@@ -4,13 +4,19 @@
   <div class="dlabnav">
       <div class="dlabnav-scroll">
           <ul class="metismenu" id="menu">
-              <li><a class="has-arrow " href="<?= base_url('admin') ?>" aria-expanded="false">
+              <li><a href="<?= base_url('admin') ?>" aria-expanded="false">
                       <i class="fas fa-home"></i>
                       <span class="nav-text">Dashboard</span>
                   </a>
               </li>
-              <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                      <i class="fas fa-home"></i>
+              <li><a href="<?= base_url('admin/keuangan') ?>" aria-expanded=" false">
+                      <i class="fas fa-dollar-sign"></i>
+                      <span class="nav-text">Kelola Keuangan</span>
+                  </a>
+              </li>
+
+              <li><a href="<?= base_url('admin/pengguna') ?>" aria-expanded=" false">
+                      <i class="fas fa-users"></i>
                       <span class="nav-text">Kelola Pengguna</span>
                   </a>
               </li>
