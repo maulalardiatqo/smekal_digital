@@ -23,6 +23,7 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Kelola Pengguna';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['pengguna'] = $this->db->get('user')->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
@@ -101,7 +102,7 @@ class Admin extends CI_Controller
     }
     public function rekapsurat()
     {
-        $data['judul'] = 'Rekap / Laporan Surat'; 
+        $data['judul'] = 'Rekap / Laporan Surat';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
