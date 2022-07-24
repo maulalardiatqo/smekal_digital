@@ -72,6 +72,10 @@
 <script src="<?= base_url('assets/') ?>js/dlabnav-init.js"></script>
 <script src="<?= base_url('assets/') ?>js/demo.js"></script>
 <script src="<?= base_url('assets/') ?>js/styleSwitcher.js"></script>
+
+<!-- Sweet Alert -->
+<script src="<?= base_url('assets/') ?>swettjs/dist/sweetalert2.all.min.js"></script>
+<script src="<?= base_url('assets/') ?>swettjs/scriptku.js"></script>
 <script>
     function cardsCenter() {
 

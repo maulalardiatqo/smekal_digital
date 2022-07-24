@@ -33,7 +33,7 @@ class Auth extends CI_Controller
         } else {
             $data = [
                 'nama' => $this->input->post('nama'),
-                'foto' => 'user_default.jpg',
+                'foto' => 'user_default.png',
                 'username' => $this->input->post('username'),
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'role_id' => 1,
