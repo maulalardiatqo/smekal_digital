@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link rel="shortcut icon" href="<?= base_url('assets/images/logo-smk.png'); ?>">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="keywords" content="">
@@ -15,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Admin Dashboard</title>
+    <title><?= $judul ?></title>
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/') ?>images/favicon.png">
@@ -23,6 +24,8 @@
     <link href="<?= base_url('assets/') ?>vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('assets/') ?>vendor/nouislider/nouislider.min.css">
 
+    <!-- Datatable -->
+    <link href="<?= base_url('assets/') ?>vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- Style css -->
     <link href="<?= base_url('assets/') ?>css/style.css" rel="stylesheet">
 
@@ -68,3 +71,4 @@
         <!--**********************************
             Nav header end
         ***********************************-->
+        <div id="flash-data" data-typealert="<?= $this->session->flashData('flashtype'); ?>" data-flashdata="<?= $this->session->flashData('flash'); ?>"></div>

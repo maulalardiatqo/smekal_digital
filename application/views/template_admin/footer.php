@@ -56,6 +56,11 @@
 
 <script src="<?= base_url('assets/') ?>vendor/chart.js/Chart.bundle.min.js"></script>
 
+<!-- Datatable -->
+<script src="<?= base_url('assets/') ?>vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url('assets/') ?>js/plugins-init/datatables.init.js"></script>
+
+
 <!-- Chart piety plugin files -->
 <script src="<?= base_url('assets/') ?>vendor/peity/jquery.peity.min.js"></script>
 <!-- Dashboard 1 -->
@@ -67,6 +72,10 @@
 <script src="<?= base_url('assets/') ?>js/dlabnav-init.js"></script>
 <script src="<?= base_url('assets/') ?>js/demo.js"></script>
 <script src="<?= base_url('assets/') ?>js/styleSwitcher.js"></script>
+
+<!-- Sweet Alert -->
+<script src="<?= base_url('assets/') ?>swettjs/dist/sweetalert2.all.min.js"></script>
+<script src="<?= base_url('assets/') ?>swettjs/scriptku.js"></script>
 <script>
     function cardsCenter() {
 

@@ -48,3 +48,4 @@
 	<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
+	<div id="flash-data" data-typealert="<?= $this->session->flashData('flashtype'); ?>" data-flashdata="<?= $this->session->flashData('flash'); ?>"></div>
