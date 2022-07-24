@@ -63,10 +63,19 @@
 
 <script src="<?= base_url('assets/') ?>vendor/owl-carousel/owl.carousel.js"></script>
 
+
+<!-- Datatable -->
+<script src="<?= base_url('assets/') ?>vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url('assets/') ?>js/plugins-init/datatables.init.js"></script>
+
 <script src="<?= base_url('assets/') ?>js/custom.min.js"></script>
 <script src="<?= base_url('assets/') ?>js/dlabnav-init.js"></script>
 <script src="<?= base_url('assets/') ?>js/demo.js"></script>
 <script src="<?= base_url('assets/') ?>js/styleSwitcher.js"></script>
+
+<!-- Sweet Alert -->
+<script src="<?= base_url('assets/') ?>swettjs/dist/sweetalert2.all.min.js"></script>
+<script src="<?= base_url('assets/') ?>swettjs/scriptku.js"></script>
 <script>
     function cardsCenter() {
 

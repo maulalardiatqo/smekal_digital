@@ -52,8 +52,9 @@ class Admin extends CI_Controller
             'kontak' => $this->input->post('kontak'),
             'tahun_masuk' => $this->input->post('tahun_masuk')
         ];
+        $password = password_hash($data['kode'], PASSWORD_DEFAULT);
         $this->db->insert('guru', $data);
-        $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[kode]', '$data[kode]', 4, 1, now())");
+        $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[kode]', '$password', 4, 1, now())");
         $this->session->set_flashdata('flash', 'Data Berhasil Di Input');
         $this->session->set_flashdata('flashtype', 'success');
 
@@ -83,8 +84,9 @@ class Admin extends CI_Controller
             'kontak' => $this->input->post('kontak'),
             'tahun_masuk' => $this->input->post('tahun_masuk')
         ];
+        $password = password_hash($data['nis'], PASSWORD_DEFAULT);
         $this->db->insert('siswa', $data);
-        $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[nis]', '$data[nis]', 5, 1, now())");
+        $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[nis]', '$password', 5, 1, now())");
         $this->session->set_flashdata('flash', 'Data Berhasil Di Input');
         $this->session->set_flashdata('flashtype', 'success');
 
