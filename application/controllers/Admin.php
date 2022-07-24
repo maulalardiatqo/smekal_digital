@@ -94,11 +94,32 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Pemasukan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['jenis_pemasukan'] = $this->db->get_where('rfgeneral', ['type' => 'jenis_pemasukan'])->result_array();
+        $data['siswa'] = $this->db->get('siswa')->result_array();
+        $data['guru'] = $this->db->get('guru')->result_array();
+        $data['js'] = 'uangmasuk';
+        $this->db->select('pemasukan.*,rfgeneral.desc');
+        $this->db->from('pemasukan');
+        $this->db->join('rfgeneral', 'pemasukan.type = rfgeneral.id');
+        $data['pemasukan'] =$query = $this->db->get()->result_array();;
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
         $this->load->view('admin/uangmasuk', $data);
         $this->load->view('template_admin/footer');
+    }
+    public function tambahpemasukan()
+    {
+        $data = [
+            'type' => $this->input->post('type'),
+            'jumlah' => $this->input->post('jumlah'),
+            'keterangan' => $this->input->post('keterangan'),
+            'id_siswa' => $this->input->post('id_siswa'),
+            'id_guru' => $this->input->post('id_guru'),
+            'tanggal_pemasukan' => $this->input->post('tanggal_pemasukan'),
+        ];
+        $insert=$this->db->insert('pemasukan', $data);
+        redirect('admin/uangmasuk');
     }
     public function uangkeluar()
     {

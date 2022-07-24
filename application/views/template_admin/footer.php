@@ -76,6 +76,7 @@
 <!-- Sweet Alert -->
 <script src="<?= base_url('assets/') ?>swettjs/dist/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('assets/') ?>swettjs/scriptku.js"></script>
+<script src="<?= base_url('assets/') ?>js/<?= $js ?>.js"></script>
 <script>
     function cardsCenter() {
 
