@@ -20,18 +20,18 @@
                 <h5 class="modal-title" id="exampleModalLabel">Form Pemasukan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="needs-validation" novalidate="" action="<?= base_url('admin/tambahpemasukan') ?>" method="POST">
+            <form class="needs-validation" novalidate="" action="<?= base_url('admin/savepemasukan') ?>" method="POST">
                 <div class="modal-body">
                     <div class="row">
-                        <input type="hidden" id="id">
+                        <input type="text" id="id" name='id'>
                         <div class="col-xl-12">
                         <div class="mb-3 row">
                                 <label class="col-lg-2 col-form-label" for="type">Jenis Pemasukan
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
-                                    <select class="default-select wide form-control" id="type" name="type">
-                                        <!-- <option value="0">Please select</option> -->
+                                    <select class="form-control" id="type" name="type">
+                                        <option value="0">Please select</option>
                                         <?php foreach($jenis_pemasukan as $j) : ?>
                                             <option value="<?= $j['id']?>"><?= $j['desc']?></option>
                                         <?php endforeach; ?>
@@ -43,7 +43,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
-                                    <select class="default-select wide form-control" id="id_siswa" name="id_siswa">
+                                    <select class="form-control" id="id_siswa" name="id_siswa">
                                         <option data-display="Select" value="null">Please select</option>
                                         <?php foreach($siswa as $s) : ?>
                                             <option value="<?= $s['id']?>"><?= $s['nama']?></option>
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label class="col-lg-2 col-form-label" for="nis">Tanggal Pemasukan
+                                <label class="col-lg-2 col-form-label" for="tanggal_pemasukan">Tanggal Pemasukan
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
@@ -127,19 +127,19 @@
                                                 <td><?= $no ?></td>
                                                 <td><?= $p['desc'] ?></td>
                                                 <td><?= $p['jumlah'] ?></td>
-                                                <td><?= $p['tanggal_pemasukan'] ?></td>
+                                                <td><?= date("d/m/Y",strtotime($p['tanggal_pemasukan'])) ?></td>
                                                 <td><?= $p['keterangan'] ?></td>
                                                 <td>
                                                     <div class="d-flex">
                                                         <button type="button"
-                                                            id="btn-edit" 
-                                                            class="btn btn-primary shadow btn-xs sharp me-1" 
+                                                         
+                                                            class="btn btn-primary shadow btn-xs sharp me-1 btn-edit" 
                                                             data-bs-toggle="modal" 
                                                             data-bs-target="#exampleModal"
                                                             data-id="<?= $p['id'] ?>"
                                                             data-type="<?= $p['type'] ?>"
                                                             data-jumlah="<?= $p['jumlah'] ?>"
-                                                            data-tanggal_pemasukan="<?= $p['tanggal_pemasukan'] ?>"
+                                                            data-tanggalpemasukan="<?= date("Y-m-d",strtotime($p['tanggal_pemasukan'])) ?>"
                                                             data-keterangan="<?= $p['keterangan'] ?>"
                                                             >
                                                                 <i class="fas fa-pencil-alt"></i>

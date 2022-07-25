@@ -120,9 +120,10 @@ class Admin extends CI_Controller
         $this->load->view('admin/uangmasuk', $data);
         $this->load->view('template_admin/footer');
     }
-    public function tambahpemasukan()
+    public function savepemasukan()
     {
         $data = [
+            'id' =>$this->input->post('id'),
             'type' => $this->input->post('type'),
             'jumlah' => $this->input->post('jumlah'),
             'keterangan' => $this->input->post('keterangan'),
@@ -130,7 +131,12 @@ class Admin extends CI_Controller
             'id_guru' => $this->input->post('id_guru'),
             'tanggal_pemasukan' => $this->input->post('tanggal_pemasukan'),
         ];
-        $insert=$this->db->insert('pemasukan', $data);
+        // if($id == null || $id == ''){
+        //     $insert=$this->db->insert('pemasukan', $data);
+        // }else{
+        //     $update=$this->db->update('pemasukan', $data);
+        // }
+        $save = $this->db->replace('pemasukan',$data);
         redirect('admin/uangmasuk');
     }
     public function uangkeluar()
