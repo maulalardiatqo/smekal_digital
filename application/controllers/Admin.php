@@ -131,14 +131,15 @@ class Admin extends CI_Controller
             'id_guru' => $this->input->post('id_guru'),
             'tanggal_pemasukan' => $this->input->post('tanggal_pemasukan'),
         ];
-        // if($id == null || $id == ''){
-        //     $insert=$this->db->insert('pemasukan', $data);
-        // }else{
-        //     $update=$this->db->update('pemasukan', $data);
-        // }
         $save = $this->db->replace('pemasukan',$data);
         redirect('admin/uangmasuk');
     }
+
+    public function deletepemasukan($id){
+        $this->db->delete('pemasukan',['id'=>$id]);
+        redirect('admin/uangmasuk');
+    }
+
     public function uangkeluar()
     {
         $data['judul'] = 'Pengeluaran';

@@ -144,7 +144,12 @@
                                                             >
                                                                 <i class="fas fa-pencil-alt"></i>
                                                         </button>
-                                                        <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                        <a href="<?= base_url('admin/deletepemasukan/'.$p['id']) ?>"
+                                                            class="btn btn-danger shadow btn-xs sharp"
+                                                            onclick="return confirm('Are you sure you want to delete this data?');"
+                                                            >
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
                                                     </div>
                                                 </td>
                                             </tr>
