@@ -92,6 +92,16 @@ class Admin extends CI_Controller
 
         redirect('admin/siswa');
     }
+    public function pengelolaan(){
+        $data['judul'] = 'Pengelolaan Keungan';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/pengelolaan', $data);
+        $this->load->view('template_admin/footer');
+    }
     public function uangmasuk()
     {
         $data['judul'] = 'Pemasukan';

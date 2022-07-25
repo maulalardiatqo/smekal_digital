@@ -14,6 +14,7 @@
                       <span class="nav-text">Keuangan</span>
                   </a>
                   <ul aria-expanded="false">
+                    <li><a href="<?= base_url('admin/pengelolaan') ?>">Pengelolaan</a></li>
                       <li><a href="<?= base_url('admin/uangmasuk') ?>">Pemasukan</a></li>
                       <li><a href="<?= base_url('admin/uangkeluar') ?>">Pengeluaran</a></li>
                       <li><a href="<?= base_url('admin/rekapuang') ?>">Rekap</a></li>
