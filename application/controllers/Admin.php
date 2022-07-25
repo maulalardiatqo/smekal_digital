@@ -144,12 +144,41 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Pengeluaran';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['jenis_pemasukan'] = $this->db->get_where('rfgeneral', ['type' => 'jenis_pemasukan'])->result_array();
+        $data['siswa'] = $this->db->get('siswa')->result_array();
+        $data['guru'] = $this->db->get('guru')->result_array();
+        $data['js'] = 'uangkeluar';
+        $this->db->select('pengeluaran.*,rfgeneral.desc');
+        $this->db->from('pengeluaran');
+        $this->db->join('rfgeneral', 'pengeluaran.type = rfgeneral.id');
+        $data['pengeluaran'] =$query = $this->db->get()->result_array();;
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
         $this->load->view('admin/uangkeluar', $data);
         $this->load->view('template_admin/footer');
     }
+
+    public function savepengeluaran()
+    {
+        $data = [
+            'id' =>$this->input->post('id'),
+            'type' => $this->input->post('type'),
+            'jumlah' => $this->input->post('jumlah'),
+            'keterangan' => $this->input->post('keterangan'),
+            'id_siswa' => $this->input->post('id_siswa'),
+            'id_guru' => $this->input->post('id_guru'),
+            'tanggal_pengeluaran' => $this->input->post('tanggal_pengeluaran'),
+        ];
+        $save = $this->db->replace('pengeluaran',$data);
+        redirect('admin/uangkeluar');
+    }
+
+    public function deletepengeluaran($id){
+        $this->db->delete('pengeluaran',['id'=>$id]);
+        redirect('admin/uangkeluar');
+    }
+
     public function rekapuang()
     {
         $data['judul'] = 'Rekap / Laporan';
