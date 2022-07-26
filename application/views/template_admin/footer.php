@@ -73,6 +73,12 @@
 <script src="<?= base_url('assets/') ?>js/demo.js"></script>
 <script src="<?= base_url('assets/') ?>js/styleSwitcher.js"></script>
 
+
+<!-- Calenders -->
+<script src="<?= base_url('assets/') ?>vendor/fullcalendar/js/main.min.js"></script>
+<script src="<?= base_url('assets/') ?>js/plugins-init/fullcalendar-init.js"></script>
+<script src="<?= base_url('assets/') ?>vendor/moment/moment.min.js"></script>
+
 <!-- Sweet Alert -->
 <script src="<?= base_url('assets/') ?>swettjs/dist/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('assets/') ?>swettjs/scriptku.js"></script>

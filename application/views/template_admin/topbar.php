@@ -18,6 +18,9 @@
     <!-- PAGE TITLE HERE -->
     <title><?= $judul ?></title>
 
+    <!-- KALENDER CSS -->
+    <link href="<?= base_url('assets/') ?>vendor/fullcalendar/css/main.min.css" rel="stylesheet">
+
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/') ?>images/favicon.png">
     <link href="<?= base_url('assets/') ?>vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">

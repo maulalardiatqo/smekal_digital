@@ -14,9 +14,23 @@
                       <span class="nav-text">Keuangan</span>
                   </a>
                   <ul aria-expanded="false">
-                    <li><a href="<?= base_url('admin/pengelolaan') ?>">Pengelolaan</a></li>
-                      <li><a href="<?= base_url('admin/uangmasuk') ?>">Pemasukan</a></li>
-                      <li><a href="<?= base_url('admin/uangkeluar') ?>">Pengeluaran</a></li>
+                      <li><a href="<?= base_url('admin/pengelolaan') ?>">Pengelolaan</a></li>
+                      <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Pemasukan</a>
+                          <ul aria-expanded="false">
+                              <li><a href="ecom-product-grid.html">DAFTAR ULANG</a></li>
+                              <li><a href="ecom-product-list.html">SPP</a></li>
+                              <li><a href="ecom-product-detail.html">PAS</a></li>
+                              <li><a href="ecom-product-order.html">PTS</a></li>
+                              <li><a href="ecom-checkout.html">US</a></li>
+                              <li><a href="ecom-invoice.html">LAINYA</a></li>
+                          </ul>
+                      </li>
+                      <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Pengeluaran</a>
+                          <ul aria-expanded="false">
+                              <li><a href="ecom-product-grid.html">GAJI KARYAWAN</a></li>
+                              <li><a href="ecom-invoice.html">LAINYA</a></li>
+                          </ul>
+                      </li>
                       <li><a href="<?= base_url('admin/rekapuang') ?>">Rekap</a></li>
                   </ul>
               </li>
@@ -35,10 +49,10 @@
                       <span class="nav-text">Inventaris</span>
                   </a>
                   <ul aria-expanded="false">
-                      <li><a href="app-profile.html">Kelas</a></li>
-                      <li><a href="post-details.html">Lab Komputer</a></li>
-                      <li><a href="post-details.html">Perbankan</a></li>
-                      <li><a href="post-details.html">Bengkel</a></li>
+                      <li><a href="<?= base_url('admin/kelas') ?>">Kelas</a></li>
+                      <li><a href="<?= base_url('admin/lab') ?>">Lab Komputer</a></li>
+                      <li><a href="<?= base_url('admin/perbankan') ?>">Perbankan</a></li>
+                      <li><a href="<?= base_url('admin/bengkel') ?>">Bengkel</a></li>
                   </ul>
               </li>
               <li><a href="<?= base_url('admin/guru') ?>" aria-expanded=" false">
@@ -55,12 +69,12 @@
                       <i class="fas fa-users"></i>
                       <span class="nav-text">Kelola Pengguna</span>
                   </a>
-              </li>    
+              </li>
               <li><a href="<?= base_url('admin/website') ?>" aria-expanded=" false">
                       <i class="fas fa-globe"></i>
                       <span class="nav-text">Kelola Website</span>
                   </a>
-              </li>      
+              </li>
       </div>
   </div>
   <!--**********************************
