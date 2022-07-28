@@ -17,12 +17,8 @@
                       <li><a href="<?= base_url('admin/pengelolaan') ?>">Pengelolaan</a></li>
                       <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Pemasukan</a>
                           <ul aria-expanded="false">
-                              <li><a href="ecom-product-grid.html">DAFTAR ULANG</a></li>
-                              <li><a href="ecom-product-list.html">SPP</a></li>
-                              <li><a href="ecom-product-detail.html">PAS</a></li>
-                              <li><a href="ecom-product-order.html">PTS</a></li>
-                              <li><a href="ecom-checkout.html">US</a></li>
-                              <li><a href="ecom-invoice.html">LAINYA</a></li>
+                              <li><a href="<?= base_url('admin/uangmasuk') ?>">Pemasukan Tetap</a></li>
+                              <li><a href="<?= base_url('admin/lainya') ?>">Lainya</a></li>
                           </ul>
                       </li>
                       <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Pengeluaran</a>
@@ -49,7 +45,6 @@
                       <span class="nav-text">Inventaris</span>
                   </a>
                   <ul aria-expanded="false">
-                      <li><a href="<?= base_url('admin/kelas') ?>">Kelas</a></li>
                       <li><a href="<?= base_url('admin/lab') ?>">Lab Komputer</a></li>
                       <li><a href="<?= base_url('admin/perbankan') ?>">Perbankan</a></li>
                       <li><a href="<?= base_url('admin/bengkel') ?>">Bengkel</a></li>
@@ -63,6 +58,11 @@
               <li><a href="<?= base_url('admin/siswa') ?>" aria-expanded=" false">
                       <i class="fas fa-user"></i>
                       <span class="nav-text">Siswa</span>
+                  </a>
+              </li>
+              <li><a href="<?= base_url('admin/kelas') ?>" aria-expanded=" false">
+                      <i class="fas fa-book-open"></i>
+                      <span class="nav-text">Kelola PRODI/KELAS</span>
                   </a>
               </li>
               <li><a href="<?= base_url('admin/pengguna') ?>" aria-expanded=" false">

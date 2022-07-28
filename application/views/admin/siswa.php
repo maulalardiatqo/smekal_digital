@@ -3,7 +3,7 @@
 
         <div class="row page-titles">
             <ol class="breadcrumb">
-                <button type="button" class="btn light btn-dark"><i class="fas fa-download"></i> Unduh Template Siswa</button>
+                <a href="<? base_url('assets/template/') ?>" type="button" class="btn light btn-dark"><i class="fas fa-download"></i> Unduh Template Siswa</a>
                 <button type="button" class="btn light btn-info"><i class="fas fa-upload"></i> Upload Template Siswa</button>
             </ol>
         </div>
@@ -31,7 +31,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="nis" name="nis" placeholder="Nama Siswa.." required="">
+                                            <input type="text" class="form-control" id="nis" name="nis" placeholder="NIS.." required="">
                                         </div>
                                     </div>
 
@@ -78,7 +78,12 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="kelas" name="kelas" placeholder="Kelas..." required="">
+                                            <select class="default-select wide form-control" id="kelas" name="kelas">
+                                                <option data-display="Select">Please select</option>
+                                                <?php foreach ($kelas as $k) : ?>
+                                                    <option value="<?= $k['id']; ?>"><?= $k['tingkat'] ?> <?= $k['prodi'] ?> <?= $k['rombel'] ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">

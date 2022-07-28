@@ -19,6 +19,16 @@ class Admin extends CI_Controller
         $this->load->view('admin/index', $data);
         $this->load->view('template_admin/footer');
     }
+    public function lainya()
+    {
+        $data['judul'] = 'Kelola Pengguna';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/lainya', $data);
+        $this->load->view('template_admin/footer');
+    }
     public function pengguna()
     {
         $data['judul'] = 'Kelola Pengguna';
@@ -75,6 +85,7 @@ class Admin extends CI_Controller
         $data['judul'] = 'Siswa';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['siswa'] = $this->db->get('siswa')->result_array();
+        $data['kelas'] = $this->db->get('kelas')->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
@@ -97,11 +108,33 @@ class Admin extends CI_Controller
         ];
         $password = password_hash($data['nis'], PASSWORD_DEFAULT);
         $cek = $this->input->post('nis');
+        $cek1 = $this->input->post('nama');
+        $cek2 = $this->input->post('nis');
+        $cek3 = $this->input->post('nisn');
+        $cek4 = $this->input->post('alamat');
+        $cek5 = $this->input->post('gender');
+        $cek6 = $this->input->post('nama_ibu');
+        $cek7 = $this->input->post('kelas');
+        $cek8 = $this->input->post('kontak');
+        $cek9 = $this->input->post('tahun_masuk');
+        $selec = 'Please select';
+        $kosong = '';
         $query = $this->db->get('siswa')->row_array();
         if ($cek == $query['nis']) {
             $this->session->set_flashdata('flash', 'NIS Sudah Terdaftar');
             $this->session->set_flashdata('flashtype', 'info');
 
+            redirect('admin/siswa');
+        } elseif ($cek == $kosong || $cek1 == $kosong || $cek2 == $kosong || $cek3 == $kosong || $cek4 == $kosong || $cek6 == $kosong || $cek8 == $kosong || $cek9 == $kosong) {
+            $this->session->set_flashdata('flash', 'Data Tidak Boleh Kosong');
+            $this->session->set_flashdata('flashtype', 'danger');
+        } elseif ($cek5 == $selec) {
+            $this->session->set_flashdata('flash', 'Anda Belum Memilih Jenis Kelamin');
+            $this->session->set_flashdata('flashtype', 'danger');
+            redirect('admin/siswa');
+        } elseif ($cek7 == $selec) {
+            $this->session->set_flashdata('flash', 'Anda Belum Memilih kelas');
+            $this->session->set_flashdata('flashtype', 'danger');
             redirect('admin/siswa');
         } else {
             $this->db->insert('siswa', $data);
@@ -251,11 +284,32 @@ class Admin extends CI_Controller
         $this->load->view('admin/rekapsurat', $data);
         $this->load->view('template_admin/footer');
     }
+    public function tambahProdi()
+    {
+        $data = [
+            'nama_prodi' => $this->input->post('nama_prodi')
+        ];
+        $prodi = $this->input->post('nama_prodi');
+        $ga = '';
+        if ($prodi == $ga) {
+            $this->session->set_flashdata('flash', 'Anda Belum Mengetik Apapun');
+            $this->session->set_flashdata('flashtype', 'danger');
+            redirect('admin/kelas');
+        } else {
+            $this->db->insert('prodi', $data);
+            $this->session->set_flashdata('flash', 'Data Berhasil Di Tambah');
+            $this->session->set_flashdata('flashtype', 'success');
+        }
+
+
+        redirect('admin/kelas');
+    }
     public function kelas()
     {
-        $data['judul'] = 'Inventaris Kelas';
+        $data['judul'] = 'Kelas dan Prodi';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['guru'] = $this->db->get('guru')->result_array();
+        $data['prodi'] = $this->db->get('prodi')->result_array();
         $this->db->select('*');
         $this->db->from('kelas');
         $this->db->join('guru', 'guru.id = kelas.walas');
@@ -269,13 +323,26 @@ class Admin extends CI_Controller
     public function tambahKelas()
     {
         $data = [
-            'nama_kelas' => $this->input->post('nama'),
+            'tingkat' => $this->input->post('tingkat'),
             'prodi' => $this->input->post('prodi'),
+            'rombel' => $this->input->post('rombel'),
             'walas' => $this->input->post('walas'),
         ];
-        $this->db->insert('Kelas', $data);
-        $this->session->set_flashdata('flash', 'Data Berhasil Di Tambah');
-        $this->session->set_flashdata('flashtype', 'success');
+        $coba = $this->input->post('tingkat');
+        $coba2 = $this->input->post('prodi');
+        $coba3 = $this->input->post('rombel');
+        $coba4 = $this->input->post('walas');
+        $tidak = 'Please select';
+        if ($coba == $tidak || $coba2 == $tidak || $coba3 == $tidak || $coba4 == $tidak) {
+            $this->session->set_flashdata('flash', 'Anda Belum Memilih Data');
+            $this->session->set_flashdata('flashtype', 'danger');
+            redirect('admin/kelas');
+        } else {
+            $this->db->insert('Kelas', $data);
+            $this->session->set_flashdata('flash', 'Data Berhasil Di Tambah');
+            $this->session->set_flashdata('flashtype', 'success');
+        }
+
 
         redirect('admin/kelas');
     }
