@@ -3,8 +3,8 @@
 
         <div class="row page-titles">
             <ol class="breadcrumb">
-                <a href="<? base_url('assets/template/') ?>" type="button" class="btn light btn-dark"><i class="fas fa-download"></i> Unduh Template Siswa</a>
-                <button type="button" class="btn light btn-info"><i class="fas fa-upload"></i> Upload Template Siswa</button>
+                <a href="<?= base_url('assets/template/template_siswa.xlsx') ?>" download="" type="button" class="btn light btn-dark"><i class="fas fa-download"></i> Unduh Template Siswa</a>
+                <button type="button" class="btn light btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-upload"></i> Upload Template Siswa</button>
             </ol>
         </div>
         <!-- row -->
@@ -173,3 +173,37 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form Pengeluaran</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="needs-validation" novalidate="" action="<?= base_url('admin/tambahProdi') ?>" method="POST">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <label class="col-lg-4 col-form-label" for="nama_prodi">Nama Prodi
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <div class="form-file">
+                                    <input type="file" class="form-file-input form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
