@@ -1,12 +1,17 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require_once APPPATH . 'third_party/Spout/AutoLoader/autoload.php';
+
+use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 
 class Admin extends CI_Controller
 {
-    public function __constructor()
+    public function __construct()
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->model('siswaModel');
+        $this->load->helper('date');
     }
     public function index()
     {
@@ -142,6 +147,61 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('flash', 'Data Berhasil Di Input');
             $this->session->set_flashdata('flashtype', 'success');
         }
+        redirect('admin/siswa');
+    }
+    public function uploadSiswa()
+    {
+        //uplad file
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'xlsx|xls';
+        $config['file_name'] = 'siswa' . time();
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('file')) {
+            $file = $this->upload->data();
+
+            $reader = ReaderEntityFactory::createXLSXReader();
+            $reader->open('uploads/' . $file['file_name']);
+            foreach ($reader->getSheetIterator() as $sheet) {
+                $numrow = 1;
+                foreach ($sheet->getRowIterator() as $row) {
+                    $passwordU = password_hash($row->getCellAtIndex(1), PASSWORD_DEFAULT);
+                    if ($numrow > 1) {
+                        $dataSiswa = array(
+                            'nama' => $row->getCellAtIndex(0),
+                            'nis' => $row->getCellAtIndex(1),
+                            'nisn' => $row->getCellAtIndex(2),
+                            'alamat' => $row->getCellAtIndex(3),
+                            'gender' => $row->getCellAtIndex(4),
+                            'nama_ibu' => $row->getCellAtIndex(5),
+                            'kelas' => $row->getCellAtIndex(6),
+                            'kontak' => $row->getCellAtIndex(7),
+                            'tahun_masuk' => $row->getCellAtIndex(8),
+                        );
+                        $dataUser = array(
+                            'nama' => $row->getCellAtIndex(0),
+                            'foto' => 'user_default.png',
+                            'username' => $row->getCellAtIndex(1),
+                            'password' => $passwordU,
+                            'role_id' => 5,
+                            'is_active' => 1,
+                            'date_create' => now(),
+                        );
+                        if ($dataSiswa['nis']) {
+                            $this->siswaModel->import_data($dataSiswa, $dataUser);
+                        }
+                    }
+                    $numrow++;
+                }
+                $reader->close();
+                unlink('uploads/' . $file['file_name']);
+                $this->session->set_flashdata('flash', 'Data Berhasil di Upload');
+                $this->session->set_flashdata('flashtype', 'success');
+            }
+        } else {
+            echo "Error :" . $this->upload->display_errors();
+            $this->session->set_flashdata('flash', 'NIS Sudah terdaftar');
+            $this->session->set_flashdata('flashtype', 'info');
+        };
         redirect('admin/siswa');
     }
     public function hapusSiswa($nis)

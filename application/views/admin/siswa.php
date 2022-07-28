@@ -183,16 +183,16 @@
                 <h5 class="modal-title" id="exampleModalLabel">Form Pengeluaran</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="needs-validation" novalidate="" action="<?= base_url('admin/tambahProdi') ?>" method="POST">
+            <form class="needs-validation" action="<?= base_url('admin/uploadSiswa') ?>" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xl-12">
-                            <label class="col-lg-4 col-form-label" for="nama_prodi">Nama Prodi
+                            <label class="col-lg-4 col-form-label" for="file">Nama Prodi
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="input-group">
                                 <div class="form-file">
-                                    <input type="file" class="form-file-input form-control">
+                                    <input type="file" class="form-file-input form-control" id="file" name="file" accept=".xlsx,.xls" required>
                                 </div>
                             </div>
                         </div>
