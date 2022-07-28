@@ -56,7 +56,7 @@ class Auth extends CI_Controller
         if ($user) {
             // cek aktivasi akun
             if ($user['is_active'] == 1) {
-                // cek password
+                // cek password default admin : smekalkambangan
                 if (password_verify($password, $user['password'])) {
                     $data = [
                         'username' => $user['username'],

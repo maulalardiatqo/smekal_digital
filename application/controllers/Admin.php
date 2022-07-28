@@ -218,6 +218,9 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Pengelolaan Keungan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['jenispemasukan'] = $this->db->get('jenispemasukan')->result_array();
+        $data['jenispengeluaran'] = $this->db->get('jenispengeluaran')->result_array();
+        $data['js'] ='pengelolaan';
 
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
@@ -225,6 +228,30 @@ class Admin extends CI_Controller
         $this->load->view('admin/pengelolaan', $data);
         $this->load->view('template_admin/footer');
     }
+
+    public function savejeniskeuangan(){
+        $type = $this->input->post('type');
+        $data = [
+            'id' => $this->input->post('id'),
+            'desc' => $this->input->post('desc'),
+        ];
+       
+        $save = $this->db->replace($type, $data);
+        $this->session->set_flashdata('flash', 'Berhasil Save Data');
+        $this->session->set_flashdata('flashtype', 'success');
+
+        redirect('admin/pengelolaan');
+    }
+
+    public function deletejeniskeuangan($type,$id)
+    {
+        $this->db->delete($type, ['id' => $id]);
+        $this->session->set_flashdata('flash', 'Berhasil Delete Data');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/pengelolaan');
+    }
+
+
     public function uangmasuk()
     {
         $data['judul'] = 'Pemasukan';
