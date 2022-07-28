@@ -12,8 +12,8 @@
                 <form class="needs-validation" novalidate="" action="<?= base_url('admin/savejeniskeuangan') ?>" method="POST">
                     <div class="modal-body">
                         <div class="row">
-                            <input type="text" id="id" name='id'>
-                            <input type="text" id="type" name='type'>
+                            <input type="hidden" id="id" name='id'>
+                            <input type="hidden" id="type" name='type'>
                             <div class="">
                                 <input type="text" class="form-control" id="desc" name="desc" placeholder="Jenis Keuangan.." required="">
                             </div>
