@@ -2,11 +2,26 @@
     <!-- row -->
     <div class="container-fluid">
         <div class="row page-titles">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb d-flex justify-content-between">
                 <button type="button" class="btn light btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i class="fas fa-plus"></i> 
                     Add
                 </button>
+                <div class='d-flex align-items-center justify-content-evenly'>
+                    <select class="form-control" id="filter-pemasukan">
+                        <option value="0">Filter Jenis Pemasukan</option>
+                        <option value="pemasukan_tetap">Pemasukan Tetap</option>
+                        <option value="lainya">Lainya</option>
+                    </select>
+                    <select class="form-control d-none" id="filter-pemasukan-tetap">
+                        <option value="0">Filter Jenis Pemasukan Tetap</option>
+                        <option value="all">all</option>
+                        <?php foreach($jenis_pemasukan as $j) : ?>
+                            <option value="<?= $j['id']?>"><?= $j['desc']?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <a href="<?= base_url('admin/pemasukan') ?>" class='btn btn-primary btn-sm d-none' id='btn-filter'>Go</a>
+                </div>
             </ol>
         </div>
         <!-- modal -->
@@ -23,7 +38,7 @@
             <form class="needs-validation" novalidate="" action="<?= base_url('admin/savepemasukan') ?>" method="POST">
                 <div class="modal-body">
                     <div class="row">
-                        <input type="text" id="id" name='id'>
+                        <input type="hidden" id="id" name='id'>
                         <div class="col-xl-12">
                         <div class="mb-3 row">
                                 <label class="col-lg-2 col-form-label" for="type">Jenis Pemasukan
@@ -35,6 +50,7 @@
                                         <?php foreach($jenis_pemasukan as $j) : ?>
                                             <option value="<?= $j['id']?>"><?= $j['desc']?></option>
                                         <?php endforeach; ?>
+                                        <option value="lainya">Lainya</option>
                                     </select>
                                 </div>
                             </div>
@@ -125,7 +141,7 @@
                                         <?php foreach ($pemasukan as $p) : ?>
                                             <tr>
                                                 <td><?= $no ?></td>
-                                                <td><?= $p['desc'] ?></td>
+                                                <td><?= $p['type'] == 'lainya' ? 'Lainya' : $p['desc'] ?></td>
                                                 <td><?= $p['jumlah'] ?></td>
                                                 <td><?= date("d/m/Y",strtotime($p['tanggal_pemasukan'])) ?></td>
                                                 <td><?= $p['keterangan'] ?></td>

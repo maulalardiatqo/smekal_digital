@@ -23,7 +23,7 @@
             <form class="needs-validation" novalidate="" action="<?= base_url('admin/savepengeluaran') ?>" method="POST">
                 <div class="modal-body">
                     <div class="row">
-                        <input type="text" id="id" name='id'>
+                        <input type="hidden" id="id" name='id'>
                         <div class="col-xl-12">
                         <div class="mb-3 row">
                                 <label class="col-lg-2 col-form-label" for="type">Jenis Pengeluaran

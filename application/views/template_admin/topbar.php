@@ -35,7 +35,7 @@
 </head>
 
 <body>
-
+    <input type="hidden" name="" id="base_url" value="<?php echo base_url() ?>">
     <!--*******************
         Preloader start
     ********************-->

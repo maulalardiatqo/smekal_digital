@@ -192,18 +192,25 @@ class Admin extends CI_Controller
     }
 
 
-    public function uangmasuk()
+    public function uangmasuk($jenispemasukan = null)
     {
         $data['judul'] = 'Pemasukan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['jenis_pemasukan'] = $this->db->get_where('rfgeneral', ['type' => 'jenis_pemasukan'])->result_array();
+        $data['jenis_pemasukan'] = $this->db->get('jenispemasukan')->result_array();
         $data['siswa'] = $this->db->get('siswa')->result_array();
         $data['guru'] = $this->db->get('guru')->result_array();
         $data['js'] = 'uangmasuk';
-        $this->db->select('pemasukan.*,rfgeneral.desc');
+        $this->db->select('pemasukan.*,jenispemasukan.desc');
         $this->db->from('pemasukan');
-        $this->db->join('rfgeneral', 'pemasukan.type = rfgeneral.id');
-        $data['pemasukan'] = $query = $this->db->get()->result_array();;
+        $this->db->join('jenispemasukan', 'pemasukan.type = jenispemasukan.id', 'left');
+        if($jenispemasukan){
+            if($jenispemasukan == 'all'){
+                $this->db->where('pemasukan.type !=','lainya');
+            }else{
+                $this->db->where('pemasukan.type',$jenispemasukan);
+            }
+        }
+        $data['pemasukan'] = $query = $this->db->get()->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);

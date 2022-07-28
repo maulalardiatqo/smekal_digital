@@ -48,5 +48,25 @@ $(document).ready( function () {
         }
         setInputForm(data)
     })
+
+    $('#filter-pemasukan').change(function(){
+        console.log("TET")
+        let value = $('#filter-pemasukan').val();
+        console.log(value)
+        let url=$('#base_url').val();
+        if(value == 'pemasukan_tetap'){
+            $('#filter-pemasukan-tetap').removeClass('d-none');
+        }else{
+            $('#btn-filter').attr('href', `${url}admin/uangmasuk/lainya`)
+        }
+        $('#btn-filter').removeClass('d-none')
+    })
+
+    $('#filter-pemasukan-tetap').change(function(){
+        let value = $('#filter-pemasukan-tetap').val();
+        let url=$('#base_url').val();
+        $('#btn-filter').attr('href', `${url}admin/uangmasuk/${value !== 0 && value}`)
+    });
+
     // event listener
 } );
