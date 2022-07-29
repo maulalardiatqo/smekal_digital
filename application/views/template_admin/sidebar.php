@@ -19,8 +19,8 @@
                       </li>
                       <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Pengeluaran</a>
                           <ul aria-expanded="false">
-                              <li><a href="ecom-product-grid.html">GAJI KARYAWAN</a></li>
-                              <li><a href="ecom-invoice.html">LAINYA</a></li>
+                              <li><a href="<?= base_url('admin/gaji') ?>">GAJI KARYAWAN</a></li>
+                              <li><a href="<?= base_url('admin/uangkeluar') ?>">LAINYA</a></li>
                           </ul>
                       </li>
                       <li><a href="<?= base_url('admin/rekapuang') ?>">Rekap</a></li>
@@ -53,7 +53,7 @@
               </li>
               <li><a href="<?= base_url('admin/guru') ?>" aria-expanded=" false">
                       <i class="fas fa-user"></i>
-                      <span class="nav-text">Guru</span>
+                      <span class="nav-text">Karyawan</span>
                   </a>
               </li>
               <li><a href="<?= base_url('admin/siswa') ?>" aria-expanded=" false">

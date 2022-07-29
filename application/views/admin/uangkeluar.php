@@ -51,19 +51,6 @@
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="mb-3 row">
-                                <label class="col-lg-2 col-form-label" for="gender">Guru
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="col-lg-10">
-                                    <select class="default-select wide form-control" id="id_guru" name="id_guru">
-                                        <option data-display="Select">Please select</option>
-                                        <?php foreach($guru as $s) : ?>
-                                            <option value="<?= $s['id']?>"><?= $s['nama']?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div> -->
                             <div class="mb-3 row">
                                 <label class="col-lg-2 col-form-label" for="jumlah">Amount
                                     <span class="text-danger">*</span>

@@ -422,9 +422,9 @@ class Admin extends CI_Controller
         $data['siswa'] = $this->db->get('siswa')->result_array();
         $data['guru'] = $this->db->get('guru')->result_array();
         $data['js'] = 'uangkeluar';
-        $this->db->select('pengeluaran.*,rfgeneral.desc');
+        $this->db->select('pengeluaran.*,jenispengeluaran.desc');
         $this->db->from('pengeluaran');
-        $this->db->join('rfgeneral', 'pengeluaran.type = rfgeneral.id');
+        $this->db->join('jenispengeluaran', 'pengeluaran.type = jenispengeluaran.id');
         $data['pengeluaran'] = $query = $this->db->get()->result_array();;
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
@@ -740,5 +740,22 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('flash', 'Data dihapus');
         $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/' . $hal);
+    }
+
+    public function gaji(){
+        $data['judul'] = 'Gaji Karyawan';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->db->select('guru.*,rfgeneral.desc,pengeluaran.jumlah,pengeluaran.tanggal_pengeluaran');
+        $this->db->from('guru');
+        $this->db->join('rfgeneral', 'guru.jabatan = rfgeneral.id', 'left');
+        $this->db->join('pengeluaran', 'guru.id = pengeluaran.id_guru', 'left');
+        $data['guru'] = $this->db->get()->result_array();
+        $data['jabatan'] = $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
+
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/gajikaryawan', $data);
+        $this->load->view('template_admin/footer');
     }
 }
