@@ -437,6 +437,37 @@ class Admin extends CI_Controller
         redirect('admin/uangkeluar');
     }
 
+    public function masterjabatan()
+    {
+        $data['judul'] = 'Master Jabatan';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        
+        $data['js'] = 'masterjabatan';
+        $data['jabatan'] =  $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/masterjabatan', $data);
+        $this->load->view('template_admin/footer');
+    }
+
+    public function savemasterjabatan()
+    {
+        $data = [
+            'id' => $this->input->post('id'),
+            'type' => 'jabatan',
+            'desc' => $this->input->post('desc'),
+        ];
+        $save = $this->db->replace('rfgeneral', $data);
+        redirect('admin/masterjabatan');
+    }
+
+    public function deletemasterjabatan($id)
+    {
+        $this->db->delete('rfgeneral', ['id' => $id]);
+        redirect('admin/masterjabatan');
+    }
+
     public function rekapuang()
     {
         $data['judul'] = 'Rekap / Laporan';
