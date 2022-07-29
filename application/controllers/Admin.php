@@ -47,9 +47,14 @@ class Admin extends CI_Controller
     }
     public function guru()
     {
-        $data['judul'] = 'Guru';
+        $data['judul'] = 'Karyawan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['guru'] = $this->db->get('guru')->result_array();
+        $this->db->select('guru.*,rfgeneral.desc');
+        $this->db->from('guru');
+        $this->db->join('rfgeneral', 'guru.jabatan = rfgeneral.id', 'left');
+        $data['guru'] = $this->db->get()->result_array();
+        $data['jabatan'] = $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
+        $data['js'] ='guru';
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
@@ -65,11 +70,16 @@ class Admin extends CI_Controller
             'gender' => $this->input->post('gender'),
             'jabatan' => $this->input->post('jabatan'),
             'kontak' => $this->input->post('kontak'),
-            'tahun_masuk' => $this->input->post('tahun_masuk')
+            'tahun_masuk' => $this->input->post('tahun_masuk'),
+            'salary_per_hour' => $this->input->post('salary_per_hour'),
+            'jam_kerja' => $this->input->post('jam_kerja'),
         ];
+        $role_id = $this->input->post('role_id');
         $password = password_hash($data['kode'], PASSWORD_DEFAULT);
         $this->db->insert('guru', $data);
-        $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[kode]', '$password', 4, 1, now())");
+        if($role_id){
+            $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[kode]', '$password', '$role_id', 1, now())");
+        }
         $this->session->set_flashdata('flash', 'Data Berhasil Di Input');
         $this->session->set_flashdata('flashtype', 'success');
 
@@ -87,9 +97,10 @@ class Admin extends CI_Controller
     }
     public function editGuru($kode)
     {
-        $data['judul'] = 'Edit Guru';
+        $data['judul'] = 'Edit Karyawan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['guru'] = $this->db->get_where('guru', ['kode' => $kode])->result_array();
+        $data['jabatan'] = $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
@@ -106,6 +117,8 @@ class Admin extends CI_Controller
             'jabatan' => $this->input->post('jabatan'),
             'kontak' => $this->input->post('kontak'),
             'tahun_masuk' => $this->input->post('tahun_masuk'),
+            'salary_per_hour' => $this->input->post('salary_per_hour'),
+            'jam_kerja' => $this->input->post('jam_kerja'),
         ];
         $this->db->update('guru', $data, ['kode' => $kode]);
         $this->session->set_flashdata('flash', 'Update Berhasil');
@@ -388,12 +401,16 @@ class Admin extends CI_Controller
             'tanggal_pemasukan' => $this->input->post('tanggal_pemasukan'),
         ];
         $save = $this->db->replace('pemasukan', $data);
+        $this->session->set_flashdata('flash', 'Berhasil Save Data');
+        $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/uangmasuk');
     }
 
     public function deletepemasukan($id)
     {
         $this->db->delete('pemasukan', ['id' => $id]);
+        $this->session->set_flashdata('flash', 'Berhasil Delete Data');
+        $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/uangmasuk');
     }
 
@@ -428,13 +445,56 @@ class Admin extends CI_Controller
             'tanggal_pengeluaran' => $this->input->post('tanggal_pengeluaran'),
         ];
         $save = $this->db->replace('pengeluaran', $data);
+        $this->session->set_flashdata('flash', 'Berhasil Save Data');
+        $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/uangkeluar');
     }
 
     public function deletepengeluaran($id)
     {
         $this->db->delete('pengeluaran', ['id' => $id]);
+        $this->session->set_flashdata('flash', 'Berhasil Delete Data');
+        $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/uangkeluar');
+    }
+
+    public function masterjabatan()
+    {
+        $data['judul'] = 'Master Jabatan';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        
+        $data['js'] = 'masterjabatan';
+        $this->db->select('rfgeneral.*,user_role.role');
+        $this->db->join('user_role','rfgeneral.role_id = user_role.id','left');
+        $data['jabatan'] =  $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
+        $data['roles'] =  $this->db->get_where('user_role',['role !='=>'siswa'])->result_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/masterjabatan', $data);
+        $this->load->view('template_admin/footer');
+    }
+
+    public function savemasterjabatan()
+    {
+        $data = [
+            'id' => $this->input->post('id'),
+            'type' => 'jabatan',
+            'desc' => $this->input->post('desc'),
+            'role_id'=> $this->input->post('role_id')
+        ];
+        $save = $this->db->replace('rfgeneral', $data);
+        $this->session->set_flashdata('flash', 'Berhasil Save Data');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/masterjabatan');
+    }
+
+    public function deletemasterjabatan($id)
+    {
+        $this->db->delete('rfgeneral', ['id' => $id]);
+        $this->session->set_flashdata('flash', 'Berhasil Delete Data');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/masterjabatan');
     }
 
     public function rekapuang()
@@ -576,6 +636,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['guru'] = $this->db->get('guru')->result_array();
         $data['prodi'] = $this->db->get('prodi')->result_array();
+        
         $this->db->select('*');
         $this->db->from('kelas');
         $this->db->join('guru', 'guru.id = kelas.walas');

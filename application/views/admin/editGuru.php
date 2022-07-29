@@ -54,7 +54,12 @@
                                             <label class="col-lg-4 col-form-label" for="jabatan">Jabatan <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="jabatan" name="jabatan" rows="5" value="<?= $s['jabatan'] ?>" required=""></input>
+                                                <select class="form-control" id="jabatan" name="jabatan">
+                                                    <option value="0">Please select</option>
+                                                    <?php foreach($jabatan as $j) : ?>
+                                                        <option value="<?= $j['id']?>" <?= $s['jabatan'] == $j['id'] ? 'selected' : '' ?>><?= $j['desc']?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -74,6 +79,20 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input type="text" class="form-control" id="tahun_masuk" name="tahun_masuk" value="<?= $s['tahun_masuk'] ?>" required="">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-lg-4 col-form-label" for="tahun_masuk">Gaji/Jam <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="salary_per_hour" name="salary_per_hour" value="<?= $s['salary_per_hour'] ?>" placeholder="Gaji / Jam.." required="">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-lg-4 col-form-label" for="tahun_masuk">Jumlah Jam Kerja <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="jam_kerja" name="jam_kerja" value="<?= $s['jam_kerja'] ?>" placeholder="Jumlah Jam Kerja.." required="">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">

@@ -15,11 +15,7 @@
                   </a>
                   <ul aria-expanded="false">
                       <li><a href="<?= base_url('admin/pengelolaan') ?>">Pengelolaan</a></li>
-                      <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Pemasukan</a>
-                          <ul aria-expanded="false">
-                              <li><a href="<?= base_url('admin/uangmasuk') ?>">Pemasukan Tetap</a></li>
-                              <li><a href="<?= base_url('admin/lainya') ?>">Lainya</a></li>
-                          </ul>
+                      <li><a href="<?= base_url('admin/uangmasuk') ?>">Pemasukan</a>
                       </li>
                       <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Pengeluaran</a>
                           <ul aria-expanded="false">
@@ -49,6 +45,11 @@
                       <li><a href="<?= base_url('admin/perbankan') ?>">Perbankan</a></li>
                       <li><a href="<?= base_url('admin/bengkel') ?>">Bengkel</a></li>
                   </ul>
+              </li>
+              <li><a href="<?= base_url('admin/masterjabatan') ?>" aria-expanded=" false">
+                      <i class="fas fa-table"></i>
+                      <span class="nav-text">Jabatan</span>
+                  </a>
               </li>
               <li><a href="<?= base_url('admin/guru') ?>" aria-expanded=" false">
                       <i class="fas fa-user"></i>
