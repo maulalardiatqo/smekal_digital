@@ -4,7 +4,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Tambah Guru</h4>
+                    <h4 class="card-title">Tambah Karyawan</h4>
                 </div>
                 <div class="card-body">
                     <div class="form-validation">
@@ -52,9 +52,15 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="Jabatan.." required="">
+                                        <select class="form-control" id="jabatan" name="jabatan">
+                                            <option value="0">Please select</option>
+                                            <?php foreach($jabatan as $j) : ?>
+                                                <option value="<?= $j['id']?>" data-role="<?= $j['role_id']?>"><?= $j['desc']?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="role_id" id="role_id">
                                     <div class="mb-3 row">
                                         <label class="col-lg-4 col-form-label" for="kontak">Kontak
                                             <span class="text-danger">*</span>
@@ -86,7 +92,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Daftar Guru</h4>
+                            <h4 class="card-title">Daftar Karyawan</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -117,7 +123,7 @@
                                                     } else {
                                                         echo 'Perempuan';
                                                     } ?></td>
-                                                <td><?= $p['jabatan'] ?></td>
+                                                <td><?= $p['desc'] ?></td>
                                                 <td><?= $p['kontak'] ?></td>
                                                 <td><?= $p['tahun_masuk'] ?></td>
                                                 <td>

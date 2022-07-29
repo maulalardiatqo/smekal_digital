@@ -33,7 +33,21 @@
                                     <input type="text" class="form-control" id="desc" name="desc" placeholder="Jabatan.." required="">
                                 </div>
                             </div>
-                            
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="mb-3 row">
+                                <label class="col-lg-2 col-form-label" for="jumlah">Akses
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="role_id" name="role_id">
+                                        <option value="0">Please select</option>
+                                        <?php foreach($roles as $r) : ?>
+                                            <option value="<?= $r['id']?>"><?= $r['role']?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -60,6 +74,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Jabatan</th>
+                                            <th>Akses</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -70,6 +85,7 @@
                                             <tr>
                                                 <td><?= $no ?></td>
                                                 <td><?= $p['desc'] ?></td>
+                                                <td><?= $p['role'] ?></td>
                                                 <td>
                                                     <div class="d-flex">
                                                         <button type="button"
@@ -78,6 +94,7 @@
                                                             data-bs-target="#exampleModal"
                                                             data-id="<?= $p['id'] ?>"
                                                             data-desc="<?= $p['desc'] ?>"
+                                                            data-role="<?= $p['role_id'] ?>"
                                                             >
                                                                 <i class="fas fa-pencil-alt"></i>
                                                         </button>

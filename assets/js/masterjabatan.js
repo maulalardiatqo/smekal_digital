@@ -2,9 +2,10 @@ $(document).ready( function () {
 
     console.log("TEST");
     // function 
-    function setInputForm({id,desc}){
+    function setInputForm({id,desc,role_id}){
         $('#id').val(id)
         $('#desc').val(desc)
+        $('#role_id').val(role_id)
     }
     // function
     
@@ -12,7 +13,8 @@ $(document).ready( function () {
     $('.btn-add').click(function(){
         let data ={
             id : null,
-            desc : null
+            desc : null,
+            role_id : null
         }
         setInputForm(data)
     })
@@ -21,8 +23,10 @@ $(document).ready( function () {
         let tanggalPemasukan = new Date($(this).data('tanggalpemasukan'));
         let data ={
             id : $(this).data('id'),
-            desc : $(this).data('desc')
+            desc : $(this).data('desc'),
+            role_id : $(this).data('role')
         }
+        console.log(data)
         setInputForm(data)
     });
 
@@ -30,7 +34,8 @@ $(document).ready( function () {
         // do something…
         let data ={
             id : null,
-            keterangan : null
+            keterangan : null,
+            role_id : null
         }
         setInputForm(data)
     })

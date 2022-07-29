@@ -54,7 +54,12 @@
                                             <label class="col-lg-4 col-form-label" for="jabatan">Jabatan <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="jabatan" name="jabatan" rows="5" value="<?= $s['jabatan'] ?>" required=""></input>
+                                                <select class="form-control" id="jabatan" name="jabatan">
+                                                    <option value="0">Please select</option>
+                                                    <?php foreach($jabatan as $j) : ?>
+                                                        <option value="<?= $j['id']?>" <?= $s['jabatan'] == $j['id'] ? 'selected' : '' ?>><?= $j['desc']?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
