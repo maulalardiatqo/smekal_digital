@@ -388,12 +388,16 @@ class Admin extends CI_Controller
             'tanggal_pemasukan' => $this->input->post('tanggal_pemasukan'),
         ];
         $save = $this->db->replace('pemasukan', $data);
+        $this->session->set_flashdata('flash', 'Berhasil Save Data');
+        $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/uangmasuk');
     }
 
     public function deletepemasukan($id)
     {
         $this->db->delete('pemasukan', ['id' => $id]);
+        $this->session->set_flashdata('flash', 'Berhasil Delete Data');
+        $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/uangmasuk');
     }
 
@@ -428,12 +432,16 @@ class Admin extends CI_Controller
             'tanggal_pengeluaran' => $this->input->post('tanggal_pengeluaran'),
         ];
         $save = $this->db->replace('pengeluaran', $data);
+        $this->session->set_flashdata('flash', 'Berhasil Save Data');
+        $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/uangkeluar');
     }
 
     public function deletepengeluaran($id)
     {
         $this->db->delete('pengeluaran', ['id' => $id]);
+        $this->session->set_flashdata('flash', 'Berhasil Delete Data');
+        $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/uangkeluar');
     }
 
@@ -459,12 +467,16 @@ class Admin extends CI_Controller
             'desc' => $this->input->post('desc'),
         ];
         $save = $this->db->replace('rfgeneral', $data);
+        $this->session->set_flashdata('flash', 'Berhasil Save Data');
+        $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/masterjabatan');
     }
 
     public function deletemasterjabatan($id)
     {
         $this->db->delete('rfgeneral', ['id' => $id]);
+        $this->session->set_flashdata('flash', 'Berhasil Delete Data');
+        $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/masterjabatan');
     }
 
