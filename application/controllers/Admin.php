@@ -85,6 +85,33 @@ class Admin extends CI_Controller
 
         redirect('admin/guru');
     }
+    public function editGuru($kode)
+    {
+        $data['judul'] = 'Edit Guru';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['guru'] = $this->db->get_where('guru', ['kode' => $kode])->result_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/editGuru', $data);
+        $this->load->view('template_admin/footer');
+    }
+    public function updateGuru($kode)
+    {
+        $data = [
+            'kode' => $this->input->post('kode'),
+            'nama' => $this->input->post('nama'),
+            'pendidikan_terakhir' => $this->input->post('pendidikan_terakhir'),
+            'gender' => $this->input->post('gender'),
+            'jabatan' => $this->input->post('jabatan'),
+            'kontak' => $this->input->post('kontak'),
+            'tahun_masuk' => $this->input->post('tahun_masuk'),
+        ];
+        $this->db->update('guru', $data, ['kode' => $kode]);
+        $this->session->set_flashdata('flash', 'Update Berhasil');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/guru');
+    }
     public function siswa()
     {
         $data['judul'] = 'Siswa';
@@ -232,13 +259,30 @@ class Admin extends CI_Controller
         $selec1 = $this->input->post('gender');
         $selec2 = $this->input->post('kelas');
         $d = 'Please select';
-        if ($selec1 == $d || $selec2 == $d) {
+        if ($selec1 == $d) {
             $data = [
                 'nama' => $this->input->post('nama'),
                 'nis' => $this->input->post('nis'),
                 'nisn' => $this->input->post('nisn'),
                 'alamat' => $this->input->post('alamat'),
                 'gender' => $siswa['gender'],
+                'nama_ibu' => $this->input->post('nama_ibu'),
+                'kelas' => $this->input->post('kelas'),
+                'kontak' => $this->input->post('kontak'),
+                'tahun_masuk' => $this->input->post('tahun_masuk'),
+            ];
+            $this->db->where('nis', $nis);
+            $this->db->update('siswa', $data);
+            $this->session->set_flashdata('flash', 'Berhasil Update Data');
+            $this->session->set_flashdata('flashtype', 'success');
+            redirect('admin/siswa');
+        } elseif ($selec2 == $d) {
+            $data = [
+                'nama' => $this->input->post('nama'),
+                'nis' => $this->input->post('nis'),
+                'nisn' => $this->input->post('nisn'),
+                'alamat' => $this->input->post('alamat'),
+                'gender' => $this->input->post('gender'),
                 'nama_ibu' => $this->input->post('nama_ibu'),
                 'kelas' => $siswa['kelas'],
                 'kontak' => $this->input->post('kontak'),
