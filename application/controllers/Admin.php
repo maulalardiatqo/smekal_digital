@@ -428,7 +428,8 @@ class Admin extends CI_Controller
             'nama_surat' => $this->input->post('nama_surat'),
             'tanggal_surat' => $this->input->post('tanggal_surat'),
             'keterangan' => $this->input->post('keterangan'),
-            'untuk_dari' => $this->input->post('untuk_dari'),
+            'dari' => $this->input->post('dari'),
+            'untuk' => $this->input->post('untuk'),
             'jenis' => '2',      
         ];
         $this->db->insert('surat', $data);
@@ -442,6 +443,7 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Rekap / Laporan Surat';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['surat'] = $this->db->get('surat')->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);

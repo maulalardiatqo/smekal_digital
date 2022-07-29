@@ -49,11 +49,19 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="col-lg-4 col-form-label" for="untuk_dari">Penerima Surat
+                                        <label class="col-lg-4 col-form-label" for="dari">Pengirim
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="untuk_dari" name="untuk_dari" placeholder="Pengirim Surat.." required="">
+                                            <input type="text" class="form-control" id="dari" name="dari" placeholder="Pengirim Surat.." required="">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-lg-4 col-form-label" for="untuk">Penerima
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="untuk" name="untuk" placeholder="Penerima Surat.." required="">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -84,7 +92,8 @@
                                         <th>Nama Surat</th>
                                         <th>Tanggal Masuk</th>
                                         <th>Keterangan</th>
-                                        <th>Untuk</th>
+                                        <th>Dari</th>
+                                        <th>Kepada</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -98,7 +107,8 @@
                                             <td><?= $p['nama_surat'] ?></td>
                                             <td><?= $p['tanggal_surat'] ?></td>
                                             <td><?= $p['keterangan'] ?></td>
-                                            <td><?= $p['untuk_dari'] ?></td>
+                                            <td><?= $p['dari'] ?></td>
+                                            <td><?= $p['untuk'] ?></td>
                                             <td>
                                                 <div class="d-flex">
                                                     <a href="<?= base_url('admin/hapusSurat/' . $p['id_surat'] . '/' . $hal) ?>" class="btn btn-danger shadow btn-xs sharp tombol-hapus"><i class="fa fa-trash"></i></a>
