@@ -71,6 +71,8 @@ class Admin extends CI_Controller
             'jabatan' => $this->input->post('jabatan'),
             'kontak' => $this->input->post('kontak'),
             'tahun_masuk' => $this->input->post('tahun_masuk'),
+            'salary_per_hour' => $this->input->post('salary_per_hour'),
+            'jam_kerja' => $this->input->post('jam_kerja'),
         ];
         $role_id = $this->input->post('role_id');
         $password = password_hash($data['kode'], PASSWORD_DEFAULT);
@@ -115,6 +117,8 @@ class Admin extends CI_Controller
             'jabatan' => $this->input->post('jabatan'),
             'kontak' => $this->input->post('kontak'),
             'tahun_masuk' => $this->input->post('tahun_masuk'),
+            'salary_per_hour' => $this->input->post('salary_per_hour'),
+            'jam_kerja' => $this->input->post('jam_kerja'),
         ];
         $this->db->update('guru', $data, ['kode' => $kode]);
         $this->session->set_flashdata('flash', 'Update Berhasil');

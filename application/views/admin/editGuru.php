@@ -82,6 +82,20 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
+                                            <label class="col-lg-4 col-form-label" for="tahun_masuk">Gaji/Jam <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="salary_per_hour" name="salary_per_hour" value="<?= $s['salary_per_hour'] ?>" placeholder="Gaji / Jam.." required="">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-lg-4 col-form-label" for="tahun_masuk">Jumlah Jam Kerja <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="jam_kerja" name="jam_kerja" value="<?= $s['jam_kerja'] ?>" placeholder="Jumlah Jam Kerja.." required="">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
                                             <div class="col-lg-8 ms-auto">
                                                 <button type="submit" class="btn btn-primary">Update</button>
                                             </div>
