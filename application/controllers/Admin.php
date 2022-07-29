@@ -352,21 +352,91 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Surat Masuk';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['surat'] = $this->db->get_where('surat', ['jenis' => '1'])->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
         $this->load->view('admin/suratmasuk', $data);
         $this->load->view('template_admin/footer');
     }
+    public function inputSuratM()
+    {
+
+        $cek = $this->input->post('nomor_surat');
+        $cek1 = $this->input->post('nama_surat');
+        $cek2 = $this->input->post('tanggal_surat');
+        $cek3 = $this->input->post('keterangan');
+        $cek4 = $this->input->post('untuk_dari');
+        $tidak = '';
+
+        if($cek == $tidak || $cek1 == $tidak || $cek2 == $tidak || $cek3 == $tidak || $cek4 == $tidak){
+            $this->session->set_flashdata('flash', 'Data Tidak Boleh Kosong');
+            $this->session->set_flashdata('flashtype', 'danger');
+    
+            redirect('admin/suratmasuk');
+        }else {
+            $data = [
+            'nomor_surat' => $this->input->post('nomor_surat'),
+            'nama_surat' => $this->input->post('nama_surat'),
+            'tanggal_surat' => $this->input->post('tanggal_surat'),
+            'keterangan' => $this->input->post('keterangan'),
+            'untuk_dari' => $this->input->post('untuk_dari'),
+            'jenis' => '1',      
+        ];
+        $this->db->insert('surat', $data);
+        $this->session->set_flashdata('flash', 'Surat Masuk Berhasil Ditambahkan');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/suratmasuk');
+        }
+        
+    }
+    public function hapusSurat($id_surat, $hal){
+        $this->db->delete('surat', ['id_surat' => $id_surat]);
+        $this->session->set_flashdata('flash', 'Surat Dihapus');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/' . $hal);
+    }
     public function suratkeluar()
     {
         $data['judul'] = 'Surat Keluar';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['surat'] = $this->db->get_where('surat', ['jenis' => '2'])->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
         $this->load->view('admin/suratkeluar', $data);
         $this->load->view('template_admin/footer');
+    }
+    public function inputSuratK()
+    {
+
+        $cek = $this->input->post('nomor_surat');
+        $cek1 = $this->input->post('nama_surat');
+        $cek2 = $this->input->post('tanggal_surat');
+        $cek3 = $this->input->post('keterangan');
+        $cek4 = $this->input->post('untuk_dari');
+        $tidak = '';
+
+        if($cek == $tidak || $cek1 == $tidak || $cek2 == $tidak || $cek3 == $tidak || $cek4 == $tidak){
+            $this->session->set_flashdata('flash', 'Data Tidak Boleh Kosong');
+            $this->session->set_flashdata('flashtype', 'danger');
+    
+            redirect('admin/suratkeluar');
+        }else {
+            $data = [
+            'nomor_surat' => $this->input->post('nomor_surat'),
+            'nama_surat' => $this->input->post('nama_surat'),
+            'tanggal_surat' => $this->input->post('tanggal_surat'),
+            'keterangan' => $this->input->post('keterangan'),
+            'untuk_dari' => $this->input->post('untuk_dari'),
+            'jenis' => '2',      
+        ];
+        $this->db->insert('surat', $data);
+        $this->session->set_flashdata('flash', 'Surat Masuk Berhasil Ditambahkan');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/suratkeluar');
+        }
+        
     }
     public function rekapsurat()
     {
