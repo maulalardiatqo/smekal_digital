@@ -214,7 +214,8 @@ class Admin extends CI_Controller
 
         redirect('admin/siswa');
     }
-    public function editSiswa($nis){
+    public function editSiswa($nis)
+    {
         $data['judul'] = 'Edit Siswa';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['siswa'] = $this->db->get_where('siswa', ['nis' => $nis])->result_array();
@@ -225,21 +226,47 @@ class Admin extends CI_Controller
         $this->load->view('admin/editSiswa', $data);
         $this->load->view('template_admin/footer');
     }
-    public function updateSiswa(){
-        $data = [
-            'nama' => $this->input->post('nama'),
-            'nis' => $this->input->post('nis'),
-            'nisn' => $this->input->post('nisn'),
-            'alamat' => $this->input->post('alamat'),
-            'nama_ibu' => $this->input->post('nama_ibu'),
-            'kelas' => $this->input->post('kelas'),
-            'kontak' => $this->input->post('kontak'),
-            'tahun_masuk' => $this->input->post('tahun_masuk'),
-        ];
-        $this->db->replace('siswa', $data);
-        $this->session->set_flashdata('flash', 'Berhasil Update Data');
-        $this->session->set_flashdata('flashtype', 'success');
-        redirect('admin/siswa');
+    public function updateSiswa($nis)
+    {
+        $siswa = $this->db->get_where('siswa', ['nis' => $nis])->row_array();
+        $selec1 = $this->input->post('gender');
+        $selec2 = $this->input->post('kelas');
+        $d = 'Please select';
+        if ($selec1 == $d || $selec2 == $d) {
+            $data = [
+                'nama' => $this->input->post('nama'),
+                'nis' => $this->input->post('nis'),
+                'nisn' => $this->input->post('nisn'),
+                'alamat' => $this->input->post('alamat'),
+                'gender' => $siswa['gender'],
+                'nama_ibu' => $this->input->post('nama_ibu'),
+                'kelas' => $siswa['kelas'],
+                'kontak' => $this->input->post('kontak'),
+                'tahun_masuk' => $this->input->post('tahun_masuk'),
+            ];
+            $this->db->where('nis', $nis);
+            $this->db->update('siswa', $data);
+            $this->session->set_flashdata('flash', 'Berhasil Update Data');
+            $this->session->set_flashdata('flashtype', 'success');
+            redirect('admin/siswa');
+        } else {
+            $data = [
+                'nama' => $this->input->post('nama'),
+                'nis' => $this->input->post('nis'),
+                'nisn' => $this->input->post('nisn'),
+                'alamat' => $this->input->post('alamat'),
+                'gender' => $this->input->post('gender'),
+                'nama_ibu' => $this->input->post('nama_ibu'),
+                'kelas' => $this->input->post('kelas'),
+                'kontak' => $this->input->post('kontak'),
+                'tahun_masuk' => $this->input->post('tahun_masuk'),
+            ];
+            $this->db->where('nis', $nis);
+            $this->db->update('siswa', $data);
+            $this->session->set_flashdata('flash', 'Berhasil Update Data');
+            $this->session->set_flashdata('flashtype', 'success');
+            redirect('admin/siswa');
+        }
     }
     public function pengelolaan()
     {
@@ -247,7 +274,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['jenispemasukan'] = $this->db->get('jenispemasukan')->result_array();
         $data['jenispengeluaran'] = $this->db->get('jenispengeluaran')->result_array();
-        $data['js'] ='pengelolaan';
+        $data['js'] = 'pengelolaan';
 
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
@@ -256,13 +283,14 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/footer');
     }
 
-    public function savejeniskeuangan(){
+    public function savejeniskeuangan()
+    {
         $type = $this->input->post('type');
         $data = [
             'id' => $this->input->post('id'),
             'desc' => $this->input->post('desc'),
         ];
-       
+
         $save = $this->db->replace($type, $data);
         $this->session->set_flashdata('flash', 'Berhasil Save Data');
         $this->session->set_flashdata('flashtype', 'success');
@@ -270,7 +298,7 @@ class Admin extends CI_Controller
         redirect('admin/pengelolaan');
     }
 
-    public function deletejeniskeuangan($type,$id)
+    public function deletejeniskeuangan($type, $id)
     {
         $this->db->delete($type, ['id' => $id]);
         $this->session->set_flashdata('flash', 'Berhasil Delete Data');
@@ -290,11 +318,11 @@ class Admin extends CI_Controller
         $this->db->select('pemasukan.*,jenispemasukan.desc');
         $this->db->from('pemasukan');
         $this->db->join('jenispemasukan', 'pemasukan.type = jenispemasukan.id', 'left');
-        if($jenispemasukan){
-            if($jenispemasukan == 'all'){
-                $this->db->where('pemasukan.type !=','lainya');
-            }else{
-                $this->db->where('pemasukan.type',$jenispemasukan);
+        if ($jenispemasukan) {
+            if ($jenispemasukan == 'all') {
+                $this->db->where('pemasukan.type !=', 'lainya');
+            } else {
+                $this->db->where('pemasukan.type', $jenispemasukan);
             }
         }
         $data['pemasukan'] = $query = $this->db->get()->result_array();
@@ -396,28 +424,28 @@ class Admin extends CI_Controller
         $cek4 = $this->input->post('untuk_dari');
         $tidak = '';
 
-        if($cek == $tidak || $cek1 == $tidak || $cek2 == $tidak || $cek3 == $tidak || $cek4 == $tidak){
+        if ($cek == $tidak || $cek1 == $tidak || $cek2 == $tidak || $cek3 == $tidak || $cek4 == $tidak) {
             $this->session->set_flashdata('flash', 'Data Tidak Boleh Kosong');
             $this->session->set_flashdata('flashtype', 'danger');
-    
+
             redirect('admin/suratmasuk');
-        }else {
+        } else {
             $data = [
-            'nomor_surat' => $this->input->post('nomor_surat'),
-            'nama_surat' => $this->input->post('nama_surat'),
-            'tanggal_surat' => $this->input->post('tanggal_surat'),
-            'keterangan' => $this->input->post('keterangan'),
-            'untuk_dari' => $this->input->post('untuk_dari'),
-            'jenis' => '1',      
-        ];
-        $this->db->insert('surat', $data);
-        $this->session->set_flashdata('flash', 'Surat Masuk Berhasil Ditambahkan');
-        $this->session->set_flashdata('flashtype', 'success');
-        redirect('admin/suratmasuk');
+                'nomor_surat' => $this->input->post('nomor_surat'),
+                'nama_surat' => $this->input->post('nama_surat'),
+                'tanggal_surat' => $this->input->post('tanggal_surat'),
+                'keterangan' => $this->input->post('keterangan'),
+                'untuk_dari' => $this->input->post('untuk_dari'),
+                'jenis' => '1',
+            ];
+            $this->db->insert('surat', $data);
+            $this->session->set_flashdata('flash', 'Surat Masuk Berhasil Ditambahkan');
+            $this->session->set_flashdata('flashtype', 'success');
+            redirect('admin/suratmasuk');
         }
-        
     }
-    public function hapusSurat($id_surat, $hal){
+    public function hapusSurat($id_surat, $hal)
+    {
         $this->db->delete('surat', ['id_surat' => $id_surat]);
         $this->session->set_flashdata('flash', 'Surat Dihapus');
         $this->session->set_flashdata('flashtype', 'success');
@@ -444,27 +472,26 @@ class Admin extends CI_Controller
         $cek4 = $this->input->post('untuk_dari');
         $tidak = '';
 
-        if($cek == $tidak || $cek1 == $tidak || $cek2 == $tidak || $cek3 == $tidak || $cek4 == $tidak){
+        if ($cek == $tidak || $cek1 == $tidak || $cek2 == $tidak || $cek3 == $tidak || $cek4 == $tidak) {
             $this->session->set_flashdata('flash', 'Data Tidak Boleh Kosong');
             $this->session->set_flashdata('flashtype', 'danger');
-    
+
             redirect('admin/suratkeluar');
-        }else {
+        } else {
             $data = [
-            'nomor_surat' => $this->input->post('nomor_surat'),
-            'nama_surat' => $this->input->post('nama_surat'),
-            'tanggal_surat' => $this->input->post('tanggal_surat'),
-            'keterangan' => $this->input->post('keterangan'),
-            'dari' => $this->input->post('dari'),
-            'untuk' => $this->input->post('untuk'),
-            'jenis' => '2',      
-        ];
-        $this->db->insert('surat', $data);
-        $this->session->set_flashdata('flash', 'Surat Masuk Berhasil Ditambahkan');
-        $this->session->set_flashdata('flashtype', 'success');
-        redirect('admin/suratkeluar');
+                'nomor_surat' => $this->input->post('nomor_surat'),
+                'nama_surat' => $this->input->post('nama_surat'),
+                'tanggal_surat' => $this->input->post('tanggal_surat'),
+                'keterangan' => $this->input->post('keterangan'),
+                'dari' => $this->input->post('dari'),
+                'untuk' => $this->input->post('untuk'),
+                'jenis' => '2',
+            ];
+            $this->db->insert('surat', $data);
+            $this->session->set_flashdata('flash', 'Surat Masuk Berhasil Ditambahkan');
+            $this->session->set_flashdata('flashtype', 'success');
+            redirect('admin/suratkeluar');
         }
-        
     }
     public function rekapsurat()
     {
