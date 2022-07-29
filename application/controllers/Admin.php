@@ -214,6 +214,33 @@ class Admin extends CI_Controller
 
         redirect('admin/siswa');
     }
+    public function editSiswa($nis){
+        $data['judul'] = 'Edit Siswa';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['siswa'] = $this->db->get_where('siswa', ['nis' => $nis])->result_array();
+        $data['kelas'] = $this->db->get('kelas')->result_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/editSiswa', $data);
+        $this->load->view('template_admin/footer');
+    }
+    public function updateSiswa(){
+        $data = [
+            'nama' => $this->input->post('nama'),
+            'nis' => $this->input->post('nis'),
+            'nisn' => $this->input->post('nisn'),
+            'alamat' => $this->input->post('alamat'),
+            'nama_ibu' => $this->input->post('nama_ibu'),
+            'kelas' => $this->input->post('kelas'),
+            'kontak' => $this->input->post('kontak'),
+            'tahun_masuk' => $this->input->post('tahun_masuk'),
+        ];
+        $this->db->replace('siswa', $data);
+        $this->session->set_flashdata('flash', 'Berhasil Update Data');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/siswa');
+    }
     public function pengelolaan()
     {
         $data['judul'] = 'Pengelolaan Keungan';
