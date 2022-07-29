@@ -98,8 +98,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $no = 1; 
-                                    $hal = 'suratmasuk'?>
+                                    <?php $no = 1;
+                                    $hal = 'suratmasuk' ?>
                                     <?php foreach ($surat as $p) : ?>
                                         <tr>
                                             <td><?= $no ?></td>

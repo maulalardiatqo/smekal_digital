@@ -460,15 +460,15 @@ class Admin extends CI_Controller
     }
     public function inputSuratM()
     {
-
         $cek = $this->input->post('nomor_surat');
         $cek1 = $this->input->post('nama_surat');
         $cek2 = $this->input->post('tanggal_surat');
         $cek3 = $this->input->post('keterangan');
-        $cek4 = $this->input->post('untuk_dari');
+        $cek4 = $this->input->post('dari');
+        $cek5 = $this->input->post('untuk');
         $tidak = '';
 
-        if ($cek == $tidak || $cek1 == $tidak || $cek2 == $tidak || $cek3 == $tidak || $cek4 == $tidak) {
+        if ($cek == $tidak || $cek1 == $tidak || $cek2 == $tidak || $cek3 == $tidak || $cek4 == $tidak || $cek5 == $tidak) {
             $this->session->set_flashdata('flash', 'Data Tidak Boleh Kosong');
             $this->session->set_flashdata('flashtype', 'danger');
 
@@ -479,7 +479,8 @@ class Admin extends CI_Controller
                 'nama_surat' => $this->input->post('nama_surat'),
                 'tanggal_surat' => $this->input->post('tanggal_surat'),
                 'keterangan' => $this->input->post('keterangan'),
-                'untuk_dari' => $this->input->post('untuk_dari'),
+                'dari' => $this->input->post('dari'),
+                'untuk' => $this->input->post('untuk'),
                 'jenis' => '1',
             ];
             $this->db->insert('surat', $data);
@@ -513,10 +514,11 @@ class Admin extends CI_Controller
         $cek1 = $this->input->post('nama_surat');
         $cek2 = $this->input->post('tanggal_surat');
         $cek3 = $this->input->post('keterangan');
-        $cek4 = $this->input->post('untuk_dari');
+        $cek4 = $this->input->post('dari');
+        $cek5 = $this->input->post('untuk');
         $tidak = '';
 
-        if ($cek == $tidak || $cek1 == $tidak || $cek2 == $tidak || $cek3 == $tidak || $cek4 == $tidak) {
+        if ($cek == $tidak || $cek1 == $tidak || $cek2 == $tidak || $cek3 == $tidak || $cek4 == $tidak || $cek5 == $tidak) {
             $this->session->set_flashdata('flash', 'Data Tidak Boleh Kosong');
             $this->session->set_flashdata('flashtype', 'danger');
 
