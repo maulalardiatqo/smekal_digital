@@ -43,4 +43,13 @@ class Kepsek extends CI_Controller
         $this->load->view('kepsek/absen', $data);
         $this->load->view('template_kepsek/footer');
     }
+    public function proposal()
+    {
+        $data['judul'] = 'Absensi';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->view('template_kepsek/topbar', $data);
+        $this->load->view('template_kepsek/header', $data);
+        $this->load->view('kepsek/proposal', $data);
+        $this->load->view('template_kepsek/footer');
+    }
 }
