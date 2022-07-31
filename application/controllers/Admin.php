@@ -418,7 +418,7 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Pengeluaran';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['jenis_pemasukan'] = $this->db->get_where('rfgeneral', ['type' => 'jenis_pemasukan'])->result_array();
+        $data['jenis_pemasukan'] = $this->db->get_where('jenispengeluaran')->result_array();
         $data['siswa'] = $this->db->get('siswa')->result_array();
         $data['guru'] = $this->db->get('guru')->result_array();
         $data['js'] = 'uangkeluar';
@@ -443,6 +443,7 @@ class Admin extends CI_Controller
             'id_siswa' => $this->input->post('id_siswa'),
             'id_guru' => $this->input->post('id_guru'),
             'tanggal_pengeluaran' => $this->input->post('tanggal_pengeluaran'),
+            'status_gaji' => $this->input->post('status_gaji')
         ];
         $save = $this->db->replace('pengeluaran', $data);
         $this->session->set_flashdata('flash', 'Berhasil Save Data');
@@ -747,11 +748,13 @@ class Admin extends CI_Controller
     public function gaji(){
         $data['judul'] = 'Gaji Karyawan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->db->select('guru.*,rfgeneral.desc,pengeluaran.jumlah,pengeluaran.tanggal_pengeluaran');
-        $this->db->from('guru');
-        $this->db->join('rfgeneral', 'guru.jabatan = rfgeneral.id', 'left');
-        $this->db->join('pengeluaran', 'guru.id = pengeluaran.id_guru', 'left');
-        $data['guru'] = $this->db->get()->result_array();
+        // $this->db->select('guru.*,rfgeneral.desc,pengeluaran.jumlah,pengeluaran.tanggal_pengeluaran');
+        // $this->db->from('guru');
+        // $this->db->join('rfgeneral', 'guru.jabatan = rfgeneral.id', 'left');
+        // $this->db->join('pengeluaran', 'guru.id = pengeluaran.id_guru', 'left');
+        $query  ="SELECT G.*,RG.desc,P.jumlah,P.tanggal_pengeluaran,P.status_gaji FROM guru G LEFT JOIN rfgeneral RG ON RG.id = G.jabatan LEFT JOIN pengeluaran P ON P.id_guru = G.id AND MONTH(P.tanggal_pengeluaran) = MONTH(NOW())";
+    
+        $data['guru'] = $this->db->query($query)->result_array();
         $data['jabatan'] = $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
 
         $this->load->view('template_admin/topbar', $data);

@@ -37,14 +37,19 @@
                                                 <td>
                                                     <div class="d-flex">
                                                         <a href="<?= base_url('admin/editGuru/') . $p['kode'] ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <?php if($p['tanggal_pengeluaran'] == NULL): ?>
                                                         <form action="<?= base_url('admin/savepengeluaran')?>" method="post">
                                                             <input type="hidden" name="type" value="1">
                                                             <input type="hidden" name="id_guru"  value="<?= $p['id'] ?>">
                                                             <input type="hidden" name="keterangan" value="Pemberian Gaji bulan <?= date("m")?> tahun <?= date('Y')?>">
                                                             <input type="hidden" name="tanggal_pengeluaran" value="<?= date("Y-m-d H:i:s") ?>">
                                                             <input type="hidden" name="jumlah" value="<?= ($p['jam_kerja'] * $p['salary_per_hour']) ?>">
+                                                            <input type="hidden" name="status_gaji" value="MENUNGGU KONFIRMASI">
                                                             <button type="submit" class="btn btn-success shadow btn-xs sharp"><i class="fa fa-check"></i></button>
                                                         </form>
+                                                        <?php else :?>
+                                                            <span><?= $p['status_gaji'] ?></span>
+                                                        <?php endif ;?>
                                                     </div>
                                                 </td>
                                             </tr>
