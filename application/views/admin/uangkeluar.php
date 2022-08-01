@@ -1,13 +1,12 @@
 <div class="content-body">
     <!-- row -->
     <div class="container-fluid">
-        <div class="row page-titles">
-            <ol class="breadcrumb">
-                <button type="button" class="btn light btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="fas fa-plus"></i> 
-                    Add
-                </button>
-            </ol>
+        <div class="page-titles d-flex justify-content-between">
+            <button type="button" class="btn light btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fas fa-plus"></i> 
+                Add
+            </button>
+            <a href="<?php echo base_url('admin/gaji')?>" class="btn btn-info">Gaji Karyawan</a>
         </div>
         <!-- modal -->
         

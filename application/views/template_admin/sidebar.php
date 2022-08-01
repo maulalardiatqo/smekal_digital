@@ -17,11 +17,7 @@
                       <li><a href="<?= base_url('admin/pengelolaan') ?>">Pengelolaan</a></li>
                       <li><a href="<?= base_url('admin/uangmasuk') ?>">Pemasukan</a>
                       </li>
-                      <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Pengeluaran</a>
-                          <ul aria-expanded="false">
-                              <li><a href="<?= base_url('admin/gaji') ?>">GAJI KARYAWAN</a></li>
-                              <li><a href="<?= base_url('admin/uangkeluar') ?>">LAINYA</a></li>
-                          </ul>
+                      <li><a class="" href="<?= base_url('admin/uangkeluar') ?>">Pengeluaran</a>
                       </li>
                       <li><a href="<?= base_url('admin/rekapuang') ?>">Rekap</a></li>
                   </ul>

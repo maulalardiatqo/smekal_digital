@@ -502,6 +502,7 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Rekap / Laporan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['rekap']=[];
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
