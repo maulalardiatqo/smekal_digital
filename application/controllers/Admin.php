@@ -53,8 +53,8 @@ class Admin extends CI_Controller
         $this->db->from('guru');
         $this->db->join('rfgeneral', 'guru.jabatan = rfgeneral.id', 'left');
         $data['guru'] = $this->db->get()->result_array();
-        $data['jabatan'] = $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
-        $data['js'] ='guru';
+        $data['jabatan'] = $this->db->get_where('rfgeneral', ['type' => 'jabatan'])->result_array();
+        $data['js'] = 'guru';
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
@@ -77,7 +77,7 @@ class Admin extends CI_Controller
         $role_id = $this->input->post('role_id');
         $password = password_hash($data['kode'], PASSWORD_DEFAULT);
         $this->db->insert('guru', $data);
-        if($role_id){
+        if ($role_id) {
             $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[kode]', '$password', '$role_id', 1, now())");
         }
         $this->session->set_flashdata('flash', 'Data Berhasil Di Input');
@@ -100,7 +100,7 @@ class Admin extends CI_Controller
         $data['judul'] = 'Edit Karyawan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['guru'] = $this->db->get_where('guru', ['kode' => $kode])->result_array();
-        $data['jabatan'] = $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
+        $data['jabatan'] = $this->db->get_where('rfgeneral', ['type' => 'jabatan'])->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
@@ -462,12 +462,12 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Master Jabatan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        
+
         $data['js'] = 'masterjabatan';
         $this->db->select('rfgeneral.*,user_role.role');
-        $this->db->join('user_role','rfgeneral.role_id = user_role.id','left');
-        $data['jabatan'] =  $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
-        $data['roles'] =  $this->db->get_where('user_role',['role !='=>'siswa'])->result_array();
+        $this->db->join('user_role', 'rfgeneral.role_id = user_role.id', 'left');
+        $data['jabatan'] =  $this->db->get_where('rfgeneral', ['type' => 'jabatan'])->result_array();
+        $data['roles'] =  $this->db->get_where('user_role', ['role !=' => 'siswa'])->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
@@ -481,7 +481,7 @@ class Admin extends CI_Controller
             'id' => $this->input->post('id'),
             'type' => 'jabatan',
             'desc' => $this->input->post('desc'),
-            'role_id'=> $this->input->post('role_id')
+            'role_id' => $this->input->post('role_id')
         ];
         $save = $this->db->replace('rfgeneral', $data);
         $this->session->set_flashdata('flash', 'Berhasil Save Data');
@@ -636,7 +636,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['guru'] = $this->db->get('guru')->result_array();
         $data['prodi'] = $this->db->get('prodi')->result_array();
-        
+
         $this->db->select('*');
         $this->db->from('kelas');
         $this->db->join('guru', 'guru.id = kelas.walas');
@@ -744,7 +744,8 @@ class Admin extends CI_Controller
         redirect('admin/' . $hal);
     }
 
-    public function gaji(){
+    public function gaji()
+    {
         $data['judul'] = 'Gaji Karyawan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->db->select('guru.*,rfgeneral.desc,pengeluaran.jumlah,pengeluaran.tanggal_pengeluaran');
@@ -752,12 +753,22 @@ class Admin extends CI_Controller
         $this->db->join('rfgeneral', 'guru.jabatan = rfgeneral.id', 'left');
         $this->db->join('pengeluaran', 'guru.id = pengeluaran.id_guru', 'left');
         $data['guru'] = $this->db->get()->result_array();
-        $data['jabatan'] = $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
+        $data['jabatan'] = $this->db->get_where('rfgeneral', ['type' => 'jabatan'])->result_array();
 
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
         $this->load->view('admin/gajikaryawan', $data);
+        $this->load->view('template_admin/footer');
+    }
+    public function absen()
+    {
+        $data['judul'] = 'Absensi Karyawan';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/absen', $data);
         $this->load->view('template_admin/footer');
     }
 }

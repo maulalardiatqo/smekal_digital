@@ -9,20 +9,30 @@
                       <span class="nav-text">Dashboard</span>
                   </a>
               </li>
-              <li><a href="<?= base_url('waka') ?>" aria-expanded="false">
-                      <i class="fas fa-users"></i>
+              <li><a href="<?= base_url('waka/guru') ?>" aria-expanded="false">
+                      <i class="fas fa-user"></i>
                       <span class="nav-text">Data Guru</span>
                   </a>
               </li>
-              <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                      <i class="fas fa-book"></i>
-                      <span class="nav-text">Keuangan</span>
+              <li><a href="<?= base_url('waka/siswa') ?>" aria-expanded="false">
+                      <i class="fas fa-user"></i>
+                      <span class="nav-text">Data Siswa</span>
                   </a>
-                  <ul aria-expanded="false">
-                      <li><a href="<?= base_url('admin/uangmasuk') ?>">Pemasukan</a></li>
-                      <li><a href="<?= base_url('admin/uangkeluar') ?>">Pengeluaran</a></li>
-                      <li><a href="<?= base_url('admin/rekapuang') ?>">Rekap</a></li>
-                  </ul>
+              </li>
+              <li><a href="<?= base_url('waka/kelas') ?>" aria-expanded="false">
+                      <i class="fas fa-box"></i>
+                      <span class="nav-text">Data Kelas</span>
+                  </a>
+              </li>
+              <li><a href="<?= base_url('waka/jadwal') ?>" aria-expanded="false">
+                      <i class="fas fa-calendar"></i>
+                      <span class="nav-text">Penjadwalan</span>
+                  </a>
+              </li>
+              <li><a href="<?= base_url('waka/administrasi') ?>" aria-expanded="false">
+                      <i class="fas fa-book"></i>
+                      <span class="nav-text">Administrasi Guru</span>
+                  </a>
               </li>
           </ul>
       </div>

@@ -19,4 +19,54 @@ class Waka extends CI_Controller
         $this->load->view('waka/index', $data);
         $this->load->view('template_waka/footer');
     }
+    public function guru()
+    {
+        $data['judul'] = 'Data Guru';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->view('template_waka/topbar', $data);
+        $this->load->view('template_waka/header', $data);
+        $this->load->view('template_waka/sidebar', $data);
+        $this->load->view('waka/guru', $data);
+        $this->load->view('template_waka/footer');
+    }
+    public function siswa()
+    {
+        $data['judul'] = 'Data Siswa';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->view('template_waka/topbar', $data);
+        $this->load->view('template_waka/header', $data);
+        $this->load->view('template_waka/sidebar', $data);
+        $this->load->view('waka/siswa', $data);
+        $this->load->view('template_waka/footer');
+    }
+    public function kelas()
+    {
+        $data['judul'] = 'Data Kelas';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->view('template_waka/topbar', $data);
+        $this->load->view('template_waka/header', $data);
+        $this->load->view('template_waka/sidebar', $data);
+        $this->load->view('waka/kelas', $data);
+        $this->load->view('template_waka/footer');
+    }
+    public function jadwal()
+    {
+        $data['judul'] = 'Penjadwalan';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->view('template_waka/topbar', $data);
+        $this->load->view('template_waka/header', $data);
+        $this->load->view('template_waka/sidebar', $data);
+        $this->load->view('waka/jadwal', $data);
+        $this->load->view('template_waka/footer');
+    }
+    public function administrasi()
+    {
+        $data['judul'] = 'Administrasi Guru';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->view('template_waka/topbar', $data);
+        $this->load->view('template_waka/header', $data);
+        $this->load->view('template_waka/sidebar', $data);
+        $this->load->view('waka/administrasi', $data);
+        $this->load->view('template_waka/footer');
+    }
 }

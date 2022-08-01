@@ -71,6 +71,11 @@
                       <span class="nav-text">Kelola Pengguna</span>
                   </a>
               </li>
+              <li><a href="<?= base_url('admin/absen') ?>" aria-expanded=" false">
+                      <i class="fas fa-fingerprint"></i>
+                      <span class="nav-text">Absensi Karyawan</span>
+                  </a>
+              </li>
               <li><a href="<?= base_url('admin/website') ?>" aria-expanded=" false">
                       <i class="fas fa-globe"></i>
                       <span class="nav-text">Kelola Website</span>

@@ -16,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Admin Dashboard</title>
+    <title><?= $judul ?></title>
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/') ?>images/favicon.png">
