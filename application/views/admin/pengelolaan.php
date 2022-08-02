@@ -114,24 +114,26 @@
                                             <td><?= $no ?></td>
                                             <td><?= $p['desc'] ?></td>
                                             <td>
-                                                <div class="d-flex">
-                                                    <button type="button"
-                                                        class="btn btn-primary shadow btn-xs sharp me-1 btn-edit" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#exampleModal"
-                                                        data-id="<?= $p['id'] ?>"
-                                                        data-type="jenispengeluaran"
-                                                        data-desc ="<?= $p['desc'] ?>"
-                                                        >
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                    </button>
-                                                    <a href="<?= base_url('admin/deletejeniskeuangan/jenispengeluaran/'.$p['id']) ?>"
-                                                        class="btn btn-danger shadow btn-xs sharp"
-                                                        onclick="return confirm('Are you sure you want to delete this data?');"
-                                                        >
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
-                                                </div>
+                                                <?php if($p['id'] != 1):?>
+                                                    <div class="d-flex">
+                                                        <button type="button"
+                                                            class="btn btn-primary shadow btn-xs sharp me-1 btn-edit" 
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#exampleModal"
+                                                            data-id="<?= $p['id'] ?>"
+                                                            data-type="jenispengeluaran"
+                                                            data-desc ="<?= $p['desc'] ?>"
+                                                            >
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                        </button>
+                                                        <a href="<?= base_url('admin/deletejeniskeuangan/jenispengeluaran/'.$p['id']) ?>"
+                                                            class="btn btn-danger shadow btn-xs sharp"
+                                                            onclick="return confirm('Are you sure you want to delete this data?');"
+                                                            >
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                    </div>
+                                                <?php endif ?>
                                             </td>
                                         </tr>
                                         <?php $no++; ?>

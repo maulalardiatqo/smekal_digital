@@ -33,7 +33,9 @@
                                     <select class="form-control" id="type" name="type">
                                         <option value="0">Please select</option>
                                         <?php foreach($jenis_pemasukan as $j) : ?>
-                                            <option value="<?= $j['id']?>"><?= $j['desc']?></option>
+                                            <?php if($j['id'] != 1): ?>
+                                                <option value="<?= $j['id']?>"><?= $j['desc']?></option>
+                                            <?php endif ?>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
