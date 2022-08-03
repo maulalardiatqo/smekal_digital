@@ -502,7 +502,7 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Rekap / Laporan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['rekap']=[];
+        $data['rekap'] = [];
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
@@ -750,23 +750,21 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Gaji Karyawan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-<<<<<<< HEAD
+
         $this->db->select('guru.*,rfgeneral.desc,pengeluaran.jumlah,pengeluaran.tanggal_pengeluaran');
         $this->db->from('guru');
         $this->db->join('rfgeneral', 'guru.jabatan = rfgeneral.id', 'left');
         $this->db->join('pengeluaran', 'guru.id = pengeluaran.id_guru', 'left');
         $data['guru'] = $this->db->get()->result_array();
         $data['jabatan'] = $this->db->get_where('rfgeneral', ['type' => 'jabatan'])->result_array();
-=======
         // $this->db->select('guru.*,rfgeneral.desc,pengeluaran.jumlah,pengeluaran.tanggal_pengeluaran');
         // $this->db->from('guru');
         // $this->db->join('rfgeneral', 'guru.jabatan = rfgeneral.id', 'left');
         // $this->db->join('pengeluaran', 'guru.id = pengeluaran.id_guru', 'left');
-        $query  ="SELECT G.*,RG.desc,P.jumlah,P.tanggal_pengeluaran,P.status_gaji FROM guru G LEFT JOIN rfgeneral RG ON RG.id = G.jabatan LEFT JOIN pengeluaran P ON P.id_guru = G.id AND MONTH(P.tanggal_pengeluaran) = MONTH(NOW())";
-    
+        $query  = "SELECT G.*,RG.desc,P.jumlah,P.tanggal_pengeluaran,P.status_gaji FROM guru G LEFT JOIN rfgeneral RG ON RG.id = G.jabatan LEFT JOIN pengeluaran P ON P.id_guru = G.id AND MONTH(P.tanggal_pengeluaran) = MONTH(NOW())";
+
         $data['guru'] = $this->db->query($query)->result_array();
-        $data['jabatan'] = $this->db->get_where('rfgeneral',['type'=>'jabatan'])->result_array();
->>>>>>> 15e0f3a6d55b2abbc5cbf58d9bd7dae9b2d53418
+        $data['jabatan'] = $this->db->get_where('rfgeneral', ['type' => 'jabatan'])->result_array();
 
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
