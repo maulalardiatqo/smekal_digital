@@ -23,6 +23,7 @@ class Waka extends CI_Controller
     {
         $data['judul'] = 'Data Guru';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['guru'] = $this->db->get('guru')->result_array();
         $this->load->view('template_waka/topbar', $data);
         $this->load->view('template_waka/header', $data);
         $this->load->view('template_waka/sidebar', $data);
@@ -33,6 +34,7 @@ class Waka extends CI_Controller
     {
         $data['judul'] = 'Data Siswa';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['siswa'] = $this->db->get('siswa')->result_array();
         $this->load->view('template_waka/topbar', $data);
         $this->load->view('template_waka/header', $data);
         $this->load->view('template_waka/sidebar', $data);

@@ -8,7 +8,11 @@ $(document).ready( function () {
         $('#desc').val(desc)
     }
     // function
-    
+    function setInputFormSPP({id,tahunmasuk,jumlah}){
+        $('#id_spp').val(id)
+        $('#tahun_masuk').val(tahunmasuk).change()
+        $('#jumlah').val(jumlah)
+    }
     // event listener
     $('.btn-add').click(function(){
         let data ={
@@ -27,6 +31,16 @@ $(document).ready( function () {
             desc : $(this).data('desc')
         }
         setInputForm(data)
+    });
+    $('.btn-edit-spp').click(function(){
+        
+        let data ={
+            id : $(this).data('id'),
+            tahunmasuk : $(this).data('tahunmasuk'),
+            jumlah : $(this).data('jumlah')
+        }
+        console.log(data)
+        setInputFormSPP(data)
     });
 
     $('#exampleModal').on('hidden.bs.modal', function () {

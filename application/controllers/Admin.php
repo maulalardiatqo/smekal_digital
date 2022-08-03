@@ -332,12 +332,28 @@ class Admin extends CI_Controller
         $data['jenispemasukan'] = $this->db->get('jenispemasukan')->result_array();
         $data['jenispengeluaran'] = $this->db->get('jenispengeluaran')->result_array();
         $data['js'] = 'pengelolaan';
+        $data['spp'] = $this->db->get('spp_master')->result_array();
+        $data['siswa'] = $this->db->get('siswa')->result_array();
 
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
         $this->load->view('admin/pengelolaan', $data);
         $this->load->view('template_admin/footer');
+    }
+    public function saveSPP()
+    {
+        $data = [
+            'id' => $this->input->post('id'),
+            'tahun_masuk' => $this->input->post('tahun_masuk'),
+            'jumlah' => $this->input->post('jumlah'),
+        ];
+
+        $save = $this->db->replace('spp_master', $data);
+        $this->session->set_flashdata('flash', 'Berhasil Save Data');
+        $this->session->set_flashdata('flashtype', 'success');
+
+        redirect('admin/pengelolaan');
     }
 
     public function savejeniskeuangan()

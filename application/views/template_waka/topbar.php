@@ -24,6 +24,8 @@
     <link href="<?= base_url('assets/') ?>vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('assets/') ?>vendor/nouislider/nouislider.min.css">
 
+    <!-- Datatable -->
+    <link href="<?= base_url('assets/') ?>vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- Style css -->
     <link href="<?= base_url('assets/') ?>css/style.css" rel="stylesheet">
 
