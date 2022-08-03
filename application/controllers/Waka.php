@@ -45,6 +45,11 @@ class Waka extends CI_Controller
     {
         $data['judul'] = 'Data Kelas';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['guru'] = $this->db->get('guru')->result_array();
+        $this->db->select('*');
+        $this->db->from('kelas');
+        $this->db->join('guru', 'guru.id = kelas.walas');
+        $data['kelas'] = $this->db->get()->result_array();
         $this->load->view('template_waka/topbar', $data);
         $this->load->view('template_waka/header', $data);
         $this->load->view('template_waka/sidebar', $data);
