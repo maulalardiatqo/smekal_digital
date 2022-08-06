@@ -3,6 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Kepsek extends CI_Controller
 {
+    public function __constructor()
+    {
+        parent::__construct();
+        cek_login('2');
+        $this->load->library('form_validation');
+    }
     public function index()
     {
         $data['judul'] = 'Dashboard';
