@@ -12,6 +12,10 @@
 					</div>
 					<ul class="navbar-nav header-right">
 						<li class="nav-item d-flex align-items-center">
+							<div class="nama" style="font-size:14px;">
+								<?= $user['nama'] ?>
+							</div>
+
 						</li>
 
 						<li class="nav-item dropdown  header-profile">
@@ -44,3 +48,4 @@
 	<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
+	<div id="flash-data" data-typealert="<?= $this->session->flashData('flashtype'); ?>" data-flashdata="<?= $this->session->flashData('flash'); ?>"></div>

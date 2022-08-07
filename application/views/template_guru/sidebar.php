@@ -9,6 +9,11 @@
                       <span class="nav-text">Dashboard</span>
                   </a>
               </li>
+              <li><a href="<?= base_url('guru/gaji') ?>" aria-expanded="false">
+                      <i class="fas fa-wallet"></i>
+                      <span class="nav-text">Gaji</span>
+                  </a>
+              </li>
               <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
                       <i class="fas fa-book"></i>
                       <span class="nav-text">Administrasi</span>
