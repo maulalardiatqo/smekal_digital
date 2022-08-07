@@ -62,30 +62,33 @@
                                     <select class="form-control" id="id_siswa" name="id_siswa">
                                         <option data-display="Select" value="null">Please select</option>
                                         <?php foreach($siswa as $s) : ?>
-                                            <option value="<?= $s['id']?>"><?= $s['nama']?></option>
+                                            <option value="<?= $s['id']?>" data-jumlahtagihan="<?php echo $s['jumlah']?>"><?= $s['nama']?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="mb-3 row">
-                                <label class="col-lg-2 col-form-label" for="gender">Guru
+                            <div class="mb-3 row d-none" id="container-tagihan">
+                                <label class="col-lg-2 col-form-label" for="jumlah">Tagihan
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
-                                    <select class="default-select wide form-control" id="id_guru" name="id_guru">
-                                        <option data-display="Select">Please select</option>
-                                        <?php foreach($guru as $s) : ?>
-                                            <option value="<?= $s['id']?>"><?= $s['nama']?></option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                    <input type="text" class="form-control" id="tagihan" name="tagihan" placeholder="Tagihan.." required="" readonly>
                                 </div>
-                            </div> -->
-                            <div class="mb-3 row">
-                                <label class="col-lg-2 col-form-label" for="jumlah">Amount
+                            </div>
+                            <div class="mb-3 row ">
+                                <label class="col-lg-2 col-form-label" for="jumlah">Bayar
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
                                     <input type="text" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah.." required="">
+                                </div>
+                            </div>
+                            <div class="mb-3 row d-none" id="container-kurang">
+                                <label class="col-lg-2 col-form-label" for="jumlah">Kurang
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="kurang" name="kurang" placeholder="kurang.." required="" readonly>
                                 </div>
                             </div>
                             <div class="mb-3 row">

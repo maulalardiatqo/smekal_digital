@@ -385,7 +385,11 @@ class Admin extends CI_Controller
         $data['judul'] = 'Pemasukan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['jenis_pemasukan'] = $this->db->get('jenispemasukan')->result_array();
-        $data['siswa'] = $this->db->get('siswa')->result_array();
+        $querySiswa = $this->db->select('siswa.*,spp_master.jumlah')
+        ->from('siswa')
+        ->join('spp_master', 'siswa.tahun_masuk = spp_master.tahun_masuk', 'left')->get()->result_array();
+        $data['siswa'] = $querySiswa;
+        
         $data['guru'] = $this->db->get('guru')->result_array();
         $data['js'] = 'uangmasuk';
         $this->db->select('pemasukan.*,jenispemasukan.desc');

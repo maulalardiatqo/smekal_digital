@@ -9,6 +9,18 @@ $(document).ready( function () {
         $('#id_siswa').val(idSiswa).change()
         document.getElementById('tanggal_pemasukan').valueAsDate = tanggalPemasukan;
     }
+
+    function calculateBill(){
+        let tagihan = $('#tagihan').val()
+        let bayar = $('#jumlah').val()
+        let kurang = Number(tagihan) - Number(bayar)
+        if(kurang > 0){
+            $('#kurang').val(kurang)
+            $('#container-kurang').removeClass('d-none')
+        }else{
+            $('#container-kurang').addClass('d-none')
+        }
+    }
     // function
     
     // event listener
@@ -17,10 +29,23 @@ $(document).ready( function () {
         
         if(value == 1){
             $('#input_id_siswa').removeClass('d-none');
+            $('#container-tagihan').removeClass('d-none');
+
         }else{
             $('#input_id_siswa').addClass('d-none');
+            $('#container-tagihan').addClass('d-none');
         }
     });
+
+    $('#id_siswa').change(function(){
+        var optionSelected = $("option:selected", this);
+        let jumlahTagihan =optionSelected.data('jumlahtagihan')
+        $('#tagihan').val(jumlahTagihan)
+    })
+
+    $('#jumlah').on('input',function(){
+        calculateBill()
+    })
 
     $('.btn-edit').click(function(){
         let tanggalPemasukan = new Date($(this).data('tanggalpemasukan'));
@@ -50,7 +75,6 @@ $(document).ready( function () {
     })
 
     $('#filter-pemasukan').change(function(){
-        console.log("TET")
         let value = $('#filter-pemasukan').val();
         console.log(value)
         let url=$('#base_url').val();
