@@ -3,11 +3,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Ppdb extends CI_Controller
 {
-    public function __constructor()
+    public function __construct()
     {
         parent::__construct();
         cek_login('6');
         $this->load->library('form_validation');
+        $this->load->model('siswaModel');
+        $this->load->helper('date');
     }
     public function index()
     {
