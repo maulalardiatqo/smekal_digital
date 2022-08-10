@@ -5,17 +5,21 @@ $(document).ready( function () {
         $('#id').val(id)
         $('#type').val(type).change()
         $('#keterangan').val(keterangan)
-        $('#jumlah').val(jumlah)
         $('#id_siswa').val(idSiswa).change()
+        $('#jumlah').val(jumlah).change()
         document.getElementById('tanggal_pemasukan').valueAsDate = tanggalPemasukan;
+        initDecimalInput()
     }
 
+    
+
     function calculateBill(){
-        let tagihan = $('#tagihan').val()
+        let tagihan = $('#tagihan').val().replaceAll(",","")
         let bayar = $('#jumlah').val()
         let kurang = Number(tagihan) - Number(bayar)
+        console.log("Kurang",kurang)
         if(kurang > 0){
-            kurang=formatNumber(Number(kurang))
+            kurang=formatNumber(kurang.toString())
             $('#kurang').val(kurang)
             $('#container-kurang').removeClass('d-none')
         }else{
@@ -41,10 +45,14 @@ $(document).ready( function () {
     $('#id_siswa').change(function(){
         var optionSelected = $("option:selected", this);
         let jumlahTagihan =optionSelected.data('jumlahtagihan')
-        $('#tagihan').val(jumlahTagihan)
+        $('#tagihan').val(formatNumber(jumlahTagihan.toString()))
     })
 
     $('#jumlah').on('input',function(){
+        calculateBill()
+    })
+    $('#jumlah').on('change',function(){
+        console.log("change")
         calculateBill()
     })
 
@@ -55,9 +63,10 @@ $(document).ready( function () {
             type : $(this).data('type'),
             keterangan : $(this).data('keterangan'),
             jumlah : $(this).data('jumlah'),
-            idSiswa : $(this).data('id_siswa'),
+            idSiswa : $(this).data('idsiswa'),
             tanggalPemasukan : tanggalPemasukan
         }
+        console.log("data",data)
         setInputForm(data)
     });
 

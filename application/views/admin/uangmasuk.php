@@ -156,6 +156,7 @@
                                                             data-bs-toggle="modal" 
                                                             data-bs-target="#exampleModal"
                                                             data-id="<?= $p['id'] ?>"
+                                                            data-idsiswa="<?= $p['id_siswa'] ?>"
                                                             data-type="<?= $p['type'] ?>"
                                                             data-jumlah="<?= $p['jumlah'] ?>"
                                                             data-tanggalpemasukan="<?= date("Y-m-d",strtotime($p['tanggal_pemasukan'])) ?>"
