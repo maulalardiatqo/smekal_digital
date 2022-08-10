@@ -32,6 +32,9 @@
                                     <select class="form-control" id="type" name="type">
                                         <option value="0">Please select</option>
                                         <?php foreach($jenis_pemasukan as $j) : ?>
+                                            <?php if($j['id'] == 1): ?>
+                                                <option value="<?= $j['id']?>" disabled><?= $j['desc']?></option>
+                                            <?php endif ?>
                                             <?php if($j['id'] != 1): ?>
                                                 <option value="<?= $j['id']?>"><?= $j['desc']?></option>
                                             <?php endif ?>
@@ -57,7 +60,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah.." required="">
+                                    <input type="text" class="form-control decimal-input" id="jumlah" name="jumlah" placeholder="Jumlah.." required="">
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -114,7 +117,7 @@
                                             <tr>
                                                 <td><?= $no ?></td>
                                                 <td><?= $p['desc'] ?></td>
-                                                <td><?= $p['jumlah'] ?></td>
+                                                <td><?= number_format($p['jumlah'],2,'.',',') ?></td>
                                                 <td><?= date("d/m/Y",strtotime($p['tanggal_pengeluaran'])) ?></td>
                                                 <td><?= $p['keterangan'] ?></td>
                                                 <td>

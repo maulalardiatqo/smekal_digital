@@ -453,6 +453,8 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/sidebar', $data);
         $this->load->view('admin/uangkeluar', $data);
         $this->load->view('template_admin/footer');
+        $this->load->view('template_admin/number_format');
+
     }
 
     public function savepengeluaran()
