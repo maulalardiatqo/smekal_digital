@@ -72,7 +72,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="tagihan" name="tagihan" placeholder="Tagihan.." required="" readonly>
+                                    <input type="text" class="form-control decimal-input" id="tagihan" name="tagihan" placeholder="Tagihan.." required="" readonly>
                                 </div>
                             </div>
                             <div class="mb-3 row ">
@@ -80,7 +80,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah.." required="">
+                                    <input type="text" class="form-control decimal-input" id="jumlah" name="jumlah" placeholder="Jumlah.." required="">
                                 </div>
                             </div>
                             <div class="mb-3 row d-none" id="container-kurang">
@@ -88,7 +88,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="kurang" name="kurang" placeholder="kurang.." required="" readonly>
+                                    <input type="text" class="form-control decimal-input" id="kurang" name="kurang" placeholder="kurang.." required="" readonly>
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -145,7 +145,7 @@
                                             <tr>
                                                 <td><?= $no ?></td>
                                                 <td><?= $p['type'] == 'lainya' ? 'Lainya' : $p['desc'] ?></td>
-                                                <td><?= $p['jumlah'] ?></td>
+                                                <td class="decimal-input"><?= number_format($p['jumlah'],2,'.',',')  ?></td>
                                                 <td><?= date("d/m/Y",strtotime($p['tanggal_pemasukan'])) ?></td>
                                                 <td><?= $p['keterangan'] ?></td>
                                                 <td>

@@ -15,6 +15,7 @@ $(document).ready( function () {
         let bayar = $('#jumlah').val()
         let kurang = Number(tagihan) - Number(bayar)
         if(kurang > 0){
+            kurang=formatNumber(Number(kurang))
             $('#kurang').val(kurang)
             $('#container-kurang').removeClass('d-none')
         }else{
