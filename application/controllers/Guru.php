@@ -6,7 +6,7 @@ class Guru extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        cek_login('1');
+        cek_login('4');
         $this->load->library('form_validation');
         $this->load->model('siswaModel');
         $this->load->helper('date');
