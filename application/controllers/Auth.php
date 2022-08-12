@@ -76,6 +76,8 @@ class Auth extends CI_Controller
                         redirect('guru');
                     } elseif ($user['role_id'] == 6) {
                         redirect('ppdb');
+                    }elseif ($user['role_id'] == 7) {
+                        redirect('piket');
                     } else {
                         redirect('siswa');
                     }

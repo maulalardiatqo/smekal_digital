@@ -19,6 +19,8 @@ function cek_login($rol_id)
             redirect('siswa');
         } elseif ($ci->session->userdata('role_id') == '6') {
             redirect('ppdb');
+        }elseif ($ci->session->userdata('role_id') == '7') {
+            redirect('piket');
         }
     }
 }

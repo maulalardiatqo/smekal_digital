@@ -19,6 +19,7 @@
                                         <th>Username</th>
                                         <th>User Role</th>
                                         <th>Date Crate</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,6 +41,10 @@
                                                     echo "Siswa";
                                                 } ?></td>
                                             <td><?= $p['date_create'] ?></td>
+                                            <td><div class="d-flex">
+                                                        <a href="<?= base_url('admin/editUser/') . $p['id'] ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                    </div>
+                                                </td>
                                         </tr>
                                         <?php $no++; ?>
                                     <?php endforeach; ?>

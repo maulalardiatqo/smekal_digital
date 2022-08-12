@@ -25,6 +25,17 @@ class Admin extends CI_Controller
         $this->load->view('admin/index', $data);
         $this->load->view('template_admin/footer');
     }
+    public function editUser($id)
+    {
+        $data['judul'] = 'Edit User';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['userS'] = $this->db->get_where('user', ['id' => $id])->result_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/editUser', $data);
+        $this->load->view('template_admin/footer');
+    }
     public function lainya()
     {
         $data['judul'] = 'Kelola Pengguna';
