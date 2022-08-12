@@ -82,13 +82,13 @@
     ***********************************-->
 <!-- Required vendors -->
 <script src="<?= base_url('assets/') ?>vendor/global/global.min.js"></script>
-<script src="<?= base_url('assets/') ?>vendor/chart.js/Chart.bundle.min.js"></script>
+<!-- <script src="<?= base_url('assets/') ?>vendor/chart.js/Chart.bundle.min.js"></script> -->
 <script src="<?= base_url('assets/') ?>vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 
 <!-- Apex Chart -->
-<script src="<?= base_url('assets/') ?>vendor/apexchart/apexchart.js"></script>
+<!-- <script src="<?= base_url('assets/') ?>vendor/apexchart/apexchart.js"></script>
 
-<script src="<?= base_url('assets/') ?>vendor/chart.js/Chart.bundle.min.js"></script>
+<script src="<?= base_url('assets/') ?>vendor/chart.js/Chart.bundle.min.js"></script> -->
 
 <!-- Datatable -->
 <script src="<?= base_url('assets/') ?>vendor/datatables/js/jquery.dataTables.min.js"></script>
@@ -98,7 +98,7 @@
 <!-- Chart piety plugin files -->
 <script src="<?= base_url('assets/') ?>vendor/peity/jquery.peity.min.js"></script>
 <!-- Dashboard 1 -->
-<script src="<?= base_url('assets/') ?>js/dashboard/dashboard-1.js"></script>
+<!-- <script src="<?= base_url('assets/') ?>js/dashboard/dashboard-1.js"></script> -->
 
 <script src="<?= base_url('assets/') ?>vendor/owl-carousel/owl.carousel.js"></script>
 
