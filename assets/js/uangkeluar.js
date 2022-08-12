@@ -5,9 +5,10 @@ $(document).ready( function () {
         $('#id').val(id)
         $('#type').val(type).change()
         $('#keterangan').val(keterangan)
-        $('#jumlah').val(jumlah)
+        $('#jumlah').val(formatNumber(jumlah.toString()))
         $('#id_siswa').val(idSiswa).change()
         document.getElementById('tanggal_pengeluaran').valueAsDate = tanggalPengeluaran;
+        initDecimalInput()
     }
     // function
     
@@ -33,6 +34,7 @@ $(document).ready( function () {
             tanggalPengeluaran : tanggalPengeluaran
         }
         setInputForm(data)
+        console.log("Edit",data)
     });
 
     $('#exampleModal').on('hidden.bs.modal', function () {

@@ -32,8 +32,8 @@
                                                 <td><?= $p['nama'] ?></td>
                                                 <td><?= $p['desc'] ?></td>
                                                 <td><?= $p['jam_kerja'] ?></td>
-                                                <td><?= $p['salary_per_hour'] ?></td>
-                                                <td><?= ($p['jam_kerja'] * $p['salary_per_hour']) ?></td>
+                                                <td><?= number_format($p['salary_per_hour'],2,'.',',') ?></td>
+                                                <td><?= number_format(($p['jam_kerja'] * $p['salary_per_hour']),2,'.',',') ?></td>
                                                 <td>
                                                     <div class="d-flex">
                                                         <a href="<?= base_url('admin/editGuru/') . $p['kode'] ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
