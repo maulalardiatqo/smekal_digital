@@ -15,6 +15,7 @@
                   </a>
                   <ul aria-expanded="false">
                       <li><a href="<?= base_url('admin/pengelolaan') ?>">Pengelolaan</a></li>
+                      <li><a href="<?= base_url('admin/tagihan') ?>">Tagihan</a></li>
                       <li><a href="<?= base_url('admin/uangmasuk') ?>">Pemasukan</a>
                       </li>
                       <li><a class="" href="<?= base_url('admin/uangkeluar') ?>">Pengeluaran</a>

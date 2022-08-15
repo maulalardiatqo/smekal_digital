@@ -447,6 +447,148 @@ class Admin extends CI_Controller
         redirect('admin/uangmasuk');
     }
 
+    // Tagihan
+
+    public function tagihan()
+    {
+        $data['judul'] = 'Pemasukan';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        
+        $data['tagihan'] = $this->db->get('tagihan')->result_array();
+        $data['js'] = 'tagihan';
+        // $this->db->select('pemasukan.*,jenispemasukan.desc');
+        // $this->db->from('pemasukan');
+        // $this->db->join('jenispemasukan', 'pemasukan.type = jenispemasukan.id', 'left');
+        // if ($jenispemasukan) {
+        //     if ($jenispemasukan == 'all') {
+        //         $this->db->where('pemasukan.type !=', 'lainya');
+        //     } else {
+        //         $this->db->where('pemasukan.type', $jenispemasukan);
+        //     }
+        // }
+        // $data['pemasukan'] = $query = $this->db->get()->result_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/tagihan', $data);
+        $this->load->view('template_admin/footer');
+        $this->load->view('template_admin/number_format');
+    }
+
+    public function savetagihan()
+    {
+        $data = [
+            'id' => $this->input->post('id'),
+            'title' => $this->input->post('title'),
+            'jumlah' => $this->input->post('jumlah'),
+            'tanggal_input' => $this->input->post('tanggal_input'),
+            'tanggal_tenggang' => $this->input->post('tanggal_tenggang'),
+            'desc' => $this->input->post('desc')
+        ];
+        $save = $this->db->replace('tagihan', $data);
+        $insert_id = $this->db->insert_id();
+        $this->session->set_flashdata('flash', 'Berhasil Save Data');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/tagihandetail/'.$insert_id);
+    }
+
+    public function savetagihandetail()
+    {
+        $siswaChecked =$this->input->post();
+        // query delete All Tagihan Detail that does not have value on Bayar Field
+        $this->db->delete('tagihan_detail', ['id_tagihan' => $this->input->post('id_tagihan'),'bayar'=>null]);
+        // Insert Tagihan Detail
+        foreach($siswaChecked as $key => $siswa){
+             $dataInsert=array(
+                "id_tagihan" => $this->input->post('id_tagihan'),
+                "to" => $key
+             );
+             if($key != "id_tagihan"){
+                $isAlreadyExist = $this->db->get_where('tagihan_detail',['to'=>$dataInsert['to'],'id_tagihan'=>$this->input->post('id_tagihan')])->num_rows();
+                if($isAlreadyExist == 0){
+                    $this->db->insert('tagihan_detail',$dataInsert);
+                }
+             }
+        }
+        redirect('admin/tagihandetail/'.$this->input->post('id_tagihan'));
+    }
+    
+    public function bayartagihan(){
+        $id=$this->input->post('id');
+        $data = [
+            "bayar" => $this->input->post('bayar') + $this->input->post('sudahdibayar'),
+            "status" => $this->input->post('kurang') > 0 ? 0 : 1,
+            "tanggal_bayar" => date()
+        ];
+        $this->db->update('tagihan_detail', $data, ['id' => $id]);
+        $this->session->set_flashdata('flash', 'Update Berhasil');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/tagihandetail/'.$this->input->post('id_tagihan'));
+    }
+
+    public function tagihandetail($id){
+        $data['judul'] = 'Tagihan Detail';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['tagihan_detail'] = $this->db->get_where('tagihan_detail',array('id_tagihan' => $id))->result_array();
+        $data['tagihan'] = $this->db->get_where('tagihan',array('id' => $id))->row_array();
+        $dataSiswa =[];
+        $querySiswa= $this->db->get('siswa')->result_array();
+        foreach($querySiswa as $qs){
+            if($dataSiswa > 0){
+                $cek =0;
+                $index=null;
+                foreach($dataSiswa as $key => $ds){
+                    if($ds['kelas'] == $qs['kelas']){
+                        $cek ++;
+                        $index =$key;
+                    }
+                }   
+
+                if($cek > 0){
+                    array_push($dataSiswa[$index]['detail'],[
+                        "id" => $qs['id'],
+                        "nama" => $qs['nama']
+                    ]);
+                }else{
+                    array_push($dataSiswa,array(
+                        "kelas"=>$qs['kelas'],
+                        "detail"=>[[
+                            "id"=> $qs['id'],
+                            "nama" => $qs['nama']
+                        ]]
+                    ));
+                }
+            }else{
+                array_push($dataSiswa,array(
+                    "kelas"=>$qs['kelas'],
+                    "detail"=>[[
+                        "id"=> $qs['id'],
+                        "nama" => $qs['nama']
+                    ]]
+                ));
+            }
+        }
+
+        $data['siswa'] = $dataSiswa;
+        $data['js'] = 'tagihan_detail';
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/tagihan_detail', $data);
+        $this->load->view('template_admin/footer');
+        $this->load->view('template_admin/number_format');
+    }
+
+    public function deletetagihan($id)
+    {
+        $this->db->delete('tagihan', ['id' => $id]);
+        $this->db->delete('tagihan_detail', ['id_tagihan' => $id]);
+        $this->session->set_flashdata('flash', 'Berhasil Delete Data');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/tagihan');
+    }
+    // Tagihan End
+
     public function uangkeluar()
     {
         $data['judul'] = 'Pengeluaran';
