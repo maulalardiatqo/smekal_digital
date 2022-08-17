@@ -507,6 +507,7 @@ class Admin extends CI_Controller
                 $isAlreadyExist = $this->db->get_where('tagihan_detail',['to'=>$dataInsert['to'],'id_tagihan'=>$this->input->post('id_tagihan')])->num_rows();
                 if($isAlreadyExist == 0){
                     $this->db->insert('tagihan_detail',$dataInsert);
+                    // Insert to pemasukan
                 }
              }
         }
