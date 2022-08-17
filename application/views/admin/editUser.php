@@ -5,6 +5,19 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
+                    <h4 class="card-title">Reset Password</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-validation">
+                        <?php foreach ($userS as $s) : ?>
+                            <form class="needs-validation" novalidate="" action="<?= base_url('admin/resetPassword/' . $s['id']) ?>" method="POST">
+                                <button type="submit" class="btn btn-success">Reset Password</button>
+                                <span>Jika menekan tombol ini password akan di reset menjadi : <b style="color:aliceblue;">Smekal123</b></span>
+                            </form>
+                        <?php endforeach ?>
+                    </div>
+                </div>
+                <div class="card-header">
                     <h4 class="card-title">Edit User</h4>
                 </div>
                 <div class="card-body">
@@ -31,15 +44,6 @@
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
-
-                                        <div class="mb-3 row">
-                                            <label class="col-lg-4 col-form-label" for="nama_ibu">Password
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="nama_ibu" name="nama_ibu" value="<?= $s['password'] ?>" required="">
-                                            </div>
-                                        </div>
                                         <div class="mb-3 row">
                                             <label class="col-lg-4 col-form-label" for="gender">Role Login
                                                 <span class="text-danger">*</span>

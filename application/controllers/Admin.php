@@ -25,6 +25,15 @@ class Admin extends CI_Controller
         $this->load->view('admin/index', $data);
         $this->load->view('template_admin/footer');
     }
+    public function resetPassword($id)
+    {
+        $this->db->set('password', password_hash('Smekal123', PASSWORD_DEFAULT));
+        $this->db->where('id', $id);
+        $this->db->update('user');
+        $this->session->set_flashdata('flash', 'Password berhasil di reset');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/pengguna');
+    }
     public function editUser($id)
     {
         $data['judul'] = 'Edit User';
@@ -398,10 +407,10 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['jenis_pemasukan'] = $this->db->get('jenispemasukan')->result_array();
         $querySiswa = $this->db->select('siswa.*,spp_master.jumlah')
-        ->from('siswa')
-        ->join('spp_master', 'siswa.tahun_masuk = spp_master.tahun_masuk', 'left')->get()->result_array();
+            ->from('siswa')
+            ->join('spp_master', 'siswa.tahun_masuk = spp_master.tahun_masuk', 'left')->get()->result_array();
         $data['siswa'] = $querySiswa;
-        
+
         $data['guru'] = $this->db->get('guru')->result_array();
         $data['js'] = 'uangmasuk';
         $this->db->select('pemasukan.*,jenispemasukan.desc');
@@ -453,7 +462,7 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Pemasukan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        
+
         $data['tagihan'] = $this->db->get('tagihan')->result_array();
         $data['js'] = 'tagihan';
         // $this->db->select('pemasukan.*,jenispemasukan.desc');
@@ -489,17 +498,17 @@ class Admin extends CI_Controller
         $insert_id = $this->db->insert_id();
         $this->session->set_flashdata('flash', 'Berhasil Save Data');
         $this->session->set_flashdata('flashtype', 'success');
-        redirect('admin/tagihandetail/'.$insert_id);
+        redirect('admin/tagihandetail/' . $insert_id);
     }
 
     public function savetagihandetail()
     {
-        $siswaChecked =$this->input->post();
+        $siswaChecked = $this->input->post();
         // query delete All Tagihan Detail that does not have value on Bayar Field
-        $this->db->delete('tagihan_detail', ['id_tagihan' => $this->input->post('id_tagihan'),'bayar'=>null]);
+        $this->db->delete('tagihan_detail', ['id_tagihan' => $this->input->post('id_tagihan'), 'bayar' => null]);
         // Insert Tagihan Detail
-        foreach($siswaChecked as $key => $siswa){
-             $dataInsert=array(
+        foreach ($siswaChecked as $key => $siswa) {
+            $dataInsert = array(
                 "id_tagihan" => $this->input->post('id_tagihan'),
                 "to" => $key
              );
@@ -507,15 +516,15 @@ class Admin extends CI_Controller
                 $isAlreadyExist = $this->db->get_where('tagihan_detail',['to'=>$dataInsert['to'],'id_tagihan'=>$this->input->post('id_tagihan')])->num_rows();
                 if($isAlreadyExist == 0){
                     $this->db->insert('tagihan_detail',$dataInsert);
-                    // Insert to pemasukan
                 }
-             }
+            }
         }
-        redirect('admin/tagihandetail/'.$this->input->post('id_tagihan'));
+        redirect('admin/tagihandetail/' . $this->input->post('id_tagihan'));
     }
-    
-    public function bayartagihan(){
-        $id=$this->input->post('id');
+
+    public function bayartagihan()
+    {
+        $id = $this->input->post('id');
         $data = [
             "bayar" => $this->input->post('bayar') + $this->input->post('sudahdibayar'),
             "status" => $this->input->post('kurang') > 0 ? 0 : 1,
@@ -524,46 +533,47 @@ class Admin extends CI_Controller
         $this->db->update('tagihan_detail', $data, ['id' => $id]);
         $this->session->set_flashdata('flash', 'Update Berhasil');
         $this->session->set_flashdata('flashtype', 'success');
-        redirect('admin/tagihandetail/'.$this->input->post('id_tagihan'));
+        redirect('admin/tagihandetail/' . $this->input->post('id_tagihan'));
     }
 
-    public function tagihandetail($id){
+    public function tagihandetail($id)
+    {
         $data['judul'] = 'Tagihan Detail';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['tagihan_detail'] = $this->db->get_where('tagihan_detail',array('id_tagihan' => $id))->result_array();
-        $data['tagihan'] = $this->db->get_where('tagihan',array('id' => $id))->row_array();
-        $dataSiswa =[];
-        $querySiswa= $this->db->get('siswa')->result_array();
-        foreach($querySiswa as $qs){
-            if($dataSiswa > 0){
-                $cek =0;
-                $index=null;
-                foreach($dataSiswa as $key => $ds){
-                    if($ds['kelas'] == $qs['kelas']){
-                        $cek ++;
-                        $index =$key;
+        $data['tagihan_detail'] = $this->db->get_where('tagihan_detail', array('id_tagihan' => $id))->result_array();
+        $data['tagihan'] = $this->db->get_where('tagihan', array('id' => $id))->row_array();
+        $dataSiswa = [];
+        $querySiswa = $this->db->get('siswa')->result_array();
+        foreach ($querySiswa as $qs) {
+            if ($dataSiswa > 0) {
+                $cek = 0;
+                $index = null;
+                foreach ($dataSiswa as $key => $ds) {
+                    if ($ds['kelas'] == $qs['kelas']) {
+                        $cek++;
+                        $index = $key;
                     }
-                }   
+                }
 
-                if($cek > 0){
-                    array_push($dataSiswa[$index]['detail'],[
+                if ($cek > 0) {
+                    array_push($dataSiswa[$index]['detail'], [
                         "id" => $qs['id'],
                         "nama" => $qs['nama']
                     ]);
-                }else{
-                    array_push($dataSiswa,array(
-                        "kelas"=>$qs['kelas'],
-                        "detail"=>[[
-                            "id"=> $qs['id'],
+                } else {
+                    array_push($dataSiswa, array(
+                        "kelas" => $qs['kelas'],
+                        "detail" => [[
+                            "id" => $qs['id'],
                             "nama" => $qs['nama']
                         ]]
                     ));
                 }
-            }else{
-                array_push($dataSiswa,array(
-                    "kelas"=>$qs['kelas'],
-                    "detail"=>[[
-                        "id"=> $qs['id'],
+            } else {
+                array_push($dataSiswa, array(
+                    "kelas" => $qs['kelas'],
+                    "detail" => [[
+                        "id" => $qs['id'],
                         "nama" => $qs['nama']
                     ]]
                 ));
@@ -608,7 +618,6 @@ class Admin extends CI_Controller
         $this->load->view('admin/uangkeluar', $data);
         $this->load->view('template_admin/footer');
         $this->load->view('template_admin/number_format');
-
     }
 
     public function savepengeluaran()
