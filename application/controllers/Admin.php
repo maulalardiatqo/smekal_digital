@@ -150,7 +150,7 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Siswa';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['siswa'] = $this->db->get('siswa')->result_array();
+        $data['siswa'] = $this->db->get_where('siswa', ['is_active' => 1])->result_array();
         $data['kelas'] = $this->db->get('kelas')->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
@@ -170,7 +170,8 @@ class Admin extends CI_Controller
             'nama_ibu' => $this->input->post('nama_ibu'),
             'kelas' => $this->input->post('kelas'),
             'kontak' => $this->input->post('kontak'),
-            'tahun_masuk' => $this->input->post('tahun_masuk')
+            'tahun_masuk' => $this->input->post('tahun_masuk'),
+            'is_active' => 1,
         ];
         $password = password_hash($data['nis'], PASSWORD_DEFAULT);
         $cek = $this->input->post('nis');
@@ -345,6 +346,27 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('flashtype', 'success');
             redirect('admin/siswa');
         }
+    }
+    public function naik()
+    {
+        if (isset($_POST['naik'])) {
+            if ($this->input->post('checkAll') == null || $this->input->post('check') == null) {
+                $this->session->set_flashdata('flash', 'Anda Belum Memilih Data');
+                $this->session->set_flashdata('flashtype', 'info');
+                redirect('admin/siswa');
+            }
+        }
+    }
+    public function alumni()
+    {
+        $data['judul'] = 'Alumni';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['alumni'] = $this->db->get_where('siswa', ['is_active' => 0])->result_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/alumni', $data);
+        $this->load->view('template_admin/footer');
     }
     public function pengelolaan()
     {

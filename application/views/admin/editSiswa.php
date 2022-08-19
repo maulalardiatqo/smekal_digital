@@ -50,10 +50,10 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <select class="default-select wide form-control" id="gender" name="gender">
+                                                <select class="default-select wide form-control" id="gender" name="gender" value="<?= $s['gender'] ?>">
                                                     <option data-display="Select">Please select</option>
-                                                    <option value="1">Laki - Laki</option>
-                                                    <option value="2">Perempuan</option>
+                                                    <option value="1" <?= $s['gender'] == '1' ? 'selected' : '' ?>>Laki - Laki</option>
+                                                    <option value="2" <?= $s['gender'] == '2' ? 'selected' : '' ?>>Perempuan</option>
                                                 </select>
                                             </div>
                                         </div>

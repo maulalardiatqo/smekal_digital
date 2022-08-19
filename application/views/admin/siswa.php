@@ -2,10 +2,17 @@
     <div class="container-fluid">
 
         <div class="row page-titles">
-            <ol class="breadcrumb">
-                <a href="<?= base_url('assets/template/template_siswa.xlsx') ?>" download="" type="button" class="btn light btn-dark"><i class="fas fa-download"></i> Unduh Template Siswa</a>
-                <button type="button" class="btn light btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-upload"></i> Upload Template Siswa</button>
-            </ol>
+            <div class="d-flex justify-content-between">
+                <div class="template">
+                    <ol class="breadcrumb">
+                        <a href="<?= base_url('assets/template/template_siswa.xlsx') ?>" download="" type="button" class="btn light btn-dark"><i class="fas fa-download"></i> Unduh Template Siswa</a>
+                        <button type="button" class="btn light btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-upload"></i> Upload Template Siswa</button>
+                    </ol>
+                </div>
+                <div class="button">
+                    <a class="btn btn-info" href="<?= base_url('admin/alumni') ?>">Data Alumni</a>
+                </div>
+            </div>
         </div>
         <!-- row -->
         <div class="col-lg-12">
@@ -117,55 +124,78 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Daftar Siswa</h4>
+                            <div class="row">
+                                <div class="d-flex justify-content-between">
+                                    <div class="judul">
+                                        <h4 class="card-title">Daftar Siswa</h4>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="example" class="display" style="min-width: 845px">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>NIS</th>
-                                            <th>NISN</th>
-                                            <th>Alamat</th>
-                                            <th>Gender</th>
-                                            <th>Kelas</th>
-                                            <th>Kontak</th>
-                                            <th>Tahun Masuk</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $no = 1; ?>
-                                        <?php foreach ($siswa as $p) : ?>
+                                <form action="<?= base_url('admin/naik'); ?>" method="POST">
+                                    <table id="example" class="display" style="min-width: 845px">
+                                        <thead>
                                             <tr>
-                                                <td><?= $no ?></td>
-                                                <td><?= $p['nama'] ?></td>
-                                                <td><?= $p['nis'] ?></td>
-                                                <td><?= $p['nisn'] ?></td>
-                                                <td><?= $p['alamat'] ?></td>
-                                                <td><?php if ($p['gender'] == 1) {
-                                                        echo 'Laki-Laki';
-                                                    } else {
-                                                        echo 'Perempuan';
-                                                    }
-
-                                                    ?></td>
-                                                <td><?= $p['kelas'] ?></td>
-                                                <td><?= $p['kontak'] ?></td>
-                                                <td><?= $p['tahun_masuk'] ?></td>
-                                                <td>
-                                                    <div class="d-flex">
-                                                        <a href="<?= base_url('admin/editSiswa/') . $p['nis'] ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                                        <a href="<?= base_url('admin/hapusSiswa/') . $p['nis'] ?>" class="btn btn-danger shadow btn-xs sharp tombol-hapus"><i class="fa fa-trash"></i></a>
+                                                <th>
+                                                    <div class="form-check custom-checkbox ms-2">
+                                                        <input type="checkbox" class="form-check-input" name="checkAll" id="checkAll">
+                                                        <label class="form-check-label" for="checkAll"></label>
                                                     </div>
-                                                </td>
+                                                </th>
+                                                <th>No</th>
+                                                <th>Nama</th>
+                                                <th>NIS</th>
+                                                <th>NISN</th>
+                                                <th>Alamat</th>
+                                                <th>Gender</th>
+                                                <th>Kelas</th>
+                                                <th>Kontak</th>
+                                                <th>Tahun Masuk</th>
+                                                <th>Action</th>
                                             </tr>
-                                            <?php $no++; ?>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            <?php $no = 1; ?>
+                                            <?php foreach ($siswa as $p) : ?>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check custom-checkbox ms-2">
+                                                            <input type="checkbox" class="form-check-input" id="check" name="check">
+                                                            <label class="form-check-label" for="customCheckBox2"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td><?= $no ?></td>
+                                                    <td><?= $p['nama'] ?></td>
+                                                    <td><?= $p['nis'] ?></td>
+                                                    <td><?= $p['nisn'] ?></td>
+                                                    <td><?= $p['alamat'] ?></td>
+                                                    <td><?php if ($p['gender'] == 1) {
+                                                            echo 'Laki-Laki';
+                                                        } else {
+                                                            echo 'Perempuan';
+                                                        }
+
+                                                        ?></td>
+                                                    <td><?= $p['kelas'] ?></td>
+                                                    <td><?= $p['kontak'] ?></td>
+                                                    <td><?= $p['tahun_masuk'] ?></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="<?= base_url('admin/editSiswa/') . $p['nis'] ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                            <a href="<?= base_url('admin/hapusSiswa/') . $p['nis'] ?>" class="btn btn-danger shadow btn-xs sharp tombol-hapus"><i class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <?php $no++; ?>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                    <div class="btn">
+                                        <button type="submit" name="naik" class="btn btn-success">Naikan Kelas</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
