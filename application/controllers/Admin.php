@@ -150,9 +150,10 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Siswa';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $this->db->select('*');
+        $this->db->select('siswa.*,kelas.tingkat,kelas.prodi,kelas.rombel');
         $this->db->from('siswa');
         $this->db->join('kelas', 'siswa.kelas = kelas.id');
+        $this->db->where('siswa.is_active = 1');
         $data['siswa'] = $this->db->get()->result_array();
         $data['kelas'] = $this->db->get('kelas')->result_array();
         $this->load->view('template_admin/topbar', $data);
@@ -352,13 +353,18 @@ class Admin extends CI_Controller
     }
     public function naik()
     {
-        if (isset($_POST['naik'])) {
-            if ($this->input->post('checkAll') == null || $this->input->post('check') == null) {
-                $this->session->set_flashdata('flash', 'Anda Belum Memilih Data');
-                $this->session->set_flashdata('flashtype', 'info');
-                redirect('admin/siswa');
+        // var_dump($_POST);die;
+        $to= $this->input->post('to');
+        $inputan = $_POST;
+        foreach ($inputan as $key => $siswa) {
+            if ($key != "to" || $key != "example_length" || $key != "naik") {
+                $this->db->where('id',$key);
+                $this->db->update('siswa',['kelas'=>$to]);
             }
         }
+        $this->session->set_flashdata('flash', 'Berhasil Update Data');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/siswa');
     }
     public function alumni()
     {
