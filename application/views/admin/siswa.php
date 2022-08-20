@@ -162,7 +162,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="form-check custom-checkbox ms-2">
-                                                            <input type="checkbox" class="form-check-input" id="check" name="check">
+                                                            <input type="checkbox" name="<?= $p['id'] ?>" class="form-check-input" id="check" name="check">
                                                             <label class="form-check-label" for="customCheckBox2"></label>
                                                         </div>
                                                     </td>
@@ -198,7 +198,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="col-lg-4">
-                                                <select class=" default-select wide form-control" id="gender" name="gender">
+                                                <select class=" default-select wide form-control" id="to" name="to">
                                                     <option data-display="Select">Please select</option>
                                                     <?php foreach ($kelas as $k) : ?>
                                                         <option value="<?= $k['id']; ?>"><?= $k['tingkat'] ?> <?= $k['prodi'] ?> <?= $k['rombel'] ?></option>
