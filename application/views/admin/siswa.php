@@ -178,7 +178,7 @@
                                                         }
 
                                                         ?></td>
-                                                    <td><?= $p['kelas'] ?></td>
+                                                    <td><?= $p['tingkat'] ?> <?= $p['prodi'] ?> <?= $p['rombel'] ?></td>
                                                     <td><?= $p['kontak'] ?></td>
                                                     <td><?= $p['tahun_masuk'] ?></td>
                                                     <td>
@@ -192,8 +192,24 @@
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
-                                    <div class="btn">
-                                        <button type="submit" name="naik" class="btn btn-success">Naikan Kelas</button>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4>Form Naik Kelas</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="col-lg-4">
+                                                <select class=" default-select wide form-control" id="gender" name="gender">
+                                                    <option data-display="Select">Please select</option>
+                                                    <?php foreach ($kelas as $k) : ?>
+                                                        <option value="<?= $k['id']; ?>"><?= $k['tingkat'] ?> <?= $k['prodi'] ?> <?= $k['rombel'] ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="btn">
+                                                <button type="submit" name="naik" class="btn btn-success">Naikan Kelas</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>

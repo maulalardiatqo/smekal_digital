@@ -150,7 +150,10 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Siswa';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['siswa'] = $this->db->get_where('siswa', ['is_active' => 1])->result_array();
+        $this->db->select('*');
+        $this->db->from('siswa');
+        $this->db->join('kelas', 'siswa.kelas = kelas.id');
+        $data['siswa'] = $this->db->get()->result_array();
         $data['kelas'] = $this->db->get('kelas')->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
@@ -533,11 +536,11 @@ class Admin extends CI_Controller
             $dataInsert = array(
                 "id_tagihan" => $this->input->post('id_tagihan'),
                 "to" => $key
-             );
-             if($key != "id_tagihan"){
-                $isAlreadyExist = $this->db->get_where('tagihan_detail',['to'=>$dataInsert['to'],'id_tagihan'=>$this->input->post('id_tagihan')])->num_rows();
-                if($isAlreadyExist == 0){
-                    $this->db->insert('tagihan_detail',$dataInsert);
+            );
+            if ($key != "id_tagihan") {
+                $isAlreadyExist = $this->db->get_where('tagihan_detail', ['to' => $dataInsert['to'], 'id_tagihan' => $this->input->post('id_tagihan')])->num_rows();
+                if ($isAlreadyExist == 0) {
+                    $this->db->insert('tagihan_detail', $dataInsert);
                 }
             }
         }

@@ -38,9 +38,9 @@ class Kepsek extends CI_Controller
         $data['judul'] = 'PPDB';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['calon'] = $this->db->get('casis')->num_rows();
-        $data['du'] = $this->db->get_where('casis', ['status' => 'DU'])->num_rows();
-        $data['cancel'] = $this->db->get_where('casis', ['status' => 'Cancel'])->num_rows();
-        $data['fix'] = $this->db->get_where('casis', ['status' => 'FIX'])->num_rows();
+        $data['du'] = $this->db->get_where('casis', ['status' => '2'])->num_rows();
+        $data['cancel'] = $this->db->get_where('casis', ['status' => '4'])->num_rows();
+        $data['fix'] = $this->db->get_where('casis', ['status' => '3'])->num_rows();
         $data['casis'] = $this->db->get('casis')->result_array();
         $data['guru'] = $this->db->get('guru')->result_array();
         $this->load->view('template_kepsek/topbar', $data);
