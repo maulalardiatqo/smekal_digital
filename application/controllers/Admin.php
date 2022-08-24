@@ -354,12 +354,12 @@ class Admin extends CI_Controller
     public function naik()
     {
         // var_dump($_POST);die;
-        $to= $this->input->post('to');
+        $to = $this->input->post('to');
         $inputan = $_POST;
         foreach ($inputan as $key => $siswa) {
             if ($key != "to" || $key != "example_length" || $key != "naik") {
-                $this->db->where('id',$key);
-                $this->db->update('siswa',['kelas'=>$to]);
+                $this->db->where('id', $key);
+                $this->db->update('siswa', ['kelas' => $to]);
             }
         }
         $this->session->set_flashdata('flash', 'Berhasil Update Data');
