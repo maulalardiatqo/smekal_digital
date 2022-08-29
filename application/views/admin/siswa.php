@@ -124,12 +124,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="row">
+                            <div class="row page-titles">
                                 <div class="d-flex justify-content-between">
                                     <div class="judul">
                                         <h4 class="card-title">Daftar Siswa</h4>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="lulus">
+                                <a href="<?= base_url('admin/lulus') ?>" class="btn btn-info">Luluskan Siswa</a>
                             </div>
                         </div>
                         <div class="card-body">

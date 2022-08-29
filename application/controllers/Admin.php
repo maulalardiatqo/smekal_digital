@@ -366,6 +366,36 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/siswa');
     }
+    public function lulus()
+    {
+        $data['judul'] = 'Luluskan Siswa';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->db->select('siswa.*,kelas.tingkat,kelas.prodi,kelas.rombel');
+        $this->db->from('siswa');
+        $this->db->join('kelas', 'siswa.kelas = kelas.id');
+        $this->db->where('siswa.is_active = 1');
+        $data['siswa'] = $this->db->get()->result_array();
+        $data['kelas'] = $this->db->get('kelas')->result_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/lulus', $data);
+        $this->load->view('template_admin/footer');
+    }
+    public function siswaLulus()
+    {
+        $lu = 0;
+        $inputan = $_POST;
+        foreach ($inputan as $key => $siswa) {
+            if ($key != "to" || $key != "example_length" || $key != "naik") {
+                $this->db->where('id', $key);
+                $this->db->update('siswa', ['is_active' => $lu]);
+            }
+        }
+        $this->session->set_flashdata('flash', 'Berhasil Update Data');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('admin/siswa');
+    }
     public function alumni()
     {
         $data['judul'] = 'Alumni';
@@ -559,7 +589,7 @@ class Admin extends CI_Controller
         $data = [
             "bayar" => $this->input->post('bayar') + $this->input->post('sudahdibayar'),
             "status" => $this->input->post('kurang') > 0 ? 0 : 1,
-            "tanggal_bayar" => date()
+            "tanggal_bayar" => date(''),
         ];
         $this->db->update('tagihan_detail', $data, ['id' => $id]);
         $this->session->set_flashdata('flash', 'Update Berhasil');
@@ -855,7 +885,10 @@ class Admin extends CI_Controller
         $data['judul'] = 'Kelas dan Prodi';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['guru'] = $this->db->get('guru')->result_array();
-        $data['prodi'] = $this->db->get('prodi')->result_array();
+        $this->db->select('*');
+        $this->db->from('prodi');
+        $this->db->join('guru', 'prodi.ka_prodi = guru.id');
+        $data['prodi'] = $this->db->get()->result_array();
 
         $this->db->select('*');
         $this->db->from('kelas');
