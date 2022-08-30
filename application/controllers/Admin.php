@@ -59,7 +59,7 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Kelola Pengguna';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['pengguna'] = $this->db->get('user')->result_array();
+        $data['pengguna'] = $this->db->get_where('user', ['is_active' => 1])->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
@@ -384,12 +384,16 @@ class Admin extends CI_Controller
     }
     public function siswaLulus()
     {
-        $lu = 0;
+
+        $data = [
+            'a.is_active' => 0,
+            'b.is_active' => 0
+        ];
         $inputan = $_POST;
         foreach ($inputan as $key => $siswa) {
             if ($key != "to" || $key != "example_length" || $key != "naik") {
-                $this->db->where('id', $key);
-                $this->db->update('siswa', ['is_active' => $lu]);
+                $sql = "UPDATE siswa, user SET siswa.is_active = 0, user.is_active = 0 WHERE siswa.nis = user.username";
+                $this->db->query($sql);
             }
         }
         $this->session->set_flashdata('flash', 'Berhasil Update Data');
@@ -400,7 +404,11 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Alumni';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['alumni'] = $this->db->get_where('siswa', ['is_active' => 0])->result_array();
+        $this->db->select('*');
+        $this->db->from('siswa');
+        $this->db->join('kelas', 'siswa.kelas = kelas.id');
+        $this->db->where('siswa.is_active = 0');
+        $data['alumni'] = $this->db->get()->result_array();
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);

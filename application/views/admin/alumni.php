@@ -39,7 +39,7 @@
                                                 }
 
                                                 ?></td>
-                                            <td><?= $p['kelas'] ?></td>
+                                            <td><?= $p['tingkat'] . ' ' . $p['prodi'] . ' ' . $p['rombel'] ?></td>
                                             <td><?= $p['kontak'] ?></td>
                                             <td><?= $p['tahun_masuk'] ?></td>
                                             <td>
