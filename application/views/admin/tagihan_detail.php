@@ -71,6 +71,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <input type="hidden" id="id" name='id'>
+                        <input type="hidden" id="to" name='to'>
+                        <input type="hidden" id="keterangan" name='keterangan' value="<?= 'Pembayaran '.$tagihan['title'] ?>">
                         <input type="hidden" id="id_tagihan" name='id_tagihan' value="<?= $tagihan['id'] ?>">
                         <div class="mb-3 row ">
                             <label class="col-lg-2 col-form-label" for="jumlah">Jumlah Tagihan
@@ -143,24 +145,29 @@
                                         <?php foreach ($tagihan_detail as $p) : ?>
                                             <tr>
                                                 <td><?= $no ?></td>
-                                                <td><?= $p['to'] ?></td>
+                                                <td><?= $p['nama'] ?></td>
                                                 <td class="decimal-input"><?= number_format($p['bayar'],2,'.',',')  ?></td>
                                                 <td><?= date("d/m/Y",strtotime($p['tanggal_bayar'])) ?></td>
                                                 <td class="decimal-input"><?= number_format(($tagihan['jumlah'] - $p['bayar']),2,'.',',')  ?></td>
                                                 <td><?= $p['status'] ? "Lunas" : 'Belum Lunas'; ?></td>
                                                 <td>
-                                                    <div class="d-flex">
-                                                        <button type="button"
-                                                            class="btn btn-primary shadow btn-xs btn-bayar" 
-                                                            data-bs-toggle="modal" 
-                                                            data-bs-target="#exampleModal1"
-                                                            data-id = "<?php echo $p['id'] ?>"
-                                                            data-sudahdibayar = "<?php echo $p['bayar'] ?  $p['bayar'] : 0  ?>"
-                                                            >
-                                                                <!-- <i class="fas fa-pencil-alt"> </i> -->
-                                                                Bayar
-                                                        </button>
-                                                    </div>
+                                                    <?php if($p['status']){
+                                                        echo "Lunas";
+                                                    }else{ ?>
+                                                        <div class="d-flex">
+                                                            <button type="button"
+                                                                class="btn btn-primary shadow btn-xs btn-bayar" 
+                                                                data-bs-toggle="modal" 
+                                                                data-bs-target="#exampleModal1"
+                                                                data-id = "<?php echo $p['id'] ?>"
+                                                                data-to = "<?php echo $p['to'] ?>"
+                                                                data-sudahdibayar = "<?php echo $p['bayar'] ?  $p['bayar'] : 0  ?>"
+                                                                >
+                                                                    <!-- <i class="fas fa-pencil-alt"> </i> -->
+                                                                    Bayar
+                                                            </button>
+                                                        </div>
+                                                    <?php } ?>
                                                 </td>
                                             </tr>
                                             <?php $no++; ?>
