@@ -6,6 +6,13 @@ $(document).ready( function () {
         $('#type').val(type).change()
         $('#keterangan').val(keterangan)
         $('#id_siswa').val(idSiswa).change()
+        if(idSiswa){
+            $('#input_id_siswa').removeClass('d-none');
+            // $('#container-tagihan').removeClass('d-none');
+        }else{
+            $('#input_id_siswa').addClass('d-none');
+            $('#container-tagihan').addClass('d-none');
+        }
         $('#jumlah').val(jumlah).change()
         document.getElementById('tanggal_pemasukan').valueAsDate = tanggalPemasukan;
         initDecimalInput()
