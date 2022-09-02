@@ -30,7 +30,7 @@
                                             $totalDebet = $totalDebet + $p['jumlah'];
                                         }else{
                                             $saldo = $saldo - $p['jumlah'];
-                                            $totalKredit = $totalKredit - $p['jumlah'];
+                                            $totalKredit = $totalKredit + $p['jumlah'];
                                         }
                                     } 
                                 ?>
