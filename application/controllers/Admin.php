@@ -773,7 +773,11 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Rekap / Laporan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['rekap'] = [];
+        $query = "SELECT tanggal_pemasukan AS tanggal,keterangan,jumlah,'pemasukan' AS type_transaction FROM pemasukan
+                UNION
+                SELECT tanggal_pengeluaran AS tanggal,keterangan,jumlah,'pengeluaran' AS type_transaction FROM pengeluaran ORDER BY tanggal DESC;";
+        $data['rekap'] = $this->db->query($query)->result_array();
+        
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);

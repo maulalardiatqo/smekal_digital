@@ -6,54 +6,55 @@
                 <h4 class="card-title">Rekap</h4>
             </div>
             <div class="card-body">
+                <?php $totalDebet = 0;?>
+                <?php $totalKredit = 0;?>
                 <div class="table-responsive">
                     <table id="example" class="display" style="min-width: 845px">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Total Pemasukan</th>
-                                <th>Total Pengeluaran</th>
-                                <th>Jabatan</th>
-                                <th>Jumlah Jam</th>
-                                <th>Gaji / Jam</th>
-                                <th>Total</th>
-                                <th>Action</th>
+                                <th>Tanggal</th>
+                                <th>Uraian</th>
+                                <th>Debet</th>
+                                <th>Kredit</th>
+                                <th>Saldo</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no = 1; ?>
+                            <?php $no = 1;$saldo = $rekap[0]['jumlah']; ?>
                             <?php foreach ($rekap as $p) : ?>
+                                <?php 
+                                    if($no > 1){
+                                        if($p['type_transaction'] == 'pemasukan'){
+                                            $saldo = $saldo + $p['jumlah'];
+                                            $totalDebet = $totalDebet + $p['jumlah'];
+                                        }else{
+                                            $saldo = $saldo - $p['jumlah'];
+                                            $totalKredit = $totalKredit - $p['jumlah'];
+                                        }
+                                    } 
+                                ?>
                                 <tr>
                                     <td><?= $no ?></td>
-                                    <td><?= $p['kode'] ?></td>
-                                    <td><?= $p['nama'] ?></td>
-                                    <td><?= $p['desc'] ?></td>
-                                    <td><?= $p['jam_kerja'] ?></td>
-                                    <td><?= $p['salary_per_hour'] ?></td>
-                                    <td><?= ($p['jam_kerja'] * $p['salary_per_hour']) ?></td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="<?= base_url('admin/editGuru/') . $p['kode'] ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                            <?php if($p['tanggal_pengeluaran'] == NULL): ?>
-                                            <form action="<?= base_url('admin/savepengeluaran')?>" method="post">
-                                                <input type="hidden" name="type" value="1">
-                                                <input type="hidden" name="id_guru"  value="<?= $p['id'] ?>">
-                                                <input type="hidden" name="keterangan" value="Pemberian Gaji bulan <?= date("m")?> tahun <?= date('Y')?>">
-                                                <input type="hidden" name="tanggal_pengeluaran" value="<?= date("Y-m-d H:i:s") ?>">
-                                                <input type="hidden" name="jumlah" value="<?= ($p['jam_kerja'] * $p['salary_per_hour']) ?>">
-                                                <input type="hidden" name="status_gaji" value="MENUNGGU KONFIRMASI">
-                                                <button type="submit" class="btn btn-success shadow btn-xs sharp"><i class="fa fa-check"></i></button>
-                                            </form>
-                                            <?php else :?>
-                                                <span><?= $p['status_gaji'] ?></span>
-                                            <?php endif ;?>
-                                        </div>
-                                    </td>
+                                    <td><?= $p['tanggal'] ?></td>
+                                    <td><?= $p['keterangan'] ?></td>
+                                    <td><?= $p['type_transaction'] == 'pemasukan' ? number_format($p['jumlah'],2,'.',',') : '' ?></td>
+                                    <td><?= $p['type_transaction'] == 'pengeluaran' ? number_format($p['jumlah'],2,'.',',') : '' ?></td>
+                                    <td><?= number_format($saldo,2,'.',',') ?></td>
                                 </tr>
                                 <?php $no++; ?>
                             <?php endforeach; ?>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3">Jumlah</th>
+                                <th><?= number_format($totalDebet,2,'.',',') ?></th>
+                                <th><?= number_format($totalKredit,2,'.',',') ?></th>
+                                <th><?= number_format($saldo,2,'.',',') ?></th>
+                            </tr>
+                        </tfoot>
                     </table>
+                    
                 </div>
             </div>
         </div>
