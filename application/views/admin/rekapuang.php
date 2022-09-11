@@ -21,7 +21,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no = 1;$saldo = $rekap[0]['jumlah']; ?>
+                            <?php $no = 1;$saldo = $rekap[0]['jumlah'];$totalDebet = $totalDebet + $rekap[0]['jumlah'];$totalDebet = $totalDebet + $rekap[0]['jumlah']; ?>
                             <?php foreach ($rekap as $p) : ?>
                                 <?php 
                                     if($no > 1){
@@ -30,7 +30,7 @@
                                             $totalDebet = $totalDebet + $p['jumlah'];
                                         }else{
                                             $saldo = $saldo - $p['jumlah'];
-                                            $totalKredit = $totalKredit + $p['jumlah'];
+                                            $totalKredit = $totalKredit + $p['jumlah']; 
                                         }
                                     } 
                                 ?>
