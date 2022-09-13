@@ -16,7 +16,7 @@
     </a>
     <a href="<?= base_url('kepsek/proposal') ?>" class="nav__link">
         <i class="material-icons nav__icon">edit_note</i>
-        <span class="nav__text">Proposal</span>
+        <span class="nav__text">Kehadiran</span>
     </a>
     <a href="<?= base_url('kepsek/ppdb') ?>" class="nav__link">
         <i class="material-icons nav__icon">group</i>

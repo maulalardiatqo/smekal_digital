@@ -895,7 +895,7 @@ class Admin extends CI_Controller
         $data['guru'] = $this->db->get('guru')->result_array();
         $this->db->select('*');
         $this->db->from('prodi');
-        $this->db->join('guru', 'prodi.ka_prodi = guru.id');
+        $this->db->join('guru', 'guru.kode = prodi.ka_prodi');
         $data['prodi'] = $this->db->get()->result_array();
 
         $this->db->select('*');
