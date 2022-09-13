@@ -597,9 +597,20 @@ class Admin extends CI_Controller
         $data = [
             "bayar" => $this->input->post('bayar') + $this->input->post('sudahdibayar'),
             "status" => $this->input->post('kurang') > 0 ? 0 : 1,
-            "tanggal_bayar" => date(''),
+            "tanggal_bayar" => date('Y m d'),
         ];
         $this->db->update('tagihan_detail', $data, ['id' => $id]);
+        // insert into pemasukan
+        $data = [
+            'jumlah' => $this->input->post('bayar'),
+            'keterangan' => $this->input->post('keterangan'),
+            'id_siswa' => $this->input->post('to'),
+            'id_guru' => null,
+            'tanggal_pemasukan' => date('Y m d'),
+        ];
+        $save = $this->db->replace('pemasukan', $data);
+        // END INSERT PEMASUKAN
+
         $this->session->set_flashdata('flash', 'Update Berhasil');
         $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/tagihandetail/' . $this->input->post('id_tagihan'));
@@ -609,7 +620,11 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Tagihan Detail';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['tagihan_detail'] = $this->db->get_where('tagihan_detail', array('id_tagihan' => $id))->result_array();
+        $this->db->select('tagihan_detail.*,siswa.nama');
+        $this->db->from('tagihan_detail');
+        $this->db->join('siswa', 'tagihan_detail.to = siswa.id','left');
+        $this->db->where('tagihan_detail.id_tagihan', $id);
+        $data['tagihan_detail'] = $this->db->get()->result_array();
         $data['tagihan'] = $this->db->get_where('tagihan', array('id' => $id))->row_array();
         $dataSiswa = [];
         $querySiswa = $this->db->get('siswa')->result_array();
@@ -758,7 +773,11 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Rekap / Laporan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['rekap'] = [];
+        $query = "SELECT tanggal_pemasukan AS tanggal,keterangan,jumlah,'pemasukan' AS type_transaction FROM pemasukan
+                UNION
+                SELECT tanggal_pengeluaran AS tanggal,keterangan,jumlah,'pengeluaran' AS type_transaction FROM pengeluaran ORDER BY tanggal DESC;";
+        $data['rekap'] = $this->db->query($query)->result_array();
+        
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);

@@ -29,8 +29,10 @@ $(document).ready(function(){
 
     $('.btn-bayar').click(function(){
         let id= $(this).data('id');
+        let to= $(this).data('to');
         let sudahdibayar= $(this).data('sudahdibayar');
         $('#id').val(id);
+        $('#to').val(to);
         $('#sudahdibayar').val(formatNumber(sudahdibayar.toString())).change();
     })
 
