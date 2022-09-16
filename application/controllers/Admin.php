@@ -152,7 +152,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->db->select('siswa.*,kelas.tingkat,kelas.prodi,kelas.rombel');
         $this->db->from('siswa');
-        $this->db->join('kelas', 'siswa.kelas = kelas.id');
+        $this->db->join('kelas', 'siswa.kelas = kelas.id_kelas');
         $this->db->where('siswa.is_active = 1');
         $data['siswa'] = $this->db->get()->result_array();
         $data['kelas'] = $this->db->get('kelas')->result_array();
@@ -372,7 +372,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->db->select('siswa.*,kelas.tingkat,kelas.prodi,kelas.rombel');
         $this->db->from('siswa');
-        $this->db->join('kelas', 'siswa.kelas = kelas.id');
+        $this->db->join('kelas', 'siswa.kelas = kelas.id_kelas');
         $this->db->where('siswa.is_active = 1');
         $data['siswa'] = $this->db->get()->result_array();
         $data['kelas'] = $this->db->get('kelas')->result_array();
@@ -406,7 +406,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->db->select('*');
         $this->db->from('siswa');
-        $this->db->join('kelas', 'siswa.kelas = kelas.id');
+        $this->db->join('kelas', 'siswa.kelas = kelas.id_kelas');
         $this->db->where('siswa.is_active = 0');
         $data['alumni'] = $this->db->get()->result_array();
         $this->load->view('template_admin/topbar', $data);
@@ -477,6 +477,7 @@ class Admin extends CI_Controller
         $data['jenis_pemasukan'] = $this->db->get('jenispemasukan')->result_array();
         $querySiswa = $this->db->select('siswa.*,spp_master.jumlah')
             ->from('siswa')
+            ->where('is_active' == 1)
             ->join('spp_master', 'siswa.tahun_masuk = spp_master.tahun_masuk', 'left')->get()->result_array();
         $data['siswa'] = $querySiswa;
 
@@ -622,7 +623,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->db->select('tagihan_detail.*,siswa.nama');
         $this->db->from('tagihan_detail');
-        $this->db->join('siswa', 'tagihan_detail.to = siswa.id','left');
+        $this->db->join('siswa', 'tagihan_detail.to = siswa.id', 'left');
         $this->db->where('tagihan_detail.id_tagihan', $id);
         $data['tagihan_detail'] = $this->db->get()->result_array();
         $data['tagihan'] = $this->db->get_where('tagihan', array('id' => $id))->row_array();
@@ -777,7 +778,7 @@ class Admin extends CI_Controller
                 UNION
                 SELECT tanggal_pengeluaran AS tanggal,keterangan,jumlah,'pengeluaran' AS type_transaction FROM pengeluaran ORDER BY tanggal DESC;";
         $data['rekap'] = $this->db->query($query)->result_array();
-        
+
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
@@ -955,7 +956,7 @@ class Admin extends CI_Controller
     }
     public function hapusKelas($id)
     {
-        $sql = "DELETE FROM kelas WHERE id = $id";
+        $sql = "DELETE FROM kelas WHERE id_kelas = $id";
         $this->db->query($sql, [$id]);
 
         $this->session->set_flashdata('flash', 'Data dihapus');

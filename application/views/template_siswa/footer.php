@@ -8,9 +8,9 @@
     </a>
     <a href="<?= base_url('kepsek/keuangan') ?>" class="nav__link">
         <i class="material-icons nav_icon">wallet</i>
-        <span class="nav__text">Keuangan</span>
+        <span class="nav__text">Pembayaran</span>
     </a>
-    <a href="<?= base_url('kepsek/surat') ?>" class="nav__link">
+    <!-- <a href="<?= base_url('kepsek/surat') ?>" class="nav__link">
         <i class="material-icons nav__icon">mail</i>
         <span class="nav__text">Surat</span>
     </a>
@@ -21,7 +21,7 @@
     <a href="<?= base_url('kepsek/proposal') ?>" class="nav__link">
         <i class="material-icons nav__icon">edit_note</i>
         <span class="nav__text">Proposal</span>
-    </a>
+    </a> -->
 
 </nav>
 
