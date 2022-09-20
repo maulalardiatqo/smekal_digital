@@ -72,4 +72,26 @@ class Guru extends CI_Controller
         $this->load->view('guru/nilaiSiswa', $data);
         $this->load->view('template_guru/footer');
     }
+    public function gaji()
+    {
+        $data['judul'] = 'Gaji';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $guru = $this->db->get_where('guru', ['kode' => $this->session->userdata('username')])->row_array();
+        $data['gaji'] = $this->db->get_where('pengeluaran', ['id_guru' => $guru['id']])->result_array();
+        $this->load->view('template_guru/topbar', $data);
+        $this->load->view('template_guru/header', $data);
+        $this->load->view('template_guru/sidebar', $data);
+        $this->load->view('guru/gaji', $data);
+        $this->load->view('template_guru/footer');
+    }
+    public function updateGaji($id)
+    {
+        $data = [
+            'status_gaji' => 'TERKONFIRMASI'
+        ];
+        $this->db->update('pengeluaran', $data, ['id_guru' => $id]);
+        $this->session->set_flashdata('flash', 'Update Berhasil');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('guru/gaji');
+    }
 }

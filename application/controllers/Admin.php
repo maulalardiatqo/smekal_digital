@@ -625,7 +625,10 @@ class Admin extends CI_Controller
         $this->db->from('tagihan_detail');
         $this->db->join('siswa', 'tagihan_detail.to = siswa.id', 'left');
         $this->db->where('tagihan_detail.id_tagihan', $id);
+        $this->db->where('siswa.is_active', '1');
         $data['tagihan_detail'] = $this->db->get()->result_array();
+        // var_dump($data['tagihan_detail']);
+        // die;
         $data['tagihan'] = $this->db->get_where('tagihan', array('id' => $id))->row_array();
         $dataSiswa = [];
         $querySiswa = $this->db->get('siswa')->result_array();
