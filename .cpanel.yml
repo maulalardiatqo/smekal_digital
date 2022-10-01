@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/u1601144/public_html/smekal_digital
+    - export DEPLOYPATH=/home/u1601144/public_html/
     - /bin/cp -r * $DEPLOYPATH
