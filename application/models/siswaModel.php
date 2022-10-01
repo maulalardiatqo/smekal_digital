@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class SiswaModel extends CI_Model
+class siswamodel extends CI_Model
 {
     public function import_data($dataSiswa, $dataUser)
     {

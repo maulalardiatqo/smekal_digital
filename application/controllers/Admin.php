@@ -11,7 +11,7 @@ class Admin extends CI_Controller
         parent::__construct();
         cek_login('1');
         $this->load->library('form_validation');
-        $this->load->model('SiswaModel');
+        $this->load->model('siswamodel');
         $this->load->helper('date');
     }
     public function index()
@@ -253,7 +253,7 @@ class Admin extends CI_Controller
                             'date_create' => now(),
                         );
                         if ($dataSiswa['nis']) {
-                            $this->siswaModel->import_data($dataSiswa, $dataUser);
+                            $this->siswamodel->import_data($dataSiswa, $dataUser);
                         }
                     }
                     $numrow++;
