@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/u1601144/public_html/
-    - /bin/cp -R smekal_digital $DEPLOYPATH
+    - /bin/cp * $DEPLOYPATH
