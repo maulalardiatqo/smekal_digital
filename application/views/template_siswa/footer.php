@@ -2,11 +2,11 @@
             navbar start
         ***********************************-->
 <nav class="nav">
-    <a href="<?= base_url('kepsek') ?>" class="nav__link">
+    <a href="<?= base_url('siswa') ?>" class="nav__link">
         <i class="material-icons nav__icon">home</i>
         <span class="nav__text">Home</span>
     </a>
-    <a href="<?= base_url('kepsek/keuangan') ?>" class="nav__link">
+    <a href="<?= base_url('siswa/pembayaran') ?>" class="nav__link">
         <i class="material-icons nav_icon">wallet</i>
         <span class="nav__text">Pembayaran</span>
     </a>

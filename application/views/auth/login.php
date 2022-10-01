@@ -35,7 +35,7 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <div class="text-center mb-3">
-                                        <a href="index.html"><img src="<?= base_url('assets/') ?>images/logo-baru.png" alt=""></a>
+                                        <a href="index.html"><img src="<?= base_url('assets/') ?>images/login-logo.png" alt=""></a>
                                     </div>
                                     <h4 class="text-center mb-4">Login Applikasi</h4>
                                     <?= $this->session->flashdata('message'); ?>
