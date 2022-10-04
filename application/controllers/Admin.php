@@ -96,10 +96,10 @@ class Admin extends CI_Controller
             'jam_kerja' => $this->input->post('jam_kerja'),
         ];
         $role_id = $this->input->post('role_id');
-        $password = password_hash('guru ' . $data['kode'], PASSWORD_DEFAULT);
+        $password = password_hash($data['kode'], PASSWORD_DEFAULT);
         $this->db->insert('guru', $data);
         if ($role_id) {
-            $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', 'guru$data[kode]', '$password', '$role_id', 1, now())");
+            $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[kode]', '$password', '$role_id', 1, now())");
         }
         $this->session->set_flashdata('flash', 'Data Berhasil Di Input');
         $this->session->set_flashdata('flashtype', 'success');
