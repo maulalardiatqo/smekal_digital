@@ -12,11 +12,11 @@
     </a>
     <a href="<?= base_url('kepsek/absen') ?>" class="nav__link">
         <i class="material-icons nav_icon">fingerprint</i>
-        <span class="nav__text">Absensi</span>
+        <span class="nav__text">Absen Karyawan</span>
     </a>
     <a href="<?= base_url('kepsek/proposal') ?>" class="nav__link">
         <i class="material-icons nav__icon">edit_note</i>
-        <span class="nav__text">Kehadiran</span>
+        <span class="nav__text">Kehadiran Siswa</span>
     </a>
     <a href="<?= base_url('kepsek/ppdb') ?>" class="nav__link">
         <i class="material-icons nav__icon">group</i>

@@ -204,7 +204,7 @@
                                                 <select class=" default-select wide form-control" id="to" name="to">
                                                     <option data-display="Select">Please select</option>
                                                     <?php foreach ($kelas as $k) : ?>
-                                                        <option value="<?= $k['id']; ?>"><?= $k['tingkat'] ?> <?= $k['prodi'] ?> <?= $k['rombel'] ?></option>
+                                                        <option value="<?= $k['id_kelas']; ?>"><?= $k['tingkat'] ?> <?= $k['prodi'] ?> <?= $k['rombel'] ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>

@@ -16,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Login Applikasi</title>
+    <title>Login Applikasi Al Amiriyah School</title>
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/') ?>images/favicon.png">
@@ -55,9 +55,9 @@
                                                 <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                                             </div>
                                     </form>
-                                    <div class="new-account mt-3">
+                                    <!-- <div class="new-account mt-3">
                                         <p>Don't have an account? <a class="text-primary" href="<?= base_url('auth/registrasi') ?>">Sign up</a></p>
-                                    </div>
+                                    </div> -->
                                     <div class="new-account mt-3">
                                     </div>
                                 </div>

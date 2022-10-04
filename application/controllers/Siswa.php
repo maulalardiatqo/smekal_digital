@@ -23,4 +23,14 @@ class Siswa extends CI_Controller
         $this->load->view('siswa/index', $data);
         $this->load->view('template_siswa/footer');
     }
+    public function bayar()
+    {
+        $data['judul'] = 'Pembayaran';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['pemasukan'] = $this->db->get_where('pemasukan', ['id_siswa' => $this->session->userdata('username')])->result_array();
+        $this->load->view('template_siswa/topbar', $data);
+        $this->load->view('template_siswa/header', $data);
+        $this->load->view('siswa/bayar', $data);
+        $this->load->view('template_siswa/footer');
+    }
 }
