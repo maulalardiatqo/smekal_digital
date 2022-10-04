@@ -108,7 +108,7 @@ class Admin extends CI_Controller
     }
     public function hapusGuru($kode)
     {
-        $sql = "DELETE g.*, u.* FROM guru g, user u WHERE g.kode = $kode AND u.username = 'guru$kode'";
+        $sql = "DELETE g.*, u.* FROM guru g, user u WHERE g.kode = $kode AND u.username = '$kode'";
         $this->db->query($sql, [$kode]);
 
         $this->session->set_flashdata('flash', 'Data dihapus');

@@ -54,6 +54,8 @@
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                                             </div>
+                                        </div>
+                                        <div class="row d-flex justify-content-center"> Develop By TKJ SMK Al Amiriyah</div>
                                     </form>
                                     <!-- <div class="new-account mt-3">
                                         <p>Don't have an account? <a class="text-primary" href="<?= base_url('auth/registrasi') ?>">Sign up</a></p>

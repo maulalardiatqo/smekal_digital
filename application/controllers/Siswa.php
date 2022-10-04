@@ -23,7 +23,6 @@ class Siswa extends CI_Controller
         $this->load->view('siswa/index', $data);
         $this->load->view('template_siswa/footer');
     }
-<<<<<<< HEAD
     public function bayar()
     {
         $data['judul'] = 'Pembayaran';
@@ -32,18 +31,6 @@ class Siswa extends CI_Controller
         $this->load->view('template_siswa/topbar', $data);
         $this->load->view('template_siswa/header', $data);
         $this->load->view('siswa/bayar', $data);
-=======
-    public function pembayaran()
-    {
-        $data['judul'] = 'Dashboard';
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['siswa'] = $this->db->get('siswa')->num_rows();
-        $data['guru'] = $this->db->get('guru')->num_rows();
-        $data['kelas'] = $this->db->get('kelas')->num_rows();
-        $this->load->view('template_siswa/topbar', $data);
-        $this->load->view('template_siswa/header', $data);
-        $this->load->view('siswa/pembayaran', $data);
->>>>>>> 71aba5d2d632337cbef3d1bfa1e5b04c104f26c8
         $this->load->view('template_siswa/footer');
     }
 }
