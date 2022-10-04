@@ -8,7 +8,7 @@ class Kepsek extends CI_Controller
         parent::__construct();
         cek_login('2');
         $this->load->library('form_validation');
-        $this->load->model('siswaModel');
+        $this->load->model('SiswaModel');
         $this->load->helper('date');
     }
     public function index()

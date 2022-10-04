@@ -3,6 +3,7 @@
         <div class="row">
             <div class="col-xl-6 col-sm-6">
                 <div class="card">
+<<<<<<< HEAD
                     <div class="card-head d-flex px-4 justify-content-center">
                         <h6><b>SMEKAL DIGITAL</b></h6>
                     </div>
@@ -12,6 +13,17 @@
                 </div>
             </div>
             <div class="col-xl-6 col-sm-6">
+=======
+                    <div class="card-header d-flex px-4  justify-content-center">
+                        <h6>AL AMIRIYAH SMART SCHOOL</h6>
+                    </div>
+                    <div class="card-body d-flex px-4  justify-content-center">
+                        <p><small>Adalah aplikasi berbasis web yang di bangun oleh team TKJ SMK Al Amiriyah Untuk mengelola administrasi yang ada pada SMK Al Amiriyah</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-xl-6 col-sm-6">
+>>>>>>> 71aba5d2d632337cbef3d1bfa1e5b04c104f26c8
                 <div class="card">
                     <div class="card-body d-flex px-4  justify-content-between">
                         <div>

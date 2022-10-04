@@ -6,7 +6,11 @@
         <i class="material-icons nav__icon">home</i>
         <span class="nav__text">Home</span>
     </a>
+<<<<<<< HEAD
     <a href="<?= base_url('siswa/bayar') ?>" class="nav__link">
+=======
+    <a href="<?= base_url('siswa/pembayaran') ?>" class="nav__link">
+>>>>>>> 71aba5d2d632337cbef3d1bfa1e5b04c104f26c8
         <i class="material-icons nav_icon">wallet</i>
         <span class="nav__text">Pembayaran</span>
     </a>
