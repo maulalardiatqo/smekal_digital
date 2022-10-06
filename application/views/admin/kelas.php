@@ -169,7 +169,7 @@
                                             <td><?= $p['nama'] ?></td>
                                             <td>
                                                 <div class="d-flex">
-                                                    <a href="#" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                    <a href="<?= base_url('admin/editKelas/' . $p['id_kelas']) ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
                                                     <a href="<?= base_url('admin/hapusKelas/' . $p['id_kelas']) ?>" class="btn btn-danger shadow btn-xs sharp tombol-hapus"><i class="fa fa-trash "></i></a>
                                                 </div>
                                             </td>

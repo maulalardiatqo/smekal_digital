@@ -96,7 +96,7 @@ class Admin extends CI_Controller
             'jam_kerja' => $this->input->post('jam_kerja'),
         ];
         $role_id = $this->input->post('role_id');
-        $password = password_hash($data['kode'], PASSWORD_DEFAULT);
+        $password = password_hash('Smekal123', PASSWORD_DEFAULT);
         $this->db->insert('guru', $data);
         if ($role_id) {
             $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[kode]', '$password', '$role_id', 1, now())");
@@ -965,6 +965,18 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('flash', 'Data dihapus');
         $this->session->set_flashdata('flashtype', 'success');
         redirect('admin/kelas');
+    }
+    public function editKelas($id)
+    {
+        $data['judul'] = 'Edit Kelas';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['kelas'] = $this->db->get_where('kelas', ['id_kelas' => $id])->result_array();
+        $data['guru'] = $this->db->get('guru')->result_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/editKelas', $data);
+        $this->load->view('template_admin/footer');
     }
     public function lab()
     {

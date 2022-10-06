@@ -94,4 +94,16 @@ class Guru extends CI_Controller
         $this->session->set_flashdata('flashtype', 'success');
         redirect('guru/gaji');
     }
+    public function walas()
+    {
+        $data['judul'] = 'Wali Kelas';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $guru = $this->db->get_where('guru', ['kode' => $this->session->userdata('username')])->row_array();
+        $data['kelas'] = $this->db->get_where('kelas', ['walas' => $guru['id']])->result_array();
+        $this->load->view('template_guru/topbar', $data);
+        $this->load->view('template_guru/header', $data);
+        $this->load->view('template_guru/sidebar', $data);
+        $this->load->view('guru/gaji', $data);
+        $this->load->view('template_guru/footer');
+    }
 }

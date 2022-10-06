@@ -52,12 +52,12 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                        <select class="form-control" id="jabatan" name="jabatan">
-                                            <option value="0">Please select</option>
-                                            <?php foreach($jabatan as $j) : ?>
-                                                <option value="<?= $j['id']?>" data-role="<?= $j['role_id']?>"><?= $j['desc']?></option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                            <select class="form-control" id="jabatan" name="jabatan">
+                                                <option value="0">Please select</option>
+                                                <?php foreach ($jabatan as $j) : ?>
+                                                    <option value="<?= $j['id'] ?>" data-role="<?= $j['role_id'] ?>"><?= $j['desc'] ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <input type="hidden" name="role_id" id="role_id">
