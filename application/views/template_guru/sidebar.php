@@ -32,11 +32,12 @@
                 $kelas = $this->db->get_where('kelas', ['walas' => $guru['id']])->result_array();
 
                 if ($kelas) {
-                    echo "
+                    echo '
                     <li>
-                        <a>Wali Kelas</a>
-                    </li>
-                    ";
+                    <a href="' .  ' guru/walas '  . '">
+                    <i class="fas fa-book"></i>
+                    <span class="nav-text">Wali Kelas</a></span>
+                </li>';
                 }
                 ?>
           </ul>

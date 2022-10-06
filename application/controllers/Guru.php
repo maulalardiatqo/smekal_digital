@@ -99,11 +99,38 @@ class Guru extends CI_Controller
         $data['judul'] = 'Wali Kelas';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $guru = $this->db->get_where('guru', ['kode' => $this->session->userdata('username')])->row_array();
+        $guruid = $guru['id'];
+        $data['naik'] = $this->db->get('kelas')->result_array();
         $data['kelas'] = $this->db->get_where('kelas', ['walas' => $guru['id']])->result_array();
+        $query = "SELECT id_kelas FROM kelas WHERE walas = $guruid";
+        $siswa = $this->db->query($query)->row_array();
+
+        // Implode is method for convert array to string
+        $idsiswa = implode($siswa);
+
+        $data['siswa'] = $this->db->get_where('siswa', ['kelas' => $idsiswa])->result_array();
+        $this->db->select('tingkat');
+        $this->db->from('kelas');
+        $data['tingkat'] = $this->db->get()->result_array();
+
         $this->load->view('template_guru/topbar', $data);
         $this->load->view('template_guru/header', $data);
         $this->load->view('template_guru/sidebar', $data);
-        $this->load->view('guru/gaji', $data);
+        $this->load->view('guru/walas', $data);
         $this->load->view('template_guru/footer');
+    }
+    public function naik()
+    {
+        $to = $this->input->post('to');
+        $inputan = $_POST;
+        foreach ($inputan as $key => $siswa) {
+            if ($key != "to" || $key != "example_length" || $key != "naik") {
+                $this->db->where('id', $key);
+                $this->db->update('siswa', ['kelas' => $to]);
+            }
+        }
+        $this->session->set_flashdata('flash', 'Berhasil Update Data');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('guru/walas');
     }
 }
