@@ -161,12 +161,6 @@
             cardsCenter();
         }, 1000);
     });
-    jQuery(document).ready(function() {
-        setTimeout(function() {
-            dlabSettingsOptions.version = 'dark';
-            new dlabSettings(dlabSettingsOptions);
-        }, 1500)
-    });
 </script>
 
 </body>
