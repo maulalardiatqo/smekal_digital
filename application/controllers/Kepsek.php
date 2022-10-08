@@ -15,7 +15,7 @@ class Kepsek extends CI_Controller
     {
         $data['judul'] = 'Dashboard';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['siswa'] = $this->db->get('siswa')->num_rows();
+        $data['siswa'] = $this->db->get_where('siswa', ['is_active' => '1'])->num_rows();
         $data['guru'] = $this->db->get('guru')->num_rows();
         $data['kelas'] = $this->db->get('kelas')->num_rows();
         $data['casis'] = $this->db->get('casis')->num_rows();
