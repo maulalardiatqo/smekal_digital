@@ -58,15 +58,29 @@ class Waka extends CI_Controller
         $this->load->view('waka/kelas', $data);
         $this->load->view('template_waka/footer');
     }
-    public function jadwal()
+    public function mapel()
     {
-        $data['judul'] = 'Penjadwalan';
+        $data['judul'] = 'Mata Pelajaran';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['mapel'] = $this->db->get('mapel')->result_array();
         $this->load->view('template_waka/topbar', $data);
         $this->load->view('template_waka/header', $data);
         $this->load->view('template_waka/sidebar', $data);
-        $this->load->view('waka/jadwal', $data);
+        $this->load->view('waka/mapel', $data);
         $this->load->view('template_waka/footer');
+    }
+    public function tambahMapel()
+    {
+        $data = [
+            'nama_mapel' => $this->input->post('nama_mapel'),
+            'status' => $this->input->post('status')
+        ];
+        $this->db->insert('mapel', $data);
+
+        $this->session->set_flashdata('flash', 'Data Berhasil Di Input');
+        $this->session->set_flashdata('flashtype', 'success');
+
+        redirect('waka/mapel');
     }
     public function administrasi()
     {

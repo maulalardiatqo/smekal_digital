@@ -26,6 +26,7 @@ class Guru extends CI_Controller
     {
         $data['judul'] = 'Program Tahunan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['mapel'] = $this->db->get('mapel')->result_array();
         $this->load->view('template_guru/topbar', $data);
         $this->load->view('template_guru/header', $data);
         $this->load->view('template_guru/sidebar', $data);
@@ -36,6 +37,7 @@ class Guru extends CI_Controller
     {
         $data['judul'] = 'Program Semesteran';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['mapel'] = $this->db->get('mapel')->result_array();
         $this->load->view('template_guru/topbar', $data);
         $this->load->view('template_guru/header', $data);
         $this->load->view('template_guru/sidebar', $data);
@@ -46,6 +48,7 @@ class Guru extends CI_Controller
     {
         $data['judul'] = 'Silabus';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['mapel'] = $this->db->get('mapel')->result_array();
         $this->load->view('template_guru/topbar', $data);
         $this->load->view('template_guru/header', $data);
         $this->load->view('template_guru/sidebar', $data);
@@ -56,6 +59,7 @@ class Guru extends CI_Controller
     {
         $data['judul'] = 'RPP';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['mapel'] = $this->db->get('mapel')->result_array();
         $this->load->view('template_guru/topbar', $data);
         $this->load->view('template_guru/header', $data);
         $this->load->view('template_guru/sidebar', $data);
@@ -66,6 +70,7 @@ class Guru extends CI_Controller
     {
         $data['judul'] = 'Nilai Siswa';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['mapel'] = $this->db->get('mapel')->result_array();
         $this->load->view('template_guru/topbar', $data);
         $this->load->view('template_guru/header', $data);
         $this->load->view('template_guru/sidebar', $data);
@@ -132,5 +137,34 @@ class Guru extends CI_Controller
         $this->session->set_flashdata('flash', 'Berhasil Update Data');
         $this->session->set_flashdata('flashtype', 'success');
         redirect('guru/walas');
+    }
+    public function uploadAdmin()
+    {
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+
+        $config['upload_path']          = './uploads/';
+        $config['allowed_types']        = 'doc|docx|pdf|xlx|xlxs';
+        $config['file_name'] = 'administrasiguru' . time();
+
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('file')) {
+            $file = $this->upload->data();
+            $data = [
+                'jenis' => $this->input->post('jenis'),
+                'kode_guru' => $this->session->userdata('username'),
+                'file' =>  $config['file_name'],
+                'smester' => $this->input->post('smester'),
+                'ta' => $this->input->post('ta'),
+                'mapel_id' => $this->input->post('mapel'),
+                'kelas' => $this->input->post('kelas'),
+                'keterangan' => $this->input->post('keterangan')
+            ];
+            $this->db->insert('admin_guru', $data);
+
+            unlink('uploads/' . $file['file_name']);
+            $this->session->set_flashdata('flash', 'Data Berhasil di Upload');
+            $this->session->set_flashdata('flashtype', 'success');
+            redirect('guru');
+        }
     }
 }
