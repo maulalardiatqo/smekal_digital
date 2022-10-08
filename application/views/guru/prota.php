@@ -26,8 +26,8 @@
                                         <div class="col-lg-6">
                                             <select class="default-select wide form-control" id="smester" name="smester">
                                                 <option data-display="Select">Please select</option>
-                                                <option value="1">Ganjil</option>
-                                                <option value="2">Genap</option>
+                                                <option value="GANJIL">Ganjil</option>
+                                                <option value="GENAP">Genap</option>
                                             </select>
                                         </div>
                                     </div>
@@ -87,5 +87,49 @@
                 </div>
             </div>
         </div>
+        <!-- table -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">History Upload</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example5" class="display" style="min-width: 845px">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Semester</th>
+                                    <th>TA</th>
+                                    <th>Mapel</th>
+                                    <th>Kelas</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <?php
+                                    $no = 1;
+                                    foreach ($admin as $m) : ?>
+                                        <td><?= $no ?></td>
+                                        <td><?= $m['smester'] ?></td>
+                                        <td><?= $m['ta'] ?></td>
+                                        <td><?= $m['nama_mapel'] ?></td>
+                                        <td><?= $m['kelas'] ?></td>
+                                        <td>
+                                            <span class="badge light badge-danger">
+                                                <i class="fa fa-circle text-danger me-1"></i>
+                                                New Patient
+                                            </span>
+                                        </td>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end table -->
     </div>
 </div>
