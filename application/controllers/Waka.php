@@ -36,7 +36,7 @@ class Waka extends CI_Controller
     {
         $data['judul'] = 'Data Siswa';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['siswa'] = $this->db->get('siswa')->result_array();
+        $data['siswa'] = $this->db->get_where('siswa', ['is_active' => '1'])->result_array();
         $this->load->view('template_waka/topbar', $data);
         $this->load->view('template_waka/header', $data);
         $this->load->view('template_waka/sidebar', $data);
@@ -58,6 +58,41 @@ class Waka extends CI_Controller
         $this->load->view('waka/kelas', $data);
         $this->load->view('template_waka/footer');
     }
+    public function editKelas($id)
+    {
+        $data['judul'] = 'Edit Kelas';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['kelas'] = $this->db->get_where('kelas', ['id_kelas' => $id])->result_array();
+        $data['guru'] = $this->db->get('guru')->result_array();
+        $this->load->view('template_waka/topbar', $data);
+        $this->load->view('template_waka/header', $data);
+        $this->load->view('template_waka/sidebar', $data);
+        $this->load->view('waka/editKelas', $data);
+        $this->load->view('template_waka/footer');
+    }
+    public function updateKelas($id)
+    {
+        $data = [
+            'tingkat' => $this->input->post('tingkat'),
+            'prodi' => $this->input->post('prodi'),
+            'rombel' => $this->input->post('rombel'),
+            'walas' => $this->input->post('walas')
+        ];
+        $this->db->update('kelas', $data, ['id_kelas' => $id]);
+        $this->session->set_flashdata('flash', 'Update Berhasil');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('waka/kelas');
+    }
+    public function hapusKelas($id)
+    {
+        $sql = "DELETE FROM kelas WHERE id_kelas = $id";
+        $this->db->query($sql, [$id]);
+
+        $this->session->set_flashdata('flash', 'Data dihapus');
+        $this->session->set_flashdata('flashtype', 'success');
+
+        redirect('waka/kelas');
+    }
     public function mapel()
     {
         $data['judul'] = 'Mata Pelajaran';
@@ -68,6 +103,16 @@ class Waka extends CI_Controller
         $this->load->view('template_waka/sidebar', $data);
         $this->load->view('waka/mapel', $data);
         $this->load->view('template_waka/footer');
+    }
+    public function hapusMapel($id)
+    {
+        $sql = "DELETE FROM mapel WHERE id_mapel = $id";
+        $this->db->query($sql, [$id]);
+
+        $this->session->set_flashdata('flash', 'Data dihapus');
+        $this->session->set_flashdata('flashtype', 'success');
+
+        redirect('waka/mapel');
     }
     public function tambahMapel()
     {

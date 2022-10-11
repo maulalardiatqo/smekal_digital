@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Upload Promes</h4>
+                    <h4 class="card-title">Tambah Mapel</h4>
                 </div>
                 <div class="card-body">
                     <div class="form-validation">
@@ -27,8 +27,8 @@
                                         <div class="col-lg-6">
                                             <select class="default-select wide form-control" id="status" name="status">
                                                 <option data-display="Select">Please select</option>
-                                                <option value="X">Normatif</option>
-                                                <option value="XI">Adaptif</option>
+                                                <option value="NORMATIF">Normatif</option>
+                                                <option value="ADAPTIF">Adaptif</option>
 
                                             </select>
                                         </div>
@@ -71,8 +71,7 @@
                                         <td><?= $m['status'] ?></td>
                                         <td>
                                             <span class="badge light badge-danger">
-                                                <i class="fa fa-circle text-danger me-1"></i>
-                                                New Patient
+                                                <a href="<?= base_url('waka/hapusMapel/' . $m['id_mapel']) ?>" class="btn btn-danger shadow btn-xs sharp tombol-hapus"><i class="fa fa-trash "></i></a>
                                             </span>
                                         </td>
                                     <?php endforeach; ?>
