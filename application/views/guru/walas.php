@@ -1,5 +1,19 @@
 <div class="content-body">
     <div class="container-fluid">
+
+        <div class="row page-titles">
+            <div class="d-flex justify-content-between">
+                <div class="template">
+                    <ol class="breadcrumb">
+                        <a href="<?= base_url('assets/template/template_siswa.xlsx') ?>" download="" type="button" class="btn light btn-dark"><i class="fas fa-download"></i> Unduh Template Siswa</a>
+                        <button type="button" class="btn light btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-upload"></i> Upload Template Siswa</button>
+                    </ol>
+                </div>
+                <div class="button">
+                    <a class="btn btn-info" href="<?= base_url('admin/alumni') ?>">Data Alumni</a>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -81,5 +95,18 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-body">
+                            <table class="table-responsive">
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
     </div>
-</div>
