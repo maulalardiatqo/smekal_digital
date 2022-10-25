@@ -24,9 +24,9 @@
                       <span class="nav-text">Data Kelas</span>
                   </a>
               </li>
-              <li><a href="<?= base_url('waka/jadwal') ?>" aria-expanded="false">
+              <li><a href="<?= base_url('waka/mapel') ?>" aria-expanded="false">
                       <i class="fas fa-calendar"></i>
-                      <span class="nav-text">Penjadwalan</span>
+                      <span class="nav-text">Mata Pelajaran</span>
                   </a>
               </li>
               <li><a href="<?= base_url('waka/administrasi') ?>" aria-expanded="false">

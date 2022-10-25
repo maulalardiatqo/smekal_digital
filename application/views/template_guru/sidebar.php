@@ -34,7 +34,7 @@
                 if ($kelas) {
                     echo '
                     <li>
-                    <a href="' .  ' guru/walas '  . '">
+                    <a href="' .  ' walas '  . '">
                     <i class="fas fa-book"></i>
                     <span class="nav-text">Wali Kelas</a></span>
                 </li>';
