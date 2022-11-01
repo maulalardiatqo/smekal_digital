@@ -23,14 +23,43 @@ class Waka extends CI_Controller
     }
     public function guru()
     {
-        $data['judul'] = 'Data Guru';
+        $data['judul'] = 'Karyawan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['guru'] = $this->db->get('guru')->result_array();
+        $this->db->select('guru.*,rfgeneral.desc');
+        $this->db->from('guru');
+        $this->db->join('rfgeneral', 'guru.jabatan = rfgeneral.id', 'left');
+        $data['guru'] = $this->db->get()->result_array();
+        $data['jabatan'] = $this->db->get_where('rfgeneral', ['type' => 'jabatan'])->result_array();
+        $data['js'] = 'guru';
         $this->load->view('template_waka/topbar', $data);
         $this->load->view('template_waka/header', $data);
         $this->load->view('template_waka/sidebar', $data);
         $this->load->view('waka/guru', $data);
         $this->load->view('template_waka/footer');
+    }
+    public function tambahGuru()
+    {
+        $data = [
+            'kode' => $this->input->post('kode'),
+            'nama' => $this->input->post('nama'),
+            'pendidikan_terakhir' => $this->input->post('pendidikan_terakhir'),
+            'gender' => $this->input->post('gender'),
+            'jabatan' => $this->input->post('jabatan'),
+            'kontak' => $this->input->post('kontak'),
+            'tahun_masuk' => $this->input->post('tahun_masuk'),
+            'salary_per_hour' => $this->input->post('salary_per_hour'),
+            'jam_kerja' => $this->input->post('jam_kerja'),
+        ];
+        $role_id = $this->input->post('role_id');
+        $password = password_hash('Smekal123', PASSWORD_DEFAULT);
+        $this->db->insert('guru', $data);
+        if ($role_id) {
+            $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[kode]', '$password', '$role_id', 1, now())");
+        }
+        $this->session->set_flashdata('flash', 'Data Berhasil Di Input');
+        $this->session->set_flashdata('flashtype', 'success');
+
+        redirect('waka/guru');
     }
     public function siswa()
     {
