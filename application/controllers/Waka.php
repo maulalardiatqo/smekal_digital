@@ -70,7 +70,7 @@ class Waka extends CI_Controller
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
         $this->load->view('template_admin/sidebar', $data);
-        $this->load->view('admin/editGuru', $data);
+        $this->load->view('waka/editGuru', $data);
         $this->load->view('template_admin/footer');
     }
     public function updateGuru($kode)
