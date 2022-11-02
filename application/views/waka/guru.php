@@ -121,6 +121,7 @@
                                             <th>Gender</th>
                                             <th>Kontak</th>
                                             <th>Tahun Masuk</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -138,6 +139,12 @@
                                                     } ?></td>
                                                 <td><?= $p['kontak'] ?></td>
                                                 <td><?= $p['tahun_masuk'] ?></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a href="<?= base_url('waka/editGuru/') . $p['kode'] ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a href="<?= base_url('waka/hapusGuru/') . $p['kode'] ?>" class="btn btn-danger shadow btn-xs sharp tombol-hapus"><i class="fa fa-trash"></i></a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <?php $no++; ?>
                                         <?php endforeach; ?>

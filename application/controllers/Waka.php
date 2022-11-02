@@ -61,6 +61,46 @@ class Waka extends CI_Controller
 
         redirect('waka/guru');
     }
+    public function editGuru($kode)
+    {
+        $data['judul'] = 'Edit Karyawan';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['guru'] = $this->db->get_where('guru', ['kode' => $kode])->result_array();
+        $data['jabatan'] = $this->db->get_where('rfgeneral', ['type' => 'jabatan'])->result_array();
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/editGuru', $data);
+        $this->load->view('template_admin/footer');
+    }
+    public function updateGuru($kode)
+    {
+        $data = [
+            'kode' => $this->input->post('kode'),
+            'nama' => $this->input->post('nama'),
+            'pendidikan_terakhir' => $this->input->post('pendidikan_terakhir'),
+            'gender' => $this->input->post('gender'),
+            'jabatan' => $this->input->post('jabatan'),
+            'kontak' => $this->input->post('kontak'),
+            'tahun_masuk' => $this->input->post('tahun_masuk'),
+            'salary_per_hour' => $this->input->post('salary_per_hour'),
+            'jam_kerja' => $this->input->post('jam_kerja'),
+        ];
+        $this->db->update('guru', $data, ['kode' => $kode]);
+        $this->session->set_flashdata('flash', 'Update Berhasil');
+        $this->session->set_flashdata('flashtype', 'success');
+        redirect('waka/guru');
+    }
+    public function hapusGuru($kode)
+    {
+        $sql = "DELETE g.*, u.* FROM guru g, user u WHERE g.kode = $kode AND u.username = '$kode'";
+        $this->db->query($sql, [$kode]);
+
+        $this->session->set_flashdata('flash', 'Data dihapus');
+        $this->session->set_flashdata('flashtype', 'success');
+
+        redirect('waka/guru');
+    }
     public function siswa()
     {
         $data['judul'] = 'Data Siswa';
