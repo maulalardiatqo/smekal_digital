@@ -44,7 +44,10 @@ class Guru extends CI_Controller
     {
         $config['upload_path']          = './uploads/administrasi/';
         $config['allowed_types']        = 'pdf|doc|xlsx|xls';
+        $name                           = explode(".", $_FILES['gambar']['name']);
         $config['file_name']            = 'administrai' . $this->session->userdata('username') . 'jenis' . $this->input->post('jenis') . 'mapel' . $this->input->post('mapel') . 'kelas' . $this->input->post('kelas') . 'waktu' . time();
+        var_dump($name);
+        die;
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('file')) {
             $this->session->set_flashdata('flash', 'Gagal Upload File');

@@ -67,7 +67,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input type="file" class="form-file-input form-control" id="file" name="file" accept=".xlsx,.xls" required>
+                                            <input type="file" class="form-file-input form-control" id="file" name="file" accept=".xlsx,.xls,.doc,.pdf" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-8 ms-auto">
