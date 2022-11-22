@@ -22,10 +22,11 @@ class Guru extends CI_Controller
         $this->load->view('guru/index', $data);
         $this->load->view('template_guru/footer');
     }
-    public function prota()
+    public function adminGuru()
     {
-        $data['judul'] = 'Program Tahunan';
+        $data['judul'] = 'Administrasi Guru';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['kelas'] = $this->db->get('kelas')->result_array();
         $data['mapel'] = $this->db->get('mapel')->result_array();
         $this->db->select('*');
         $this->db->from('admin_guru');
@@ -36,76 +37,33 @@ class Guru extends CI_Controller
         $this->load->view('template_guru/topbar', $data);
         $this->load->view('template_guru/header', $data);
         $this->load->view('template_guru/sidebar', $data);
-        $this->load->view('guru/prota', $data);
+        $this->load->view('guru/adminGuru', $data);
         $this->load->view('template_guru/footer');
     }
-    public function promes()
+    public function tambahAdmin()
     {
-        $data['judul'] = 'Program Semesteran';
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['mapel'] = $this->db->get('mapel')->result_array();
-        $this->db->select('*');
-        $this->db->from('admin_guru');
-        $this->db->join('mapel', 'mapel.id_mapel = admin_guru.mapel_id');
-        $this->db->where('kode_guru', $this->session->userdata('username'));
-        $this->db->where('jenis', 'PROMES');
-        $data['admin'] = $this->db->get()->result_array();
-        $this->load->view('template_guru/topbar', $data);
-        $this->load->view('template_guru/header', $data);
-        $this->load->view('template_guru/sidebar', $data);
-        $this->load->view('guru/promes', $data);
-        $this->load->view('template_guru/footer');
-    }
-    public function silabus()
-    {
-        $data['judul'] = 'Silabus';
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['mapel'] = $this->db->get('mapel')->result_array();
-        $this->db->select('*');
-        $this->db->from('admin_guru');
-        $this->db->join('mapel', 'mapel.id_mapel = admin_guru.mapel_id');
-        $this->db->where('kode_guru', $this->session->userdata('username'));
-        $this->db->where('jenis', 'SILABUS');
-        $data['admin'] = $this->db->get()->result_array();
-        $this->load->view('template_guru/topbar', $data);
-        $this->load->view('template_guru/header', $data);
-        $this->load->view('template_guru/sidebar', $data);
-        $this->load->view('guru/silabus', $data);
-        $this->load->view('template_guru/footer');
-    }
-    public function rpp()
-    {
-        $data['judul'] = 'RPP';
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['mapel'] = $this->db->get('mapel')->result_array();
-        $this->db->select('*');
-        $this->db->from('admin_guru');
-        $this->db->join('mapel', 'mapel.id_mapel = admin_guru.mapel_id');
-        $this->db->where('kode_guru', $this->session->userdata('username'));
-        $this->db->where('jenis', 'RPP');
-        $data['admin'] = $this->db->get()->result_array();
-        $this->load->view('template_guru/topbar', $data);
-        $this->load->view('template_guru/header', $data);
-        $this->load->view('template_guru/sidebar', $data);
-        $this->load->view('guru/rpp', $data);
-        $this->load->view('template_guru/footer');
-    }
-    public function nilaiSiswa()
-    {
-        $data['judul'] = 'Nilai Siswa';
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['mapel'] = $this->db->get('mapel')->result_array();
-        $this->db->select('*');
-        $this->db->from('admin_guru');
-        $this->db->join('mapel', 'mapel.id_mapel = admin_guru.mapel_id');
-        $this->db->where('kode_guru', $this->session->userdata('username'));
-        $this->db->where('jenis', 'NILAI SISWA');
-        $data['admin'] = $this->db->get()->result_array();
-        $this->load->view('template_guru/topbar', $data);
-        $this->load->view('template_guru/header', $data);
-        $this->load->view('template_guru/sidebar', $data);
-        $this->load->view('guru/nilaiSiswa', $data);
-        $this->load->view('template_guru/footer');
+        $config['upload_path']          = './uploads/administrasi/';
+        $config['allowed_types']        = 'pdf|doc|xlsx|xls';
+        $config['file_name']            = 'administrai' . $this->session->userdata('username') . 'jenis' . $this->input->post('jenis') . 'mapel' . $this->input->post('mapel') . 'kelas' . $this->input->post('kelas') . 'ta' . $this->input->post('tahun_ajaran');
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('file')) {
+            $this->session->set_flashdata('flash', 'Gagal Upload File');
+            $this->session->set_flashdata('flashtype', 'danger');
+            redirect('guru/adminGuru');
+        } else {
+            $data = array('upload_data' => $this->upload->data());
+            $data = [
+                'kode_guru' => $this->session->userdata('username'),
+                'jenis' => $this->input->post('jenis'),
+                'mapel_id' => $this->input->post('mapel'),
+                'kelas_id' => $this->input->post('kelas'),
+                'tahun_ajaran' => $this->input->post('tahun_ajaran'),
+                'file' => $config['file_name']
+            ];
+            $this->session->set_flashdata('flash', 'Berhasil Upload File');
+            $this->session->set_flashdata('flashtype', 'success');
+            redirect('guru/adminGuru');
+        }
     }
     public function gaji()
     {
