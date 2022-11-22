@@ -112,6 +112,59 @@ class Waka extends CI_Controller
         $this->load->view('waka/siswa', $data);
         $this->load->view('template_waka/footer');
     }
+    public function tambahSiswa()
+    {
+        $this->form_validation->set_rules('nis', 'NIS', 'is_unique[siswa.nis]|required');
+        $data = [
+            'nama' => $this->input->post('nama'),
+            'nis' => $this->input->post('nis'),
+            'nisn' => $this->input->post('nisn'),
+            'alamat' => $this->input->post('alamat'),
+            'gender' => $this->input->post('gender'),
+            'nama_ibu' => $this->input->post('nama_ibu'),
+            'kelas' => $this->input->post('kelas'),
+            'kontak' => $this->input->post('kontak'),
+            'tahun_masuk' => $this->input->post('tahun_masuk'),
+            'is_active' => 1,
+        ];
+        $password = password_hash($data['nis'], PASSWORD_DEFAULT);
+        $cek = $this->input->post('nis');
+        $cek1 = $this->input->post('nama');
+        $cek2 = $this->input->post('nis');
+        $cek3 = $this->input->post('nisn');
+        $cek4 = $this->input->post('alamat');
+        $cek5 = $this->input->post('gender');
+        $cek6 = $this->input->post('nama_ibu');
+        $cek7 = $this->input->post('kelas');
+        $cek8 = $this->input->post('kontak');
+        $cek9 = $this->input->post('tahun_masuk');
+        $selec = 'Please select';
+        $kosong = '';
+        $query = $this->db->get('siswa')->row_array();
+        if ($cek == $query['nis']) {
+            $this->session->set_flashdata('flash', 'NIS Sudah Terdaftar');
+            $this->session->set_flashdata('flashtype', 'info');
+
+            redirect('waka/siswa');
+        } elseif ($cek == $kosong || $cek1 == $kosong || $cek2 == $kosong || $cek3 == $kosong || $cek4 == $kosong || $cek6 == $kosong || $cek8 == $kosong || $cek9 == $kosong) {
+            $this->session->set_flashdata('flash', 'Data Tidak Boleh Kosong');
+            $this->session->set_flashdata('flashtype', 'danger');
+        } elseif ($cek5 == $selec) {
+            $this->session->set_flashdata('flash', 'Anda Belum Memilih Jenis Kelamin');
+            $this->session->set_flashdata('flashtype', 'danger');
+            redirect('waka/siswa');
+        } elseif ($cek7 == $selec) {
+            $this->session->set_flashdata('flash', 'Anda Belum Memilih kelas');
+            $this->session->set_flashdata('flashtype', 'danger');
+            redirect('waka/siswa');
+        } else {
+            $this->db->insert('siswa', $data);
+            $this->db->query("insert into user(nama, foto, username, password, role_id, is_active, date_create) values('$data[nama]', 'user_default.png', '$data[nis]', '$password', 5, 1, now())");
+            $this->session->set_flashdata('flash', 'Data Berhasil Di Input');
+            $this->session->set_flashdata('flashtype', 'success');
+        }
+        redirect('waka/siswa');
+    }
     public function kelas()
     {
         $data['judul'] = 'Data Kelas';
