@@ -31,8 +31,8 @@ class Guru extends CI_Controller
         $this->db->select('*');
         $this->db->from('admin_guru');
         $this->db->join('mapel', 'mapel.id_mapel = admin_guru.mapel_id');
+        $this->db->join('kelas', 'kelas.id_kelas = admin_guru.kelas_id');
         $this->db->where('kode_guru', $this->session->userdata('username'));
-        $this->db->where('jenis', 'PROTA');
         $data['admin'] = $this->db->get()->result_array();
         $this->load->view('template_guru/topbar', $data);
         $this->load->view('template_guru/header', $data);
@@ -44,7 +44,7 @@ class Guru extends CI_Controller
     {
         $config['upload_path']          = './uploads/administrasi/';
         $config['allowed_types']        = 'pdf|doc|xlsx|xls';
-        $config['file_name']            = 'administrai' . $this->session->userdata('username') . 'jenis' . $this->input->post('jenis') . 'mapel' . $this->input->post('mapel') . 'kelas' . $this->input->post('kelas') . 'ta' . $this->input->post('tahun_ajaran');
+        $config['file_name']            = 'administrai' . $this->session->userdata('username') . 'jenis' . $this->input->post('jenis') . 'mapel' . $this->input->post('mapel') . 'kelas' . $this->input->post('kelas') . 'waktu' . time();
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('file')) {
             $this->session->set_flashdata('flash', 'Gagal Upload File');
@@ -60,6 +60,8 @@ class Guru extends CI_Controller
                 'tahun_ajaran' => $this->input->post('tahun_ajaran'),
                 'file' => $config['file_name']
             ];
+
+            $this->db->insert('admin_guru', $data);
             $this->session->set_flashdata('flash', 'Berhasil Upload File');
             $this->session->set_flashdata('flashtype', 'success');
             redirect('guru/adminGuru');
