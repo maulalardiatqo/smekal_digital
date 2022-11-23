@@ -22,7 +22,7 @@
               <?php
                 $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
                 $guru = $this->db->get_where('guru', ['kode' => $this->session->userdata('username')])->row_array();
-                $kelas = $this->db->get_where('kelas', ['walas' => $guru['id']])->result_array();
+                $kelas = $this->db->get_where('kelas', ['walas' => $guru['kode']])->result_array();
 
                 if ($kelas) {
                     echo '

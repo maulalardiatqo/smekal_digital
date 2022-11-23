@@ -21,16 +21,11 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="mb-3 row">
-                                        <label class="col-lg-4 col-form-label" for="status">Status
+                                        <label class="col-lg-4 col-form-label" for="nama_mapel">Kode Mapel
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <select class="default-select wide form-control" id="status" name="status">
-                                                <option data-display="Select">Please select</option>
-                                                <option value="NORMATIF">Normatif</option>
-                                                <option value="ADAPTIF">Adaptif</option>
-
-                                            </select>
+                                            <input type="text" class="form-control" id="kode_mapel" name="kode_mapel" required="">
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -57,7 +52,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Mapel</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -68,7 +62,6 @@
                                     foreach ($mapel as $m) : ?>
                                         <td><?= $no ?></td>
                                         <td><?= $m['nama_mapel'] ?></td>
-                                        <td><?= $m['status'] ?></td>
                                         <td>
                                             <span class="badge light badge-danger">
                                                 <a href="<?= base_url('waka/hapusMapel/' . $m['id_mapel']) ?>" class="btn btn-danger shadow btn-xs sharp tombol-hapus"><i class="fa fa-trash "></i></a>

@@ -107,11 +107,26 @@
 
                                         <tr>
                                             <td><?= $no ?></td>
-                                            <td><?= $p['jenis'] ?></td>
+                                            <td>
+                                                <?php
+                                                if ($p['jenis'] == 1) {
+                                                    echo "RPP";
+                                                } elseif ($p['jenis'] == 2) {
+                                                    echo "SILABUS";
+                                                } elseif ($p['jenis'] == 3) {
+                                                    echo "PROTA";
+                                                } elseif ($p['jenis'] == 4) {
+                                                    echo "PROMES";
+                                                } else {
+                                                    echo "RAPORT";
+                                                }
+
+
+                                                ?></td>
                                             <td><?= $p['nama_mapel'] ?></td>
                                             <td><?= $p['tingkat'] . ' ' . $p['prodi'] . ' ' . $p['rombel'] ?></td>
                                             <td><?= $p['tahun_ajaran'] ?></td>
-                                            <td><a href="../uploads/administrasi/<?= $p['file'] ?>.xlsx"> <?= $p['file'] ?></a></td>
+                                            <td><a href="../uploads/administrasi/<?= $p['file'] ?>.<?= $p['extension'] ?>"> Download File</a></td>
                                             <td>
                                                 <div class="d-flex">
                                                     <a href="<?= base_url('admin/editAdmin/') . $p['id'] ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>

@@ -44,10 +44,10 @@ class Guru extends CI_Controller
     {
         $config['upload_path']          = './uploads/administrasi/';
         $config['allowed_types']        = 'pdf|doc|xlsx|xls';
-        $name                           = explode(".", $_FILES['file']['name']);
         $config['file_name']            = 'administrai' . $this->session->userdata('username') . 'jenis' . $this->input->post('jenis') . 'mapel' . $this->input->post('mapel') . 'kelas' . $this->input->post('kelas') . 'waktu' . time();
-        var_dump($name);
-        die;
+        $name = $_FILES["file"]["name"];
+        $ext = end((explode(".", $name))); # extra () to prevent notice
+
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('file')) {
             $this->session->set_flashdata('flash', 'Gagal Upload File');
@@ -61,7 +61,8 @@ class Guru extends CI_Controller
                 'mapel_id' => $this->input->post('mapel'),
                 'kelas_id' => $this->input->post('kelas'),
                 'tahun_ajaran' => $this->input->post('tahun_ajaran'),
-                'file' => $config['file_name']
+                'file' => $config['file_name'],
+                'extension' => $ext
             ];
 
             $this->db->insert('admin_guru', $data);
@@ -97,9 +98,9 @@ class Guru extends CI_Controller
         $data['judul'] = 'Wali Kelas';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $guru = $this->db->get_where('guru', ['kode' => $this->session->userdata('username')])->row_array();
-        $guruid = $guru['id'];
+        $guruid = $guru['kode'];
         $data['naik'] = $this->db->get('kelas')->result_array();
-        $data['kelas'] = $this->db->get_where('kelas', ['walas' => $guru['id']])->result_array();
+        $data['kelas'] = $this->db->get_where('kelas', ['walas' => $guru['kode']])->result_array();
         $query = "SELECT id_kelas FROM kelas WHERE walas = $guruid";
         $siswa = $this->db->query($query)->row_array();
 

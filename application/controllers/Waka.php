@@ -170,15 +170,42 @@ class Waka extends CI_Controller
         $data['judul'] = 'Data Kelas';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['guru'] = $this->db->get('guru')->result_array();
+        $data['prodi'] = $this->db->get('prodi')->result_array();
         $this->db->select('*');
         $this->db->from('kelas');
-        $this->db->join('guru', 'guru.id = kelas.walas');
+        $this->db->join('guru', 'guru.kode = kelas.walas');
         $data['kelas'] = $this->db->get()->result_array();
         $this->load->view('template_waka/topbar', $data);
         $this->load->view('template_waka/header', $data);
         $this->load->view('template_waka/sidebar', $data);
         $this->load->view('waka/kelas', $data);
         $this->load->view('template_waka/footer');
+    }
+    public function tambahKelas()
+    {
+        $data = [
+            'tingkat' => $this->input->post('tingkat'),
+            'prodi' => $this->input->post('prodi'),
+            'rombel' => $this->input->post('rombel'),
+            'walas' => $this->input->post('walas'),
+        ];
+        $coba = $this->input->post('tingkat');
+        $coba2 = $this->input->post('prodi');
+        $coba3 = $this->input->post('rombel');
+        $coba4 = $this->input->post('walas');
+        $tidak = 'Please select';
+        if ($coba == $tidak || $coba2 == $tidak || $coba3 == $tidak || $coba4 == $tidak) {
+            $this->session->set_flashdata('flash', 'Anda Belum Memilih Data');
+            $this->session->set_flashdata('flashtype', 'danger');
+            redirect('admin/kelas');
+        } else {
+            $this->db->insert('Kelas', $data);
+            $this->session->set_flashdata('flash', 'Data Berhasil Di Tambah');
+            $this->session->set_flashdata('flashtype', 'success');
+        }
+
+
+        redirect('waka/kelas');
     }
     public function editKelas($id)
     {
@@ -239,8 +266,8 @@ class Waka extends CI_Controller
     public function tambahMapel()
     {
         $data = [
+            'kode_mapel' => $this->input->post('kode_mapel'),
             'nama_mapel' => $this->input->post('nama_mapel'),
-            'status' => $this->input->post('status')
         ];
         $this->db->insert('mapel', $data);
 
@@ -253,10 +280,33 @@ class Waka extends CI_Controller
     {
         $data['judul'] = 'Administrasi Guru';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['guru'] = $this->db->get('guru')->result_array();
         $this->load->view('template_waka/topbar', $data);
         $this->load->view('template_waka/header', $data);
         $this->load->view('template_waka/sidebar', $data);
         $this->load->view('waka/administrasi', $data);
+        $this->load->view('template_waka/footer');
+    }
+    public function kelengkapan($kode)
+    {
+        $data['judul'] = 'Repository Administrasi';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['nama'] = $this->db->get_where('guru', ['kode' => $kode])->row_array();
+        $this->db->select('*');
+        $this->db->from('admin_guru');
+        $this->db->join('guru', 'admin_guru.kode_guru = guru.kode');
+        $this->db->join('mapel', 'mapel.id_mapel = admin_guru.mapel_id');
+        $this->db->where('admin_guru.kode_guru', $kode);
+        $this->db->order_by('kode_guru', 'esc');
+        $data['admin'] = $this->db->get()->result_array();
+
+        // $query = 'SELECT nama FROM guru WHERE kode=' . $kode;
+        // $data['nama_guru'] = $this->db->query($query)->result_array();
+
+        $this->load->view('template_waka/topbar', $data);
+        $this->load->view('template_waka/header', $data);
+        $this->load->view('template_waka/sidebar', $data);
+        $this->load->view('waka/kelengkapan', $data);
         $this->load->view('template_waka/footer');
     }
 }
