@@ -24,8 +24,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 // $config['base_url'] = 'http://localhost:8080/smekal_digital';
-// $config['base_url'] = 'http://localhost/smekal_digital';
-$config['base_url'] = 'https://smekal-smart.com/';
+$config['base_url'] = 'http://localhost/smekal_digital';
+// $config['base_url'] = 'https://smekal-smart.com/';
 
 /*
 |--------------------------------------------------------------------------

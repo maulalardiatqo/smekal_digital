@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2022 at 03:24 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.10
+-- Generation Time: Jul 23, 2023 at 12:37 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.3.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -71,8 +71,8 @@ CREATE TABLE `guru` (
 
 INSERT INTO `guru` (`id`, `kode`, `nama`, `pendidikan_terakhir`, `gender`, `jabatan`, `kontak`, `tahun_masuk`, `salary_per_hour`, `jam_kerja`) VALUES
 (1, 1, 'AMIRUL MU\'MININ', 'S2', 1, '0', '088889996655', '2007', 29000, 32),
-(2, 2, 'Lilis Anjas wati', 'S1', 2, 'Waka Kurikulum', '08925225522', '2008', 29000, 0),
-(6, 23, 'MAULAL ARDI ATQO', 'S1', 1, 'KA. PRODI TKJ', '089619166878', '2020', 29000, 0);
+(2, 2, 'Lilis Anjas wati', 'S1', 2, '0', '08925225522', '2008', 29000, 40),
+(6, 23, 'MAULAL ARDI ATQO', 'S1', 1, '0', '089619166878', '2020', 29000, 89);
 
 -- --------------------------------------------------------
 
@@ -196,7 +196,10 @@ CREATE TABLE `pengeluaran` (
 --
 
 INSERT INTO `pengeluaran` (`id`, `type`, `id_siswa`, `id_guru`, `keterangan`, `tanggal_pemasukan`, `tanggal_pengeluaran`, `jumlah`, `status_gaji`) VALUES
-(1, '1', NULL, '1', 'Pemberian Gaji bulan 09 tahun 2022', NULL, '2022-09-20', 928000, 'MENUNGGU KONFIRMASI');
+(1, '1', NULL, '1', 'Pemberian Gaji bulan 09 tahun 2022', NULL, '2022-09-20', 928000, 'MENUNGGU KONFIRMASI'),
+(2, '1', NULL, '1', 'Pemberian Gaji bulan 07 tahun 2023', NULL, '2023-07-22', 928000, 'MENUNGGU KONFIRMASI'),
+(3, '1', NULL, '2', 'Pemberian Gaji bulan 07 tahun 2023', NULL, '2023-07-22', 1160000, 'MENUNGGU KONFIRMASI'),
+(4, '1', NULL, '6', 'Pemberian Gaji bulan 07 tahun 2023', NULL, '2023-07-22', 2581000, 'TERKONFIRMASI');
 
 -- --------------------------------------------------------
 
@@ -347,6 +350,116 @@ CREATE TABLE `tagihan_detail` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_keuangan_master`
+--
+
+CREATE TABLE `tb_keuangan_master` (
+  `id_keuangan` int(11) NOT NULL,
+  `no_trans` varchar(100) NOT NULL,
+  `jen_trans` varchar(150) NOT NULL,
+  `tanggal_trans` date NOT NULL,
+  `trans_id` int(200) NOT NULL,
+  `trans_out` int(200) NOT NULL,
+  `total_amount` int(225) NOT NULL,
+  `ket` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_keuangan_master`
+--
+
+INSERT INTO `tb_keuangan_master` (`id_keuangan`, `no_trans`, `jen_trans`, `tanggal_trans`, `trans_id`, `trans_out`, `total_amount`, `ket`) VALUES
+(5, 'transin_07230001', 'Pemasukan Lain', '2023-07-23', 1600000000, 0, 1600000000, 'Saldo Awal');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_pemasukan`
+--
+
+CREATE TABLE `tb_pemasukan` (
+  `id_pemasukan` int(11) NOT NULL,
+  `no_pemasukan` varchar(150) NOT NULL,
+  `tanggal_pemasukan` date NOT NULL,
+  `jumlah_pemasukan` int(150) NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_pemasukan`
+--
+
+INSERT INTO `tb_pemasukan` (`id_pemasukan`, `no_pemasukan`, `tanggal_pemasukan`, `jumlah_pemasukan`, `keterangan`) VALUES
+(9, 'transin_07230001', '2023-07-23', 1600000000, 'Saldo Awal');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_pemasukan_siswa`
+--
+
+CREATE TABLE `tb_pemasukan_siswa` (
+  `id_pemsis` int(11) NOT NULL,
+  `no_pemsis` varchar(150) NOT NULL,
+  `tanggal_pemsis` date NOT NULL,
+  `nisn` int(11) NOT NULL,
+  `jumlah_pemsis` int(11) NOT NULL,
+  `peruntukan` int(11) NOT NULL,
+  `penerima` varchar(200) NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_pengeluaran`
+--
+
+CREATE TABLE `tb_pengeluaran` (
+  `id_pengeluaran` int(11) NOT NULL,
+  `no_pengeluaran` varchar(150) NOT NULL,
+  `tanggal_pengeluaran` date NOT NULL,
+  `jumlah_pengeluaran` int(150) NOT NULL,
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_potongan`
+--
+
+CREATE TABLE `tb_potongan` (
+  `id_potongan` int(11) NOT NULL,
+  `nama_potongan` varchar(100) NOT NULL,
+  `prosentase_potongan` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_tagihan`
+--
+
+CREATE TABLE `tb_tagihan` (
+  `id_tagihan` int(11) NOT NULL,
+  `nis_tagihan` int(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_tagihan_master`
+--
+
+CREATE TABLE `tb_tagihan_master` (
+  `id_mas_tagihan` int(11) NOT NULL,
+  `nama_mas_tagihan` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -369,7 +482,7 @@ INSERT INTO `user` (`id`, `nama`, `foto`, `username`, `password`, `role_id`, `is
 (1, 'Admin', 'user_default.png', 'admin', '$2y$10$t1DiBamGFU1D5rVJpYVrqeLzLo5KocvT0RWWgEWM0yG5PuVhBMR6K', 1, 1, '1658495229'),
 (2, 'Kepala Sekolah', 'user_default.png', 'kepsek', '$2y$10$O.wTTrX7h7k807vYOCmC5.vSkJtx9bs63mxj2A/k4iv1ReRrw/K/m', 2, 1, '1658584445'),
 (3, 'Waka Kurikulum', 'user_default.png', 'kurikulum', '$2y$10$hRthRoaPZwBcfwNx0EiCa.0v3JthXSfPebwSiOtkEfvwuXs46kY/m', 3, 1, '1658584464'),
-(10, 'MAULAL ARDI ATQO', 'user_default.png', '23', '$2y$10$bC4LLUK5S9nvDvqbOnlipe5Wq1zaBHVFsfZ1c8mixhAb7VIL19DTq', 4, 1, '2022-07-26 21:38:56'),
+(10, 'MAULAL ARDI ATQO', 'user_default.png', '23', '$2y$10$5qyS89Ym5ccZ89iCmP0WAuzj7nT5WORNKIh08aFWhbvIBwb4ueoyu', 4, 1, '2022-07-26 21:38:56'),
 (22, 'Admin PPDB', 'user_default.png', 'adminPPDB', '$2y$10$N7nlbnoo5qJpxMsiM8cUrOnYpBLGfbiY6udUtFgLfIKpJgOoJSXoG', 6, 1, '1659787996'),
 (25, 'Suilman', 'user_default.png', '3210.10', '$2y$10$.yG.XS.7Rk5V0SGEUldDDeQdw0vwN1uS/6M97mLiFGfYxvF.W9fju', 5, 0, '2022-08-19 20:37:14'),
 (27, 'AHMAD SAIFURROZIQ', 'user_default.png', '11111', '$2y$10$2J07msifOeTvwmJO2iqtcOAAmYczXg4ahe.rdoEu58Q.pPE5EoIvC', 5, 0, '2022-08-31 01:17:22'),
@@ -487,6 +600,48 @@ ALTER TABLE `tagihan_detail`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tb_keuangan_master`
+--
+ALTER TABLE `tb_keuangan_master`
+  ADD PRIMARY KEY (`id_keuangan`);
+
+--
+-- Indexes for table `tb_pemasukan`
+--
+ALTER TABLE `tb_pemasukan`
+  ADD PRIMARY KEY (`id_pemasukan`);
+
+--
+-- Indexes for table `tb_pemasukan_siswa`
+--
+ALTER TABLE `tb_pemasukan_siswa`
+  ADD PRIMARY KEY (`id_pemsis`);
+
+--
+-- Indexes for table `tb_pengeluaran`
+--
+ALTER TABLE `tb_pengeluaran`
+  ADD PRIMARY KEY (`id_pengeluaran`);
+
+--
+-- Indexes for table `tb_potongan`
+--
+ALTER TABLE `tb_potongan`
+  ADD PRIMARY KEY (`id_potongan`);
+
+--
+-- Indexes for table `tb_tagihan`
+--
+ALTER TABLE `tb_tagihan`
+  ADD PRIMARY KEY (`id_tagihan`);
+
+--
+-- Indexes for table `tb_tagihan_master`
+--
+ALTER TABLE `tb_tagihan_master`
+  ADD PRIMARY KEY (`id_mas_tagihan`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -548,7 +703,7 @@ ALTER TABLE `pemasukan`
 -- AUTO_INCREMENT for table `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `prodi`
@@ -585,6 +740,48 @@ ALTER TABLE `tagihan`
 --
 ALTER TABLE `tagihan_detail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `tb_keuangan_master`
+--
+ALTER TABLE `tb_keuangan_master`
+  MODIFY `id_keuangan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tb_pemasukan`
+--
+ALTER TABLE `tb_pemasukan`
+  MODIFY `id_pemasukan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tb_pemasukan_siswa`
+--
+ALTER TABLE `tb_pemasukan_siswa`
+  MODIFY `id_pemsis` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_pengeluaran`
+--
+ALTER TABLE `tb_pengeluaran`
+  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_potongan`
+--
+ALTER TABLE `tb_potongan`
+  MODIFY `id_potongan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_tagihan`
+--
+ALTER TABLE `tb_tagihan`
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_tagihan_master`
+--
+ALTER TABLE `tb_tagihan_master`
+  MODIFY `id_mas_tagihan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`

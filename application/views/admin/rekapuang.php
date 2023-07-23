@@ -8,49 +8,49 @@
             <div class="card-body">
                 <?php $totalDebet = 0;?>
                 <?php $totalKredit = 0;?>
+                <?php $totalAmount = 0;?>
                 <div class="table-responsive">
                     <table id="example" class="display" style="min-width: 845px">
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>No Transaksi</th>
+                                <th>Jenis</th>
                                 <th>Tanggal</th>
-                                <th>Uraian</th>
                                 <th>Debet</th>
                                 <th>Kredit</th>
                                 <th>Saldo</th>
+                                <th>Ket.</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no = 1;$saldo = $rekap[0]['jumlah'];$totalDebet = $totalDebet + $rekap[0]['jumlah'];$totalDebet = $totalDebet + $rekap[0]['jumlah']; ?>
+                            <?php $no = 1;?>
                             <?php foreach ($rekap as $p) : ?>
-                                <?php 
-                                    if($no > 1){
-                                        if($p['type_transaction'] == 'pemasukan'){
-                                            $saldo = $saldo + $p['jumlah'];
-                                            $totalDebet = $totalDebet + $p['jumlah'];
-                                        }else{
-                                            $saldo = $saldo - $p['jumlah'];
-                                            $totalKredit = $totalKredit + $p['jumlah']; 
-                                        }
-                                    } 
-                                ?>
                                 <tr>
                                     <td><?= $no ?></td>
-                                    <td><?= $p['tanggal'] ?></td>
-                                    <td><?= $p['keterangan'] ?></td>
-                                    <td><?= $p['type_transaction'] == 'pemasukan' ? number_format($p['jumlah'],2,'.',',') : '' ?></td>
-                                    <td><?= $p['type_transaction'] == 'pengeluaran' ? number_format($p['jumlah'],2,'.',',') : '' ?></td>
-                                    <td><?= number_format($saldo,2,'.',',') ?></td>
+                                    <td><?= $p['no_trans'] ?></td>
+                                    <td><?= $p['jen_trans'] ?></td>
+                                    <td><?= $p['tanggal_trans'] ?></td>
+                                    <td><?= number_format($p['trans_id'],2,'.','.',) ?></td>
+                                    <td><?= number_format($p['trans_out'],2,'.','.',) ?></td>
+                                    <td><?= number_format($p['total_amount'],2,'.','.',) ?></td>
+                                    <td><?= $p['ket'] ?></td>
+                                    
                                 </tr>
-                                <?php $no++; ?>
+                                <?php 
+                                $no++; 
+                                $totalDebet += $p['trans_id'];
+                                $totalKredit += $p['trans_out'];
+                                $totalAmount = $p['total_amount'];
+                                ?>
                             <?php endforeach; ?>
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="3">Jumlah</th>
+                                <th colspan="4">Jumlah</th>
                                 <th><?= number_format($totalDebet,2,'.',',') ?></th>
                                 <th><?= number_format($totalKredit,2,'.',',') ?></th>
-                                <th><?= number_format($saldo,2,'.',',') ?></th>
+                                <th><?= number_format($totalAmount,2,'.','.',) ?></th>
                             </tr>
                         </tfoot>
                     </table>

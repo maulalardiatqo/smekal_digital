@@ -501,6 +501,116 @@ class Admin extends CI_Controller
         $this->load->view('template_admin/footer');
         $this->load->view('template_admin/number_format');
     }
+    public function pemasukan_Siswa()
+    {
+        $data['judul'] = 'Pemasukan Siswa';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['pemasukan'] = $this->db->get('tb_pemasukan_siswa')->result_array();
+        $this->db->select('siswa.*,kelas.tingkat,kelas.prodi,kelas.rombel');
+        $this->db->from('siswa');
+        $this->db->join('kelas', 'siswa.kelas = kelas.id_kelas');
+        $this->db->where('siswa.is_active = 1');
+        $data['siswa'] = $this->db->get()->result_array();
+        $data['kelas'] = $this->db->get('kelas')->result_array();
+        
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/pemasukan_siswa', $data);
+        $this->load->view('template_admin/footer');
+        $this->load->view('template_admin/number_format');
+    }
+
+    public function pemasukan_lain()
+    {
+        $data['judul'] = 'Pemasukan Lain';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['pemasukan'] = $this->db->get('tb_pemasukan')->result_array();
+        
+        $this->load->view('template_admin/topbar', $data);
+        $this->load->view('template_admin/header', $data);
+        $this->load->view('template_admin/sidebar', $data);
+        $this->load->view('admin/pemasukan_lain', $data);
+        $this->load->view('template_admin/footer');
+        $this->load->view('template_admin/number_format');
+    }
+
+    public function inputPemasukanLain()
+    {
+        $tanggal = $this->input->post('tanggal_pemasukan');
+        $jumlahPemasukan = $this->input->post('jumlah_pemasukan');
+        $quareyMaster = $this->db->select('total_amount')
+                            ->from('tb_keuangan_master')
+                            ->order_by('total_amount')
+                            ->limit(1)
+                            ->get();
+        if($quareyMaster->num_rows() > 0){
+            $totalAmount = $quareyMaster->row()->total_amount;
+            $sumTotalAmount = $totalAmount + $jumlahPemasukan;
+            
+        }else{
+            $sumTotalAmount = $jumlahPemasukan;
+        }
+        $query = $this->db->select('no_pemasukan')
+                        ->from('tb_pemasukan')
+                        ->order_by('no_pemasukan', 'DESC')
+                        ->limit(1)
+                        ->get();
+    
+        if ($query->num_rows() > 0) {
+            $latestNoTransaksi = $query->row()->no_pemasukan;
+            preg_match('/\d+/', $latestNoTransaksi, $matches);
+            $lastNumber = substr($latestNoTransaksi, -4);
+
+            $newNumber = (int)$lastNumber + 1;
+    
+            // Convert $newNumber to 4 digits
+            $formattedNumber = str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+    
+            // Generate the new formatted no_pemasukan
+            $month = date('m', strtotime($tanggal));
+            $year = date('y', strtotime($tanggal));
+            $year = str_pad($year, 2, '0', STR_PAD_LEFT);
+    
+            $newNoTransaksi = 'transin_' . $month . $year . $formattedNumber;
+        } else {
+            // Handle the case when no previous transactions exist
+            $month = date('m', strtotime($tanggal));
+            $year = date('y', strtotime($tanggal));
+            $year = str_pad($year, 2, '0', STR_PAD_LEFT);
+            $newNoTransaksi = 'transin_' . $month . $year . '0001';
+        }
+       
+        $ket = $this->input->post('ket');
+        if($tanggal == '' || $jumlahPemasukan == '' || $ket == ''){
+            $this->session->set_flashdata('flash', 'Data Tidak Boleh Kosong');
+            $this->session->set_flashdata('flashtype', 'danger');
+
+            redirect('admin/pemasukan_lain');
+        }else{
+            $data = [
+                'no_pemasukan' => $newNoTransaksi,
+                'tanggal_pemasukan' => $tanggal,
+                'jumlah_pemasukan' => $jumlahPemasukan,
+                'keterangan' => $ket
+            ];
+            $dataToMaster = [
+                'no_trans' => $newNoTransaksi,
+                'jen_trans' => 'Pemasukan Lain',
+                'tanggal_trans' => $tanggal,
+                'trans_id' => $jumlahPemasukan,
+                'trans_out' => 0,
+                'total_amount' => $sumTotalAmount,
+                'ket' => $ket
+            ];
+            $this->db->insert('tb_keuangan_master', $dataToMaster);
+            $this->db->insert('tb_pemasukan', $data);
+            $this->session->set_flashdata('flash', 'Berhasil Input Tansaksi Masusk Dengan No '.$newNoTransaksi);
+            $this->session->set_flashdata('flashtype', 'success');
+            redirect('admin/pemasukan_lain');
+        }
+    }
+    
     public function savepemasukan()
     {
         $data = [
@@ -530,11 +640,11 @@ class Admin extends CI_Controller
 
     public function tagihan()
     {
-        $data['judul'] = 'Pemasukan';
+        $data['judul'] = 'Master Tagihan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
 
-        $data['tagihan'] = $this->db->get('tagihan')->result_array();
-        $data['js'] = 'tagihan';
+        $data['tagihan'] = $this->db->get('tb_tagihan')->result_array();
+        $data['js'] = 'tb_tagihan';
         // $this->db->select('pemasukan.*,jenispemasukan.desc');
         // $this->db->from('pemasukan');
         // $this->db->join('jenispemasukan', 'pemasukan.type = jenispemasukan.id', 'left');
@@ -777,10 +887,8 @@ class Admin extends CI_Controller
     {
         $data['judul'] = 'Rekap / Laporan';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $query = "SELECT tanggal_pemasukan AS tanggal,keterangan,jumlah,'pemasukan' AS type_transaction FROM pemasukan
-                UNION
-                SELECT tanggal_pengeluaran AS tanggal,keterangan,jumlah,'pengeluaran' AS type_transaction FROM pengeluaran ORDER BY tanggal DESC;";
-        $data['rekap'] = $this->db->query($query)->result_array();
+       
+        $data['rekap'] = $this->db->get('tb_keuangan_master')->result_array();
 
         $this->load->view('template_admin/topbar', $data);
         $this->load->view('template_admin/header', $data);
